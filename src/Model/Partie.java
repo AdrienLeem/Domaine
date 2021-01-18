@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Partie {
     private final Plateau plateau;
@@ -47,5 +48,32 @@ public class Partie {
             }
 
         }
+    }
+
+    public void commencer() {
+
+    }
+
+    public static ArrayList<Joueur> initJoueur() {
+        ArrayList<Joueur> listJ = new ArrayList<>();
+        Scanner scan1 = new Scanner(System.in);
+        System.out.print("Nombre de joueurs >> ");
+        int nbJ;
+        nbJ = scan1.nextInt();
+        for (int i = 1; i < nbJ+1; i++) {
+            String nomJ;
+            Scanner scan2 = new Scanner(System.in);
+            if (i == 1) System.out.print("Nom du " + i + "er joueur >> ");
+            else System.out.print("Nom du " + i + "eme joueur >> ");
+            nomJ = scan2.nextLine();
+            Joueur j = new Joueur(nomJ);
+            listJ.add(j);
+        }
+        return listJ;
+    }
+
+    public static void main(String[] args) {
+        Partie p = new Partie(initJoueur());
+        for (int i = 0; i < p.joueurs.size(); i++) System.out.println(p.joueurs.get(i));
     }
 }

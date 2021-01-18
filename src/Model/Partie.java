@@ -74,6 +74,6 @@ public class Partie {
 
     public static void main(String[] args) {
         Partie p = new Partie(initJoueur());
-        for (int i = 0; i < p.joueurs.size(); i++) System.out.println(p.joueurs.get(i));
+        for (int i = 0; i < p.joueurs.size(); i++) System.out.println(p.joueurs.get(i).getNom());
     }
 }

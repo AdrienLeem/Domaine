@@ -1,6 +1,6 @@
 package Model;
 
-public class Case {
+public abstract class Case {
     private int x;
     private int y;
     private int valeur;

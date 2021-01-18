@@ -13,4 +13,6 @@ public class Carte {
     public ArrayList<Action> getActions() {
         return actions;
     }
+
+    public void setActions() {  }
 }

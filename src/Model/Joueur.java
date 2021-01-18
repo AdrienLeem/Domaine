@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Joueur {
     private final String nom;
@@ -22,6 +23,14 @@ public class Joueur {
         this.domaine = new ArrayList<Domaine>();
     }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
     public void piocher(Carte carte) {
         this.main.add(carte);
     }
@@ -30,17 +39,21 @@ public class Joueur {
 
     }
 
-    public void finirTour() {
-
-    }
 
     public void jouerCarte(int index) {
+        Scanner scanner = new Scanner(System.in);
         if (this.main.get(index).getActions().size()==1){
             this.main.get(index).getActions().get(0).run();
         }
         else {
-            this.main.get(index).getActions().get(0).run();
-            this.main.get(index).getActions().get(1).run();
+            System.out.println("Choisir l'action : 1 || 2");
+            String choix = scanner.nextLine();
+            if (choix.equals("1")) {
+                this.main.get(index).getActions().get(0).run();
+            }
+            else {
+                this.main.get(index).getActions().get(1).run();
+            }
         }
     }
 

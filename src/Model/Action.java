@@ -7,5 +7,5 @@ public abstract class Action {
         this.nom = "";
     }
 
-    public void run(){};
+    public abstract void run();
 }

@@ -10,11 +10,10 @@ public class Joueur {
     private ArrayList<PionChevalier> chevaliers;
     private Pion marqueur;
     private ArrayList<Domaine> domaine;
-    private Partie partie;
 
 
     public Joueur(String n) {
-        this.nom = setNom();
+        this.nom = n;
         this.point = 0;
         this.main= new ArrayList<Carte>();
         this.chateaux = new ArrayList<PionChateau>();
@@ -36,10 +35,16 @@ public class Joueur {
     }
 
     public void jouerCarte(int index) {
-        this.main.get(index);
+        if (this.main.get(index).getActions().size()==1){
+            this.main.get(index).getActions().get(0).run();
+        }
+        else {
+            this.main.get(index).getActions().get(0).run();
+            this.main.get(index).getActions().get(1).run();
+        }
     }
 
-    public void vendreCarte(int index) {
-        partie.cartesVendu.append(this.main.get(index));
+    public Carte vendreCarte(int index) {
+        return this.main.get(index);
     }
 }

@@ -6,4 +6,8 @@ public class Tuile {
     public Tuile() {
         this.cases = new Case[4][4];
     }
+
+    public Case[][] getCases() {
+        return cases;
+    }
 }

@@ -10,4 +10,16 @@ public abstract class Case {
         this.y = y;
         this.valeur = valeur;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getValeur() {
+        return valeur;
+    }
 }

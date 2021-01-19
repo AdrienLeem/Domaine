@@ -8,6 +8,11 @@ public class ExtensionDomaine extends Action {
     }
 
     @Override
+    public String getNom() {
+        return this.nom;
+    }
+
+    @Override
     public void run() {
 
     }

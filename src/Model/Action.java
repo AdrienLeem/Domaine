@@ -7,5 +7,7 @@ public abstract class Action {
         this.nom = "";
     }
 
+    public abstract String getNom();
+
     public abstract void run();
 }

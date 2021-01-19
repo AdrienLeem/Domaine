@@ -4,7 +4,12 @@ public class AjoutFrontiere extends Action {
 
 
     public AjoutFrontiere() {
-        this.nom = "";
+        this.nom = "Place une frontière sur le plateau";
+    }
+
+    @Override
+    public String getNom() {
+        return this.nom;
     }
 
     @Override

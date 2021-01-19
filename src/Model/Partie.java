@@ -70,6 +70,30 @@ public class Partie {
         }
     }
 
+    public void jouerTour() {
+        for (Joueur joueur : this.joueurs) {
+            System.out.println("Tour de " + joueur.getNom());
+            for (int j = 1; j < joueur.getMain().size() + 1; j++) {
+                for (int k = 1; k < joueur.getMain().get(j).getActions().size() + 1; k++) {
+                    System.out.println("Carte " + j + " : \nAction " + k + " : " + joueur.getMain().get(j).getActions().get(k).getNom());
+                }
+            }
+            Scanner scan1 = new Scanner(System.in);
+            System.out.print("Carte à jouer >> ");
+            int numC;
+            numC = scan1.nextInt();
+            if (joueur.getMain().get(numC).getActions().size() > 1) {
+                Scanner scan2 = new Scanner(System.in);
+                System.out.print("Action à jouer >> ");
+                int numA;
+                numA = scan2.nextInt();
+                joueur.getMain().get(numC-1).getActions().get(numA-1).run();
+            } else {
+                joueur.getMain().get(numC-1).getActions().get(0).run();
+            }
+        }
+    }
+
     public static ArrayList<Joueur> initJoueur() {
         ArrayList<Joueur> listJ = new ArrayList<>();
         Scanner scan1 = new Scanner(System.in);

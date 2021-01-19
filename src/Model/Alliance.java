@@ -8,6 +8,11 @@ public class Alliance extends Action {
     }
 
     @Override
+    public String getNom() {
+        return this.nom;
+    }
+
+    @Override
     public void run() {
 
     }

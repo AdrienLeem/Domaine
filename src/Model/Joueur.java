@@ -55,6 +55,10 @@ public class Joueur {
         this.main.add(carte);
     }
 
+    public int getDucat() {
+        return ducat;
+    }
+
     public void placePion(Pion pion, int x, int y) {
         pion.setX(x);
         pion.setY(y);
@@ -78,6 +82,7 @@ public class Joueur {
     }
 
     public Carte vendreCarte(int index) {
+        ducat += this.main.get(index).getPrixVente();
         return this.main.get(index);
     }
 }

@@ -74,8 +74,9 @@ public class Partie {
         for (Joueur joueur : this.joueurs) {
             System.out.println("Tour de " + joueur.getNom());
             for (int j = 1; j < joueur.getMain().size() + 1; j++) {
+                System.out.println("Carte " + j + " : ");
                 for (int k = 1; k < joueur.getMain().get(j).getActions().size() + 1; k++) {
-                    System.out.println("Carte " + j + " : \nAction " + k + " : " + joueur.getMain().get(j).getActions().get(k).getNom());
+                    System.out.println("Action " + k + " : " + joueur.getMain().get(j).getActions().get(k).getNom());
                 }
             }
             Scanner scan1 = new Scanner(System.in);

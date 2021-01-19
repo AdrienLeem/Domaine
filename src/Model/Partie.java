@@ -64,9 +64,21 @@ public class Partie {
     }
 
     public void commencer() {
-        for(int i=0;i< this.joueurs.size(); i++) {
-            Joueur j = this.joueurs.get(i);
-            j.placePion(j.getChateaux().get(1), 1,1);
+        int x1,y1,x2,y2;
+        for (int k = 0; k < 4; k++){
+            for(int i = 0; i < this.joueurs.size(); i++) {
+                Joueur j = this.joueurs.get(i);
+                System.out.println("Nom du joueur : " + j.getNom());
+                System.out.println();
+                System.out.print("Placez votre " + k+1 + " Chateau :");
+                x1 = new Scanner(System.in).nextInt();
+                y1 = new Scanner(System.in).nextInt();
+                j.placePion(j.getChateaux().get(k), x1, y1);
+                System.out.print("Placez votre " + k+1 + " Chevalier :");
+                x2 = new Scanner(System.in).nextInt();
+                y2 = new Scanner(System.in).nextInt();
+                j.placePion(j.getChevaliers().get(k), x2, y2);
+            }
         }
     }
 

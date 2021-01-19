@@ -12,6 +12,7 @@ public class Joueur {
     private Pion marqueur;
     private ArrayList<Domaine> domaine;
     private String couleur;
+    private int ducat;
 
     public Joueur(String n) {
         this.nom = n;
@@ -27,6 +28,7 @@ public class Joueur {
         }
         this.marqueur =null;
         this.domaine = new ArrayList<Domaine>();
+        this.ducat = 7;
     }
 
     public String getNom() {
@@ -66,8 +68,8 @@ public class Joueur {
         }
         else {
             System.out.println("Choisir l'action : 1 || 2");
-            String choix = scanner.nextLine();
-            if (choix.equals("1")) {
+            int choix = scanner.nextInt();
+            if (choix==1) {
                 this.main.get(index).getActions().get(0).run();
             }
             else {

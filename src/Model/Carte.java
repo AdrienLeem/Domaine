@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Carte {
     private ArrayList<Action> actions;
-    private int prixAchat;
+    private int prixAction;
     private int prixVente;
 
 
@@ -20,12 +20,12 @@ public class Carte {
         this.actions.add(action);
     }
 
-    public int getPrixAchat() {
-        return prixAchat;
+    public int getPrixAction() {
+        return prixAction;
     }
 
-    public void setPrixAchat(int prixAchat) {
-        this.prixAchat = prixAchat;
+    public void setPrixAction(int prixAction) {
+        this.prixAction = prixAction;
     }
 
     public int getPrixVente() {

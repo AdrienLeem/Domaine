@@ -22,12 +22,24 @@ public class Partie {
                 case 1 -> {
                     int alea2 = rand.nextInt(2) + 1;
                     this.pioche.get(i).setAction(new AjoutFrontiere());
+                    this.pioche.get(i).setPrixAction(1);
+                    this.pioche.get(i).setPrixVente(2);
                     if (alea2 == 1) {
                         this.pioche.get(i).setAction(new AjoutChevalier());
+                        this.pioche.get(i).setPrixAction(3);
+                        this.pioche.get(i).setPrixVente(3);
                     }
                 }
-                case 2 -> this.pioche.get(i).setAction(new AjoutFrontiere());
-                default -> this.pioche.get(i).setAction(new AjoutChevalier());
+                case 2 -> {
+                    this.pioche.get(i).setAction(new AjoutFrontiere());
+                    this.pioche.get(i).setPrixAction(1);
+                    this.pioche.get(i).setPrixVente(2);
+                }
+                default -> {
+                    this.pioche.get(i).setAction(new AjoutChevalier());
+                    this.pioche.get(i).setPrixAction(2);
+                    this.pioche.get(i).setPrixVente(3);
+                }
             }
         }
         this.cartesVendu = new ArrayList<Carte>();
@@ -41,6 +53,16 @@ public class Partie {
                 else if (this.plateau.getCase(i,j) instanceof CaseForet) System.out.print(" F |");
                 else if (this.plateau.getCase(i,j) instanceof CaseCiteRoyale) System.out.print(" C |");
                 else System.out.print(" P |");
+                for (Joueur joueur : this.joueurs) {
+                    for (int l = 0; l < joueur.getChevaliers().size(); l++) {
+                        if (joueur.getChevaliers().get(l).getX() == i && joueur.getChevaliers().get(l).getY() == j)
+                            System.out.print(" X |");
+                    }
+                    for (int l = 0; l < joueur.getChateaux().size(); l++) {
+                        if (joueur.getChateaux().get(l).getX() == i && joueur.getChateaux().get(l).getY() == j)
+                            System.out.print(" A |");
+                    }
+                }
             }
             System.out.println("");
         }
@@ -101,25 +123,39 @@ public class Partie {
     public void jouerTour() {
         for (Joueur joueur : this.joueurs) {
             System.out.println("Tour de " + joueur.getNom());
+            System.out.println("Ducat : " + joueur.getDucat() );
             for (int j = 1; j < joueur.getMain().size() + 1; j++) {
-                System.out.println("Carte " + j + " : ");
+                System.out.println("Carte " + j + " : (PA : " + joueur.getMain().get(j-1).getPrixAction() + " | PV : " + joueur.getMain().get(j-1).getPrixVente() + ")");
                 for (int k = 1; k < joueur.getMain().get(j-1).getActions().size() + 1; k++) {
                     System.out.println("Action " + k + " : " + joueur.getMain().get(j-1).getActions().get(k-1).getNom());
                 }
             }
-            int numC;
-            System.out.print("Carte à jouer >> ");
-            numC = new Scanner(System.in).nextInt();
-            if (joueur.getMain().get(numC).getActions().size() > 1) {
-                int numA;
-                System.out.print("Action à jouer >> ");
-                numA = new Scanner(System.in).nextInt();
-                joueur.getMain().get(numC-1).getActions().get(numA-1).setJ(joueur);
-                joueur.getMain().get(numC-1).getActions().get(numA-1).run();
+            String choixAction;
+            System.out.print("Jouer ou vendre une carte ? >> [v/j]");
+            choixAction = new Scanner(System.in).nextLine();
+            if (choixAction.equals("j")) {
+                int numC;
+                System.out.print("Carte à jouer >> ");
+                numC = new Scanner(System.in).nextInt();
+                if (joueur.getMain().get(numC-1).getActions().size() > 1) {
+                    int numA;
+                    System.out.print("Action à jouer >> ");
+                    numA = new Scanner(System.in).nextInt();
+                    joueur.getMain().get(numC-1).getActions().get(numA-1).setJ(joueur);
+                    joueur.getMain().get(numC-1).getActions().get(numA-1).run();
+                    joueur.setDucat(-joueur.getMain().get(numC-1).getPrixAction());
+                } else {
+                    joueur.getMain().get(numC-1).getActions().get(0).setJ(joueur);
+                    joueur.getMain().get(numC-1).getActions().get(0).run();
+                    joueur.setDucat(-joueur.getMain().get(numC-1).getPrixAction());
+                }
             } else {
-                joueur.getMain().get(numC-1).getActions().get(0).setJ(joueur);
-                joueur.getMain().get(numC-1).getActions().get(0).run();
+                int numC;
+                System.out.print("Carte à vendre >> ");
+                numC = new Scanner(System.in).nextInt();
+                joueur.vendreCarte(numC-1);
             }
+            System.out.println();
         }
     }
 
@@ -147,5 +183,6 @@ public class Partie {
         p.distribuerCarte();
         p.commencer();
         p.jouerTour();
+        p.afficherPlateau();
     }
 }

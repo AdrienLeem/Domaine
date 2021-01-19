@@ -59,6 +59,10 @@ public class Joueur {
         return ducat;
     }
 
+    public void setDucat(int ducat) {
+        this.ducat = ducat;
+    }
+
     public void placePion(Pion pion, int x, int y) {
         pion.setX(x);
         pion.setY(y);

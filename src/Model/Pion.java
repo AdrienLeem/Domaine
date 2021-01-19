@@ -5,8 +5,8 @@ public abstract class Pion {
     private Integer y;
 
     public Pion() {
-        this.x = null;
-        this.y = null;
+        this.x = -1;
+        this.y = -1;
     }
 
     public Integer getX() {

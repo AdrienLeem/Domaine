@@ -77,6 +77,7 @@ public class Partie {
             }
             System.out.println("");
         }
+        System.out.println();
     }
 
     public void melanger() {
@@ -195,5 +196,9 @@ public class Partie {
         p.commencer();
         p.jouerTour();
         p.afficherPlateau();
+        int i = 1;
+        for (Joueur j : p.joueurs) {
+            System.out.println("Joueur " + i + " : " + j.getNom() + " | Ducat : " + j.getDucat());
+        }
     }
 }

@@ -16,8 +16,8 @@ public class Carte {
         return actions;
     }
 
-    public void setActions(ArrayList<Action> actions) {
-        this.actions = actions;
+    public void setAction(Action action) {
+        this.actions.add(action);
     }
 
     public int getPrixAchat() {

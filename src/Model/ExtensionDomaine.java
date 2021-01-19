@@ -5,6 +5,12 @@ public class ExtensionDomaine extends Action {
 
     public ExtensionDomaine() {
         this.nom = "";
+        this.j = null;
+    }
+
+    @Override
+    public void setJ(Joueur j) {
+        this.j = j;
     }
 
     @Override

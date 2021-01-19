@@ -5,6 +5,12 @@ public class Alliance extends Action {
 
     public Alliance() {
         this.nom = "";
+        this.j = null;
+    }
+
+    @Override
+    public void setJ(Joueur j) {
+        this.j = j;
     }
 
     @Override

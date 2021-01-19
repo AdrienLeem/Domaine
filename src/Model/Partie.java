@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Partie {
@@ -15,6 +16,19 @@ public class Partie {
         this.pioche = new ArrayList<Carte>();
         for (int i=0; i<60; i++) {
             this.pioche.add(new Carte());
+            Random rand = new Random();
+            int alea = rand.nextInt(3) + 1;
+            switch (alea) {
+                case 1 -> {
+                    int alea2 = rand.nextInt(2) + 1;
+                    this.pioche.get(i).setAction(new AjoutFrontiere());
+                    if (alea2 == 1) {
+                        this.pioche.get(i).setAction(new AjoutChevalier());
+                    }
+                }
+                case 2 -> this.pioche.get(i).setAction(new AjoutFrontiere());
+                default -> this.pioche.get(i).setAction(new AjoutChevalier());
+            }
         }
         this.cartesVendu = new ArrayList<Carte>();
     }
@@ -65,19 +79,21 @@ public class Partie {
 
     public void commencer() {
         int x1,y1,x2,y2;
-        for (int k = 0; k < 4; k++){
+        for (int k = 1; k < 4 + 1; k++){
             for(int i = 0; i < this.joueurs.size(); i++) {
                 Joueur j = this.joueurs.get(i);
-                System.out.println("Nom du joueur : " + j.getNom());
+                System.out.println("Tour de " + j.getNom());
                 System.out.println();
-                System.out.print("Placez votre " + k+1 + " Chateau :");
+                if (k == 1) System.out.print("Placez votre " + k + "er Chateau :");
+                else System.out.print("Placez votre " + k + "eme Chateau :");
                 x1 = new Scanner(System.in).nextInt();
                 y1 = new Scanner(System.in).nextInt();
-                j.placePion(j.getChateaux().get(k), x1, y1);
-                System.out.print("Placez votre " + k+1 + " Chevalier :");
+                j.placePion(j.getChateaux().get(k-1), x1, y1);
+                if (k == 1) System.out.print("Placez votre " + k + "er Chevalier :");
+                else System.out.print("Placez votre " + k + "eme Chevalier :");
                 x2 = new Scanner(System.in).nextInt();
                 y2 = new Scanner(System.in).nextInt();
-                j.placePion(j.getChevaliers().get(k), x2, y2);
+                j.placePion(j.getChevaliers().get(k-1), x2, y2);
             }
         }
     }
@@ -87,21 +103,21 @@ public class Partie {
             System.out.println("Tour de " + joueur.getNom());
             for (int j = 1; j < joueur.getMain().size() + 1; j++) {
                 System.out.println("Carte " + j + " : ");
-                for (int k = 1; k < joueur.getMain().get(j).getActions().size() + 1; k++) {
-                    System.out.println("Action " + k + " : " + joueur.getMain().get(j).getActions().get(k).getNom());
+                for (int k = 1; k < joueur.getMain().get(j-1).getActions().size() + 1; k++) {
+                    System.out.println("Action " + k + " : " + joueur.getMain().get(j-1).getActions().get(k-1).getNom());
                 }
             }
-            Scanner scan1 = new Scanner(System.in);
-            System.out.print("Carte à jouer >> ");
             int numC;
-            numC = scan1.nextInt();
+            System.out.print("Carte à jouer >> ");
+            numC = new Scanner(System.in).nextInt();
             if (joueur.getMain().get(numC).getActions().size() > 1) {
-                Scanner scan2 = new Scanner(System.in);
-                System.out.print("Action à jouer >> ");
                 int numA;
-                numA = scan2.nextInt();
+                System.out.print("Action à jouer >> ");
+                numA = new Scanner(System.in).nextInt();
+                joueur.getMain().get(numC-1).getActions().get(numA-1).setJ(joueur);
                 joueur.getMain().get(numC-1).getActions().get(numA-1).run();
             } else {
+                joueur.getMain().get(numC-1).getActions().get(0).setJ(joueur);
                 joueur.getMain().get(numC-1).getActions().get(0).run();
             }
         }
@@ -109,16 +125,14 @@ public class Partie {
 
     public static ArrayList<Joueur> initJoueur() {
         ArrayList<Joueur> listJ = new ArrayList<>();
-        Scanner scan1 = new Scanner(System.in);
-        System.out.print("Nombre de joueurs >> ");
         int nbJ;
-        nbJ = scan1.nextInt();
+        System.out.print("Nombre de joueurs >> ");
+        nbJ = new Scanner(System.in).nextInt();
         for (int i = 1; i < nbJ+1; i++) {
             String nomJ;
-            Scanner scan2 = new Scanner(System.in);
             if (i == 1) System.out.print("Nom du " + i + "er joueur >> ");
             else System.out.print("Nom du " + i + "eme joueur >> ");
-            nomJ = scan2.nextLine();
+            nomJ = new Scanner(System.in).nextLine();
             Joueur j = new Joueur(nomJ);
             listJ.add(j);
         }
@@ -130,5 +144,8 @@ public class Partie {
         Partie p = new Partie(initJoueur());
         for (int i = 0; i < p.joueurs.size(); i++) System.out.println(p.joueurs.get(i).getNom());
         p.afficherPlateau();
+        p.distribuerCarte();
+        p.commencer();
+        p.jouerTour();
     }
 }

@@ -60,7 +60,6 @@ public class Joueur {
         pion.setY(y);
     }
 
-
     public void jouerCarte(int index) {
         Scanner scanner = new Scanner(System.in);
         if (this.main.get(index).getActions().size()==1){

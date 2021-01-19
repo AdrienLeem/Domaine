@@ -46,23 +46,34 @@ public class Partie {
     }
 
     public void afficherPlateau() {
+        boolean bool = false;
         for (int i = 0; i < 12; i++) {
             System.out.print("|");
             for(int j = 0; j < 12; j++) {
-                if (this.plateau.getCase(i,j) instanceof CaseMine) System.out.print(" M |");
-                else if (this.plateau.getCase(i,j) instanceof CaseForet) System.out.print(" F |");
-                else if (this.plateau.getCase(i,j) instanceof CaseCiteRoyale) System.out.print(" C |");
-                else System.out.print(" P |");
                 for (Joueur joueur : this.joueurs) {
-                    for (int l = 0; l < joueur.getChevaliers().size(); l++) {
-                        if (joueur.getChevaliers().get(l).getX() == i && joueur.getChevaliers().get(l).getY() == j)
+                    ArrayList<PionChevalier> jX = joueur.getChevaliers();
+                    ArrayList<PionChateau> jA = joueur.getChateaux();
+                    for (int l = 0; l < jX.size(); l++) {
+                        if (jX.get(l).getX() == i && jX.get(l).getY() == j){
                             System.out.print(" X |");
+                            bool = true;
+                        }
                     }
-                    for (int l = 0; l < joueur.getChateaux().size(); l++) {
-                        if (joueur.getChateaux().get(l).getX() == i && joueur.getChateaux().get(l).getY() == j)
+                    for (int l = 0; l < jA.size(); l++) {
+                        if (jA.get(l).getX() == i && jA.get(l).getY() == j) {
                             System.out.print(" A |");
+                            bool = true;
+                        }
                     }
                 }
+                if (bool == false) {
+                    if (this.plateau.getCase(i, j) instanceof CaseMine) System.out.print(" M |");
+                    else if (this.plateau.getCase(i, j) instanceof CaseForet) System.out.print(" F |");
+                    else if (this.plateau.getCase(i, j) instanceof CaseCiteRoyale) System.out.print(" C |");
+                    else System.out.print(" P |");
+                }
+                bool = false;
+
             }
             System.out.println("");
         }

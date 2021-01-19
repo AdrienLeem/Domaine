@@ -11,14 +11,17 @@ public class Joueur {
     private ArrayList<PionChevalier> chevaliers;
     private Pion marqueur;
     private ArrayList<Domaine> domaine;
-
+    private String couleur;
 
     public Joueur(String n) {
         this.nom = n;
         this.point = 0;
         this.main= new ArrayList<Carte>();
         this.chateaux = new ArrayList<PionChateau>();
+        this.chateaux.add(new PionChateau());
         this.chevaliers = new ArrayList<PionChevalier>();
+        this.chevaliers.add(new PionChevalier());
+        this.chevaliers.add(new PionChevalier());
         this.marqueur =null;
         this.domaine = new ArrayList<Domaine>();
     }
@@ -35,8 +38,9 @@ public class Joueur {
         this.main.add(carte);
     }
 
-    public void placePion() {
-
+    public void placePion(Pion pion, int x, int y) {
+        pion.setX(x);
+        pion.setY(y);
     }
 
 

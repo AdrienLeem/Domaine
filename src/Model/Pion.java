@@ -24,4 +24,8 @@ public abstract class Pion {
     public void setY(Integer y) {
         this.y = y;
     }
+
+    public boolean estPlace() {
+        return this.x != null && this.y != null;
+    }
 }

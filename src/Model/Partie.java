@@ -64,7 +64,10 @@ public class Partie {
     }
 
     public void commencer() {
-
+        for(int i=0;i< this.joueurs.size(); i++) {
+            Joueur j = this.joueurs.get(i);
+            j.placePion(j.getChateaux().get(1), 1,1);
+        }
     }
 
     public static ArrayList<Joueur> initJoueur() {

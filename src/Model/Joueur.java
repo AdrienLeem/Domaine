@@ -18,10 +18,13 @@ public class Joueur {
         this.point = 0;
         this.main= new ArrayList<Carte>();
         this.chateaux = new ArrayList<PionChateau>();
-        this.chateaux.add(new PionChateau());
+        for (int i =0; i<4; i++) {
+            this.chateaux.add(new PionChateau());
+        }
         this.chevaliers = new ArrayList<PionChevalier>();
-        this.chevaliers.add(new PionChevalier());
-        this.chevaliers.add(new PionChevalier());
+        for (int i =0; i<15; i++) {
+            this.chevaliers.add(new PionChevalier());
+        }
         this.marqueur =null;
         this.domaine = new ArrayList<Domaine>();
     }
@@ -32,6 +35,18 @@ public class Joueur {
 
     public int getPoint() {
         return point;
+    }
+
+    public ArrayList<Carte> getMain() {
+        return main;
+    }
+
+    public ArrayList<PionChateau> getChateaux() {
+        return chateaux;
+    }
+
+    public ArrayList<PionChevalier> getChevaliers() {
+        return chevaliers;
     }
 
     public void piocher(Carte carte) {

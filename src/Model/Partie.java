@@ -19,6 +19,19 @@ public class Partie {
         this.cartesVendu = new ArrayList<Carte>();
     }
 
+    public void afficherPlateau() {
+        for (int i = 0; i < 12; i++) {
+            System.out.print("|");
+            for(int j = 0; j < 12; j++) {
+                if (this.plateau.getCase(i,j) instanceof CaseMine) System.out.print(" M |");
+                else if (this.plateau.getCase(i,j) instanceof CaseForet) System.out.print(" F |");
+                else if (this.plateau.getCase(i,j) instanceof CaseCiteRoyale) System.out.print(" C |");
+                else System.out.print(" P |");
+            }
+            System.out.println("");
+        }
+    }
+
     public void melanger() {
         ArrayList<Carte> paquetA = new ArrayList<Carte>();
         ArrayList<Carte> paquetB = new ArrayList<Carte>();
@@ -73,7 +86,9 @@ public class Partie {
     }
 
     public static void main(String[] args) {
+        System.out.println("Parametrage de la partie");
         Partie p = new Partie(initJoueur());
         for (int i = 0; i < p.joueurs.size(); i++) System.out.println(p.joueurs.get(i).getNom());
+        p.afficherPlateau();
     }
 }

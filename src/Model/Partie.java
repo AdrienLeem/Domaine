@@ -1,7 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Partie {
@@ -14,34 +14,6 @@ public class Partie {
         this.plateau = new Plateau();
         this.joueurs = j;
         this.pioche = new ArrayList<Carte>();
-        for (int i=0; i<60; i++) {
-            this.pioche.add(new Carte());
-            Random rand = new Random();
-            int alea = rand.nextInt(3) + 1;
-            switch (alea) {
-                case 1 -> {
-                    int alea2 = rand.nextInt(2) + 1;
-                    this.pioche.get(i).setAction(new AjoutFrontiere());
-                    this.pioche.get(i).setPrixAction(1);
-                    this.pioche.get(i).setPrixVente(2);
-                    if (alea2 == 1) {
-                        this.pioche.get(i).setAction(new AjoutChevalier());
-                        this.pioche.get(i).setPrixAction(3);
-                        this.pioche.get(i).setPrixVente(3);
-                    }
-                }
-                case 2 -> {
-                    this.pioche.get(i).setAction(new AjoutFrontiere());
-                    this.pioche.get(i).setPrixAction(1);
-                    this.pioche.get(i).setPrixVente(2);
-                }
-                default -> {
-                    this.pioche.get(i).setAction(new AjoutChevalier());
-                    this.pioche.get(i).setPrixAction(2);
-                    this.pioche.get(i).setPrixVente(3);
-                }
-            }
-        }
         this.cartesVendu = new ArrayList<Carte>();
     }
 
@@ -80,27 +52,218 @@ public class Partie {
         System.out.println();
     }
 
-    public void melanger() {
+    public void melanger(ArrayList<Carte> cartes) {
+        Collections.shuffle(cartes);
+    }
+
+    public void creationDeck(){
         ArrayList<Carte> paquetA = new ArrayList<Carte>();
         ArrayList<Carte> paquetB = new ArrayList<Carte>();
         ArrayList<Carte> paquetC = new ArrayList<Carte>();
         ArrayList<Carte> paquetD = new ArrayList<Carte>();
-        for (int i = 0; i < 60; i++) {
-            if (i <= 15) {
-                paquetA.add(pioche.get(i));
+
+        for (int i=0; i<15; i++){
+            Carte carte = new Carte();
+            if (i<2){
+                carte.setAction(new AjoutFrontiere(1));
+                carte.setPrixAction(1);
+                carte.setPrixVente(2);
             }
-            else if (i<= 30) {
-                paquetB.add(pioche.get(i));
+            else if (i<5){
+                carte.setAction(new AjoutFrontiere(2));
+                carte.setPrixAction(3);
+                carte.setPrixVente(3);
             }
-            else if (i<= 45) {
-                paquetC.add(pioche.get(i));
+            else if (i<8){
+                carte.setAction(new AjoutFrontiere(3));
+                carte.setPrixAction(6);
+                carte.setPrixVente(5);
+            }
+            else if (i<10){
+                carte.setAction(new AjoutChevalier(1));
+                carte.setPrixAction(2);
+                carte.setPrixVente(3);
+            }
+            else if (i<12){
+                carte.setAction(new AjoutChevalier(1));
+                carte.setAction(new AjoutFrontiere(2));
+                carte.setPrixAction(3);
+                carte.setPrixVente(3);
             }
             else {
-                paquetD.add(pioche.get(i));
+                carte.setAction(new AjoutChevalier(1));
+                carte.setAction(new ExtensionDomaine());
+                carte.setPrixAction(3);
+                carte.setPrixVente(3);
             }
+            paquetA.add(carte);
         }
+        for (int i=0; i<15; i++){
+            Carte carte = new Carte();
+            if (i<3){
+                carte.setAction(new AjoutFrontiere(2));
+                carte.setPrixAction(3);
+                carte.setPrixVente(2);
+            }
+            else if (i<5){
+                carte.setAction(new AjoutFrontiere(3));
+                carte.setPrixAction(6);
+                carte.setPrixVente(4);
+            }
+            else if (i<6){
+                carte.setAction(new AjoutChevalier(1));
+                carte.setPrixAction(3);
+                carte.setPrixVente(3);
+            }
+            else if (i<7){
+                carte.setAction(new AjoutChevalier(2));
+                carte.setPrixAction(7);
+                carte.setPrixVente(5);
+            }
+            else if (i<8){
+                carte.setAction(new ExtensionDomaine());
+                carte.setPrixAction(4);
+                carte.setPrixVente(3);
+            }
+            else if (i<9){
+                carte.setAction(new AjoutChevalier(1));
+                carte.setAction(new AjoutFrontiere(2));
+                carte.setPrixAction(4);
+                carte.setPrixVente(3);
+            }
+            else if (i<11){
+                carte.setAction(new AjoutChevalier(1));
+                carte.setAction(new ExtensionDomaine());
+                carte.setPrixAction(4);
+                carte.setPrixVente(3);
+            }
+            else if (i<13){
+                carte.setAction(new ExtensionDomaine());
+                carte.setAction(new AjoutFrontiere(2));
+                carte.setPrixAction(4);
+                carte.setPrixVente(3);
+            }
+            else if (i<14){
+                carte.setAction(new Transfuge());
+                carte.setPrixAction(6);
+                carte.setPrixVente(4);
+            }
+            else {
+                carte.setAction(new Alliance());
+                carte.setPrixAction(5);
+                carte.setPrixVente(5);
+            }
+            paquetB.add(carte);
+        }
+        for (int i=0; i<15; i++){
+            Carte carte = new Carte();
+            if (i<1){
+                carte.setAction(new AjoutFrontiere(2));
+                carte.setPrixAction(4);
+                carte.setPrixVente(3);
+            }
+            else if (i<2){
+                carte.setAction(new AjoutFrontiere(3));
+                carte.setPrixAction(7);
+                carte.setPrixVente(4);
+            }
+            else if (i<3){
+                carte.setAction(new AjoutChevalier(2));
+                carte.setPrixAction(7);
+                carte.setPrixVente(5);
+            }
+            else if (i<4){
+                carte.setAction(new ExtensionDomaine());
+                carte.setPrixAction(5);
+                carte.setPrixVente(3);
+            }
+            else if (i<5){
+                carte.setAction(new AjoutChevalier(1));
+                carte.setAction(new AjoutFrontiere(2));
+                carte.setPrixAction(5);
+                carte.setPrixVente(3);
+            }
+            else if (i<8){
+                carte.setAction(new AjoutChevalier(1));
+                carte.setAction(new ExtensionDomaine());
+                carte.setPrixAction(5);
+                carte.setPrixVente(3);
+            }
+            else if (i<11){
+                carte.setAction(new ExtensionDomaine());
+                carte.setAction(new AjoutFrontiere(2));
+                carte.setPrixAction(5);
+                carte.setPrixVente(3);
+            }
+            else if (i<13){
+                carte.setAction(new Transfuge());
+                carte.setPrixAction(7);
+                carte.setPrixVente(4);
+            }
+            else {
+                carte.setAction(new Alliance());
+                carte.setPrixAction(5);
+                carte.setPrixVente(5);
+            }
+            paquetC.add(carte);
+        }
+        for (int i=0; i<15; i++){
+            Carte carte = new Carte();
+            if (i<2){
+                carte.setAction(new AjoutFrontiere(2));
+                carte.setPrixAction(4);
+                carte.setPrixVente(2);
+            }
+            else if (i<3){
+                carte.setAction(new ExtensionDomaine());
+                carte.setPrixAction(5);
+                carte.setPrixVente(3);
+            }
+            else if (i<5){
+                carte.setAction(new AjoutChevalier(1));
+                carte.setAction(new AjoutFrontiere(2));
+                carte.setPrixAction(5);
+                carte.setPrixVente(3);
+            }
+            else if (i<8){
+                carte.setAction(new AjoutChevalier(1));
+                carte.setAction(new ExtensionDomaine());
+                carte.setPrixAction(5);
+                carte.setPrixVente(3);
+            }
+            else if (i<9){
+                carte.setAction(new AjoutChevalier(2));
+                carte.setAction(new ExtensionDomaine());
+                carte.setPrixAction(8);
+                carte.setPrixVente(4);
+            }
+            else if (i<13){
+                carte.setAction(new ExtensionDomaine());
+                carte.setAction(new AjoutFrontiere(2));
+                carte.setPrixAction(5);
+                carte.setPrixVente(3);
+            }
+            else if (i<14){
+                carte.setAction(new Transfuge());
+                carte.setPrixAction(8);
+                carte.setPrixVente(4);
+            }
+            else {
+                carte.setAction(new Alliance());
+                carte.setPrixAction(6);
+                carte.setPrixVente(4);
+            }
+            paquetD.add(carte);
+        }
+        melanger(paquetA);
+        pioche.addAll(paquetA);
+        melanger(paquetB);
+        pioche.addAll(paquetB);
+        melanger(paquetC);
+        pioche.addAll(paquetC);
+        melanger(paquetD);
+        pioche.addAll(paquetD);
     }
-
     public void distribuerCarte() {
         for (int i=0; i<3;i++) {
             for (Joueur j:joueurs) {
@@ -139,7 +302,7 @@ public class Partie {
             for (int j = 1; j < joueur.getMain().size() + 1; j++) {
                 System.out.println("Carte " + j + " : (PA : " + joueur.getMain().get(j-1).getPrixAction() + " | PV : " + joueur.getMain().get(j-1).getPrixVente() + ")");
                 for (int k = 1; k < joueur.getMain().get(j-1).getActions().size() + 1; k++) {
-                    System.out.println("Action " + k + " : " + joueur.getMain().get(j-1).getActions().get(k-1).getNom());
+                    System.out.println("Action " + k + " : " + joueur.getMain().get(j-1).getActions().get(k-1).getDescription());
                 }
             }
             String choixAction;

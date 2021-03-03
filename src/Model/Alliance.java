@@ -4,7 +4,7 @@ public class Alliance extends Action {
 
 
     public Alliance() {
-        this.nom = "";
+        this.description = "";
         this.j = null;
     }
 
@@ -14,8 +14,8 @@ public class Alliance extends Action {
     }
 
     @Override
-    public String getNom() {
-        return this.nom;
+    public String getDescription() {
+        return this.description;
     }
 
     @Override

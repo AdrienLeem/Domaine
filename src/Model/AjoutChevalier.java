@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class AjoutChevalier extends Action {
 
-    public AjoutChevalier() {
-        this.nom = "Place un chevalier sur le plateau";
-        this.j = null;
+    public AjoutChevalier(int i) {
+        super();
+        this.description = "Place un chevalier sur le plateau";
     }
 
     @Override
@@ -15,8 +15,8 @@ public class AjoutChevalier extends Action {
     }
 
     @Override
-    public String getNom() {
-        return this.nom;
+    public String getDescription() {
+        return this.description;
     }
 
     @Override

@@ -16,23 +16,25 @@ public class Carte {
         return actions;
     }
 
+
     public void setAction(Action action) {
         this.actions.add(action);
-    }
-
-    public int getPrixAction() {
-        return prixAction;
     }
 
     public void setPrixAction(int prixAction) {
         this.prixAction = prixAction;
     }
 
-    public int getPrixVente() {
-        return prixVente;
+    public int getPrixAction() {
+        return prixAction;
     }
 
     public void setPrixVente(int prixVente) {
         this.prixVente = prixVente;
     }
+
+    public int getPrixVente() {
+        return prixVente;
+    }
+
 }

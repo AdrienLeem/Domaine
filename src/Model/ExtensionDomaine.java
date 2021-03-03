@@ -4,7 +4,7 @@ public class ExtensionDomaine extends Action {
 
 
     public ExtensionDomaine() {
-        this.nom = "";
+        this.description = "";
         this.j = null;
     }
 
@@ -14,8 +14,8 @@ public class ExtensionDomaine extends Action {
     }
 
     @Override
-    public String getNom() {
-        return this.nom;
+    public String getDescription() {
+        return this.description;
     }
 
     @Override

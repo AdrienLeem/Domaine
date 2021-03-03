@@ -26,6 +26,6 @@ public abstract class Pion {
     }
 
     public boolean estPlace() {
-        return this.x != null && this.y != null;
+        return this.x != -1 && this.y != -1;
     }
 }

@@ -1,17 +1,17 @@
 package Model;
 
 public abstract class Action {
-    protected String nom;
+    protected String description;
     protected Joueur j;
+    protected Integer nombre;
 
     public Action() {
-        this.nom = "";
-        j = null;
+        this.description = "";
     }
 
     public abstract void setJ(Joueur j);
 
-    public abstract String getNom();
+    public abstract String getDescription();
 
     public abstract void run();
 }

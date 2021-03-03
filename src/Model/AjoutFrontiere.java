@@ -5,9 +5,10 @@ import java.util.Scanner;
 public class AjoutFrontiere extends Action {
 
 
-    public AjoutFrontiere() {
-        this.nom = "Place une frontière sur le plateau";
-        this.j = null;
+    public AjoutFrontiere(int i) {
+        super();
+        this.description = "Place une frontière sur le plateau";
+        this.nombre = i;
     }
 
     @Override
@@ -16,12 +17,13 @@ public class AjoutFrontiere extends Action {
     }
 
     @Override
-    public String getNom() {
-        return this.nom;
+    public String getDescription() {
+        return this.description;
     }
 
     @Override
     public void run() {
+
         System.out.print("Premiere case :");
         System.out.print("x >> ");
         int x1;

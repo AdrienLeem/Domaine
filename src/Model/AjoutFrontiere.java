@@ -4,10 +4,9 @@ import java.util.Scanner;
 
 public class AjoutFrontiere extends Action {
 
-
     public AjoutFrontiere(int i) {
         super();
-        this.description = "Place une frontière sur le plateau";
+        this.description = "Place "+ i +" frontière(s) sur le plateau";
         this.nombre = i;
     }
 

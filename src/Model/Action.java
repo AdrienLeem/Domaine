@@ -9,9 +9,7 @@ public abstract class Action {
         this.description = "";
     }
 
-    public abstract void setJ(Joueur j);
-
     public abstract String getDescription();
 
-    public abstract void run();
+    public abstract void run(Joueur j);
 }

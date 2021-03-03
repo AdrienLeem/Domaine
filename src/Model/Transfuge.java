@@ -1,10 +1,6 @@
 package Model;
 
 public class Transfuge extends Action {
-    @Override
-    public void setJ(Joueur j) {
-
-    }
 
     @Override
     public String getDescription() {
@@ -12,7 +8,7 @@ public class Transfuge extends Action {
     }
 
     @Override
-    public void run() {
+    public void run(Joueur j) {
 
     }
 }

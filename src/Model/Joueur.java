@@ -71,16 +71,16 @@ public class Joueur {
     public void jouerCarte(int index) {
         Scanner scanner = new Scanner(System.in);
         if (this.main.get(index).getActions().size()==1){
-            this.main.get(index).getActions().get(0).run();
+            this.main.get(index).getActions().get(0).run(this);
         }
         else {
             System.out.println("Choisir l'action : 1 || 2");
             int choix = scanner.nextInt();
             if (choix==1) {
-                this.main.get(index).getActions().get(0).run();
+                this.main.get(index).getActions().get(0).run(this);
             }
             else {
-                this.main.get(index).getActions().get(1).run();
+                this.main.get(index).getActions().get(1).run(this);
             }
         }
     }

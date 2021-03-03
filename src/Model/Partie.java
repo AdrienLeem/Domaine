@@ -316,12 +316,10 @@ public class Partie {
                     int numA;
                     System.out.print("Action à jouer >> ");
                     numA = new Scanner(System.in).nextInt();
-                    joueur.getMain().get(numC-1).getActions().get(numA-1).setJ(joueur);
-                    joueur.getMain().get(numC-1).getActions().get(numA-1).run();
+                    joueur.getMain().get(numC-1).getActions().get(numA-1).run(joueur);
                     joueur.setDucat(-joueur.getMain().get(numC-1).getPrixAction());
                 } else {
-                    joueur.getMain().get(numC-1).getActions().get(0).setJ(joueur);
-                    joueur.getMain().get(numC-1).getActions().get(0).run();
+                    joueur.getMain().get(numC-1).getActions().get(0).run(joueur);
                     joueur.setDucat(-joueur.getMain().get(numC-1).getPrixAction());
                 }
             } else {

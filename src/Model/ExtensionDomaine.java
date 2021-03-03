@@ -2,15 +2,9 @@ package Model;
 
 public class ExtensionDomaine extends Action {
 
-
     public ExtensionDomaine() {
         this.description = "";
         this.j = null;
-    }
-
-    @Override
-    public void setJ(Joueur j) {
-        this.j = j;
     }
 
     @Override
@@ -19,7 +13,8 @@ public class ExtensionDomaine extends Action {
     }
 
     @Override
-    public void run() {
+    public void run(Joueur j) {
 
     }
+
 }

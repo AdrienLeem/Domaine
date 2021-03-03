@@ -8,10 +8,6 @@ public class Alliance extends Action {
         this.j = null;
     }
 
-    @Override
-    public void setJ(Joueur j) {
-        this.j = j;
-    }
 
     @Override
     public String getDescription() {
@@ -19,7 +15,7 @@ public class Alliance extends Action {
     }
 
     @Override
-    public void run() {
+    public void run(Joueur j) {
 
     }
 }

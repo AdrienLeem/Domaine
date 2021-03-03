@@ -256,12 +256,12 @@ public class Partie {
             paquetD.add(carte);
         }
         melanger(paquetA);
-        pioche.addAll(paquetA);
         melanger(paquetB);
-        pioche.addAll(paquetB);
         melanger(paquetC);
-        pioche.addAll(paquetC);
         melanger(paquetD);
+        pioche.addAll(paquetA);
+        pioche.addAll(paquetB);
+        pioche.addAll(paquetC);
         pioche.addAll(paquetD);
     }
     public void distribuerCarte() {
@@ -354,6 +354,7 @@ public class Partie {
         System.out.println("Parametrage de la partie");
         Partie p = new Partie(initJoueur());
         for (int i = 0; i < p.joueurs.size(); i++) System.out.println(p.joueurs.get(i).getNom());
+        p.creationDeck();
         p.afficherPlateau();
         p.distribuerCarte();
         p.commencer();

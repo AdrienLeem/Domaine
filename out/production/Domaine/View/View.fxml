@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LauncherController">
    <children>
-      <Text layoutX="289.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COUCOU" />
+      <Pane fx:id="Children_Pane" layoutY="235.0" prefHeight="666.0" prefWidth="1600.0" style="-fx-border-color: BLACK;" />
+      <Label layoutX="611.0" layoutY="15.0" text="Domaine">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
+      <Button fx:id="Button_Quitter" layoutX="1435.0" layoutY="56.0" mnemonicParsing="false" onAction="#Quitter" text="Quitter">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Button>
+      <Button fx:id="Button_Annuler" layoutX="86.0" layoutY="787.0" mnemonicParsing="false" onAction="#Annulation" text="Annuler">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Button>
+      <Button fx:id="Button_Jouer_Partie" layoutX="397.0" layoutY="500.0" mnemonicParsing="false" onAction="#Jouer" text="Jouer une partie">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Button>
+      <Button fx:id="Button_Charger_Partie" layoutX="987.0" layoutY="500.0" mnemonicParsing="false" onAction="#Charger" text="Charger une partie">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Button>
+      <Text fx:id="label" layoutX="698.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu principal">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Text>
    </children>
 </Pane>

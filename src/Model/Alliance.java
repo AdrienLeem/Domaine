@@ -5,7 +5,6 @@ public class Alliance extends Action {
 
     public Alliance() {
         this.description = "";
-        this.j = null;
     }
 
 

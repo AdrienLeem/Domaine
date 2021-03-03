@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class AjoutChevalier extends Action {
 
     public AjoutChevalier(int i) {
-        super();
         this.description = "Place "+ i +" chevalier(s) sur le plateau";
     }
 

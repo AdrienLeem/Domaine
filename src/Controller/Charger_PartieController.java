@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Partie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -41,6 +42,7 @@ public class Charger_PartieController implements Initializable {
         for(File item : liste){
             if(item.isFile())
             {
+                Partie partie = Sauvegarde.charger(item.getName());
                 HBox h = new HBox();
                 h.setStyle("-fx-border-color:BLACK;");
                 h.setPrefWidth(598);
@@ -62,7 +64,7 @@ public class Charger_PartieController implements Initializable {
                 v.getChildren().add(t3);
                 v.setMargin(t3, new Insets( 0, 0, 0, 30 ) );
 
-                Text t4 = new Text("Nombre de joueurs : ..");
+                Text t4 = new Text("Nombre de joueurs : "+ partie.getNbJoueurs());
                 t4.setStyle("-fx-font-size: 20px");
                 v.getChildren().add(t4);
                 v.setMargin(t4, new Insets( 0, 0, 0, 30 ) );

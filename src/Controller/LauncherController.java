@@ -6,13 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -65,7 +63,7 @@ public class LauncherController implements Initializable {
     void Jouer(ActionEvent event) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/View/GameView.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("/View/PreGameView.fxml"));
             Rectangle2D screenBounds = Screen.getPrimary().getBounds();
             Scene scene = new Scene(fxmlLoader.load(), screenBounds.getWidth(), screenBounds.getHeight());
             Stage stage = new Stage();

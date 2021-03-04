@@ -371,4 +371,8 @@ public class Partie implements Serializable {
             System.out.println("Joueur " + i + " : " + j.getNom() + " | Ducat : " + j.getDucat());
         }
     }
+
+    public int getNbJoueurs(){
+        return this.joueurs.size();
+    }
 }

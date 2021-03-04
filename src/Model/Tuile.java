@@ -1,6 +1,8 @@
 package Model;
 
-public class Tuile {
+import java.io.Serializable;
+
+public class Tuile implements Serializable {
     private Case[][] cases;
 
     public Tuile() {

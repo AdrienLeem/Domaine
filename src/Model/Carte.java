@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Carte {
+public class Carte implements Serializable {
     private ArrayList<Action> actions;
     private int prixAction;
     private int prixVente;

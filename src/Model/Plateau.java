@@ -1,9 +1,10 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Plateau {
+public class Plateau implements Serializable {
     private Tuile[][] tuiles;
     private ArrayList<Domaine> domaines;
 

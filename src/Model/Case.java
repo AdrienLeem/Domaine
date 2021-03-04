@@ -1,6 +1,8 @@
 package Model;
 
-public abstract class Case {
+import java.io.Serializable;
+
+public abstract class Case implements Serializable {
     private int x;
     private int y;
     private int valeur;

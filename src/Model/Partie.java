@@ -1,10 +1,11 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Partie {
+public class Partie implements Serializable {
     private final Plateau plateau;
     private final ArrayList<Joueur> joueurs;
     private ArrayList<Carte> pioche;

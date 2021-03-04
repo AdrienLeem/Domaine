@@ -1,6 +1,8 @@
 package Model;
 
-public abstract class Action {
+import java.io.Serializable;
+
+public abstract class Action implements Serializable {
     protected String description;
     protected Joueur j;
     protected Integer nombre;

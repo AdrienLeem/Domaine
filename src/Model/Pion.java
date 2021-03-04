@@ -1,6 +1,8 @@
 package Model;
 
-public abstract class Pion {
+import java.io.Serializable;
+
+public abstract class Pion implements Serializable {
     private Integer x;
     private Integer y;
 

@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -71,8 +72,13 @@ public class PreGameController implements Initializable {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/View/GameView.fxml"));
+                Parent root = fxmlLoader.load();
+
+                GameController gameController = (GameController) fxmlLoader.getController();
+                gameController.transferMessage(this.nom);
+
                 Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-                Scene scene = new Scene(fxmlLoader.load(), screenBounds.getWidth(), screenBounds.getHeight());
+                Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
                 Stage stage = new Stage();
                 stage.setTitle("Domaine :"+this.nom);
                 stage.setScene(scene);

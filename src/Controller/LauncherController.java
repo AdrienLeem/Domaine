@@ -9,7 +9,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -22,13 +24,13 @@ import java.util.ResourceBundle;
 public class LauncherController implements Initializable {
 
     @FXML
-    private Pane MainPane;
+    private BorderPane MainPane;
 
     @FXML
     private Text label;
 
     @FXML
-    private Pane Children_Pane;
+    private StackPane Children_Pane;
 
     @FXML
     private Button Button_Quitter;
@@ -67,14 +69,16 @@ public class LauncherController implements Initializable {
             Rectangle2D screenBounds = Screen.getPrimary().getBounds();
             Scene scene = new Scene(fxmlLoader.load(), screenBounds.getWidth(), screenBounds.getHeight());
             Stage stage = new Stage();
-            stage.setTitle("New Window");
+            stage.setTitle("Domaine");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
+            System.out.println(e);
         }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
+
 
     @FXML
     void Quitter(ActionEvent event) {

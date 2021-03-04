@@ -24,8 +24,6 @@ public class Main extends Application {
         primaryStage.setTitle("Domaine");
 
         primaryStage.setScene(new Scene(root));
-        primaryStage.setMinWidth(1600);
-        primaryStage.setMinHeight(900);
         primaryStage.show();
     }
 

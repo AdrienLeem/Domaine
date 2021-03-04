@@ -10,6 +10,13 @@ public class Partie {
     private ArrayList<Carte> pioche;
     private ArrayList<Carte> cartesVendu;
 
+    public Partie() {
+        this.plateau = new Plateau();
+        this.joueurs = null;
+        this.pioche = new ArrayList<Carte>();
+        this.cartesVendu = new ArrayList<Carte>();
+    }
+
     public Partie(ArrayList<Joueur> j) {
         this.plateau = new Plateau();
         this.joueurs = j;

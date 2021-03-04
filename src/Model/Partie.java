@@ -375,4 +375,8 @@ public class Partie implements Serializable {
     public int getNbJoueurs(){
         return this.joueurs.size();
     }
+
+    public Plateau getPlateau(){
+        return this.plateau;
+    }
 }

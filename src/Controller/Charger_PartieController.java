@@ -3,14 +3,22 @@ package Controller;
 import Model.Partie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,7 +38,28 @@ public class Charger_PartieController implements Initializable {
     void Validation(ActionEvent event) {
         for(int i =0; i<this.listCheckbox.size();i++){
             if(this.listCheckbox.get(i).isSelected()){
-                System.out.println("coucou");
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("/View/GameView.fxml"));
+                    Parent root = fxmlLoader.load();
+
+                    GameController gameController = (GameController) fxmlLoader.getController();
+                    gameController.transferMessage(this.nomFichier.get(i));
+
+                    //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+                    //Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setTitle("Domaine :"+this.nomFichier.get(i));
+                    stage.setScene(scene);
+                    stage.show();
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.close();
             }
         }
     }

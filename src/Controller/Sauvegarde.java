@@ -19,14 +19,15 @@ public class Sauvegarde {
     }
 
     public static Partie charger(String nom) {
-        Partie data = new Partie();
+        Partie data = null;
         try {
             FileInputStream res = new FileInputStream("Sauvegarde/"+nom);
             ObjectInputStream ext = new ObjectInputStream(res);
             data = (Partie) ext.readObject();
             ext.close();
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("chargement error");
+            //System.out.println("chargement error");
+            e.printStackTrace();
         }
         return data;
     }

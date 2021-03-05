@@ -44,7 +44,7 @@ public class Charger_PartieController implements Initializable {
                     Parent root = fxmlLoader.load();
 
                     GameController gameController = (GameController) fxmlLoader.getController();
-                    gameController.transferMessage(this.nomFichier.get(i));
+                    gameController.init(this.nomFichier.get(i));
 
                     //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
                     //Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());

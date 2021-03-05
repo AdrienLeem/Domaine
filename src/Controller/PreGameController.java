@@ -75,7 +75,7 @@ public class PreGameController implements Initializable {
                 Parent root = fxmlLoader.load();
 
                 GameController gameController = (GameController) fxmlLoader.getController();
-                gameController.transferMessage(this.nom);
+                gameController.init(this.nom);
 
                 //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
                 //Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());

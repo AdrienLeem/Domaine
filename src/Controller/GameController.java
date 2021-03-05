@@ -1,7 +1,6 @@
 package Controller;
 
-import Model.Partie;
-import Model.Plateau;
+import Model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,7 +19,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameController implements Initializable {
+public class GameController{
     private Partie partie;
     private String nomPartie;
     private Stage stage;
@@ -123,9 +122,11 @@ public class GameController implements Initializable {
         Sauvegarde.sauvegarder(this.partie,this.nomPartie);
     }
 
-    public void transferMessage(String message) {
+    public void init(String message) {
         Label_Partie.setText("Partie : "+message);
         this.nomPartie = message;
+        this.partie = Sauvegarde.charger(this.nomPartie);
+        initGame();
     }
 
     public void initGame(){
@@ -154,17 +155,28 @@ public class GameController implements Initializable {
         for(int i=0;i<12;i++){
             for(int j=0;j<12;j++){
                 ImageView img = new ImageView();
-                img.setImage(new Image("img/pp.PNG"));
                 img.setFitHeight(65);
                 img.setFitWidth(65);
+                if(p.getCase(i,j) instanceof CaseForet){
+                    img.setImage(new Image("img/Bush.png"));
+                }else if(p.getCase(i,j) instanceof CaseMine){
+                    img.setImage(new Image("img/Mine2.png"));
+                }else if(p.getCase(i,j) instanceof CaseMineArgent){
+                    img.setImage(new Image("img/Mine2.png"));
+                }else if(p.getCase(i,j) instanceof CaseMineCuivre){
+                    img.setImage(new Image("img/Mine2.png"));
+                }else if(p.getCase(i,j) instanceof CaseMineDiamant){
+                    img.setImage(new Image("img/Mine2.png"));
+                }else if(p.getCase(i,j) instanceof CaseCiteRoyale){
+                    img.setImage(new Image("img/Pion_ChateauBleu.png"));
+                }else if(p.getCase(i,j) instanceof CaseVillage){
+                    img.setImage(new Image("img/Pion_ChateauBleu.png"));
+                }else {
+                    img.setImage(new Image("img/terrain.png"));
+                }
                 this.Plateau.add(img,i,j);
             }
         }
-    }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.partie = Sauvegarde.charger(this.nomPartie);
-        initGame();
     }
 }

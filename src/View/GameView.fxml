@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -50,55 +51,66 @@
                     </rowConstraints>
                   </GridPane>
                </center>
-               <top>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="676.0" spacing="50.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Text fx:id="Label_Partie" strokeType="OUTSIDE" strokeWidth="0.0" text="Partie :">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur : ">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tour n°">
-                           <font>
-                              <Font size="22.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="Button_Sauvegarde" mnemonicParsing="false" onAction="#Sauvegarder" text="Sauvegarde">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="Button_Quitter" mnemonicParsing="false" onAction="#Quitter" text="Quitter">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-               </top>
                <bottom>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
                      <children>
-                        <ImageView fx:id="img_SlotCarte1" fitHeight="150.0" fitWidth="76.0" onMouseClicked="#SlotCarte1Clicked" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="img_SlotCarte1" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </ImageView>
-                        <ImageView fx:id="img_SlotCarte2" fitHeight="150.0" fitWidth="76.0" onMouseClicked="#SlotCarte2Clicked" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="img_SlotCarte3" fitHeight="150.0" fitWidth="76.0" onMouseClicked="#SlotCarte3Clicked" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="img_SlotFrontière" fitHeight="150.0" fitWidth="76.0" onMouseClicked="#SlotFrontiereClicked" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="img_SlotDucat1" fitHeight="150.0" fitWidth="76.0" onMouseClicked="#SlotDucat1Clicked" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="img_SlotDucat2" fitHeight="150.0" fitWidth="76.0" onMouseClicked="#SlotDucat2Clicked" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="img_SlotChevalier" fitHeight="150.0" fitWidth="76.0" onMouseClicked="#SlotChevalierClicked" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="img_SlotPioche" fitHeight="150.0" fitWidth="76.0" onMouseClicked="#SlotPiocheClicked" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="img_SlotCarte2" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="img_SlotCarte3" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="img_SlotFrontière" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="img_SlotDucat1" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="img_SlotDucat2" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="img_SlotChevalier" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="img_SlotPioche" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
                         <Button fx:id="Button_Tour" mnemonicParsing="false" onAction="#Finir_Tour" text="Finir le tour" />
                      </children></HBox>
                </bottom>
+               <top>
+                  <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="676.0" spacing="50.0">
+                           <children>
+                              <Text fx:id="Label_Partie" strokeType="OUTSIDE" strokeWidth="0.0" text="Partie :">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="LabelJoueur" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur : ">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="LabelNbTour" strokeType="OUTSIDE" strokeWidth="0.0" text="Tour n°">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Text>
+                              <Button fx:id="Button_Sauvegarde" mnemonicParsing="false" onAction="#Sauvegarder" text="Sauvegarde">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="Button_Quitter" mnemonicParsing="false" onAction="#Quitter" text="Quitter">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Text fx:id="LabelInformation" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonjour">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Text>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </BorderPane.margin>
+                  </VBox>
+               </top>
             </BorderPane>
          </children></AnchorPane>
   </content>

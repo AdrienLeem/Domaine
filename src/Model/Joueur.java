@@ -30,6 +30,7 @@ public class Joueur implements Serializable {
         this.marqueur =null;
         this.domaine = new ArrayList<Domaine>();
         this.ducat = 7;
+        this.couleur = null;
     }
 
     public String getNom() {
@@ -89,5 +90,13 @@ public class Joueur implements Serializable {
     public Carte vendreCarte(int index) {
         this.ducat += this.main.get(index).getPrixVente();
         return this.main.get(index);
+    }
+
+    public void setCouleur(String s){
+        this.couleur = s;
+    }
+
+    public String getCouleur(){
+        return this.couleur;
     }
 }

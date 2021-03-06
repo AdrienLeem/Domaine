@@ -3,6 +3,7 @@ package Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Partie implements Serializable {
@@ -10,6 +11,7 @@ public class Partie implements Serializable {
     private final ArrayList<Joueur> joueurs;
     private ArrayList<Carte> pioche;
     private ArrayList<Carte> cartesVendu;
+    private int NbTour;
 
     public Partie() {
         this.plateau = new Plateau();
@@ -19,7 +21,16 @@ public class Partie implements Serializable {
     }
 
     public Partie(ArrayList<Joueur> j) {
+        this.NbTour = 0;
+        List<String> couleur = new ArrayList<>();
+        couleur.add("Rouge");
+        couleur.add("Bleu");
+        couleur.add("Orange");
+        couleur.add("Blanc");
         this.plateau = new Plateau();
+        for(int i =0;i<j.size();i++){
+            j.get(i).setCouleur(couleur.get(i));
+        }
         this.joueurs = j;
         this.pioche = new ArrayList<Carte>();
         this.cartesVendu = new ArrayList<Carte>();
@@ -346,5 +357,13 @@ public class Partie implements Serializable {
 
     public Plateau getPlateau(){
         return this.plateau;
+    }
+
+    public int getNbTour() {
+        return NbTour;
+    }
+
+    public void setNbTour(int nbTour) {
+        NbTour = nbTour;
     }
 }

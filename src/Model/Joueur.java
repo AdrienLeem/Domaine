@@ -70,6 +70,10 @@ public class Joueur implements Serializable {
         pion.setY(y);
     }
 
+    public void jouerCartetest(int index){
+        this.main.remove(index);
+    }
+
     public void jouerCarte(int index) {
         Scanner scanner = new Scanner(System.in);
         if (this.main.get(index).getActions().size()==1){
@@ -89,7 +93,9 @@ public class Joueur implements Serializable {
 
     public Carte vendreCarte(int index) {
         this.ducat += this.main.get(index).getPrixVente();
-        return this.main.get(index);
+        Carte res = this.main.get(index);
+        this.main.remove(index);
+        return res;
     }
 
     public void setCouleur(String s){
@@ -98,5 +104,15 @@ public class Joueur implements Serializable {
 
     public String getCouleur(){
         return this.couleur;
+    }
+
+    public int getChevalierNonPlacer(){
+        int res = 0;
+        for(int i =0;i<this.getChevaliers().size();i++){
+            if(!this.chevaliers.get(i).estPlace()){
+                res++;
+            }
+        }
+        return res;
     }
 }

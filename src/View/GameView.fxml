@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -51,24 +52,6 @@
                     </rowConstraints>
                   </GridPane>
                </center>
-               <bottom>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ImageView fx:id="img_SlotCarte1" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </ImageView>
-                        <ImageView fx:id="img_SlotCarte2" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="img_SlotCarte3" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="img_SlotFrontière" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="img_SlotDucat1" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="img_SlotDucat2" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="img_SlotChevalier" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="img_SlotPioche" fitHeight="150.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="Button_Tour" mnemonicParsing="false" onAction="#Finir_Tour" text="Finir le tour" />
-                     </children></HBox>
-               </bottom>
                <top>
                   <VBox alignment="CENTER" BorderPane.alignment="CENTER">
                      <children>
@@ -111,6 +94,113 @@
                      </BorderPane.margin>
                   </VBox>
                </top>
+               <bottom>
+                  <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox alignment="CENTER" spacing="10.0">
+                           <children>
+                              <ImageView fx:id="img_SlotCarte1" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#SlotCart1Clicked" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <image>
+                                    <Image url="@../img/pp.PNG" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="img_SlotCarte2" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#SlotCart2Clicked" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/pp.PNG" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="img_SlotCarte3" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#SlotCart3Clicked" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/pp.PNG" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="img_SlotFrontière" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/pp.PNG" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="img_SlotDucat1" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/pp.PNG" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="img_SlotChevalier" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/pp.PNG" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="img_SlotPioche" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#PiocheClicked" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/pp.PNG" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="img_SlotVendu" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#CarteVendu" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/pp.PNG" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="Button_Tour" mnemonicParsing="false" onAction="#Finir_Tour" text="Finir le tour" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="20.0">
+                           <children>
+                              <Text fx:id="LabelCart1" strokeType="OUTSIDE" strokeWidth="0.0" text="Cart1">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="60.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <Text fx:id="LabelCart2" strokeType="OUTSIDE" strokeWidth="0.0" text="Cart2">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="LabelCart3" strokeType="OUTSIDE" strokeWidth="0.0" text="Cart3">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="LabelFrontiere" strokeType="OUTSIDE" strokeWidth="0.0" text="Frontiere">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="LabelDucat1" strokeType="OUTSIDE" strokeWidth="0.0" text="Ducat1">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="LabelChevalier" strokeType="OUTSIDE" strokeWidth="0.0" text="Chevalier">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="LabelPioche" strokeType="OUTSIDE" strokeWidth="0.0" text="Pioche">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="LabelVendu" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendu">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </bottom>
             </BorderPane>
          </children></AnchorPane>
   </content>

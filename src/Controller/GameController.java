@@ -31,6 +31,10 @@ public class GameController{
     private Stage stage;
     private Boolean action;
     private List<Integer> CaseClicked = new ArrayList<>();
+    private boolean JouerCarte;
+    private boolean VendreCarte;
+    private int SlotSelect;
+    private boolean WaitTour;
 
     @FXML
     private ScrollPane MainPane;
@@ -76,27 +80,80 @@ public class GameController{
     private ImageView img_SlotDucat1;
 
     @FXML
-    private ImageView img_SlotDucat2;
-
-    @FXML
     private ImageView img_SlotChevalier;
 
     @FXML
     private ImageView img_SlotPioche;
 
     @FXML
-    void Finir_Tour(ActionEvent event) {
+    private Text LabelCart1;
 
+    @FXML
+    private Text LabelCart2;
+
+    @FXML
+    private Text LabelCart3;
+
+    @FXML
+    private Text LabelFrontiere;
+
+    @FXML
+    private Text LabelDucat1;
+
+    @FXML
+    private Text LabelChevalier;
+
+    @FXML
+    private Text LabelPioche;
+
+    @FXML
+    private ImageView img_SlotVendu;
+
+    @FXML
+    private Text LabelVendu;
+
+    @FXML
+    void CarteVendu(MouseEvent event) {
+        System.out.println("ya pa dégage la");
+    }
+
+    @FXML
+    void Finir_Tour(ActionEvent event) {
+        this.WaitTour = false;
     }
 
     @FXML
     void Quitter(ActionEvent event) {
-        MessagePop("Êtes-vous sûr de vouloir quitter votre partie ?",true,0);
+        MessagePop("Êtes-vous sûr de vouloir quitter votre partie ?",true,0,"Oui","Non");
     }
 
     @FXML
     void Sauvegarder(ActionEvent event) {
-        MessagePop("Êtes-vous sûr de vouloir sauvegarder votre partie ?",true,1);
+        MessagePop("Êtes-vous sûr de vouloir sauvegarder votre partie ?",true,1,"Oui","Non");
+    }
+
+    @FXML
+    void SlotCart1Clicked(MouseEvent event) {
+        MessagePop("Voulez-vous jouer ou vendre la carte ?",true,2,"Jouer","Vendre");
+        this.SlotSelect = 1;
+    }
+
+    @FXML
+    void SlotCart2Clicked(MouseEvent event) {
+        MessagePop("Voulez-vous jouer ou vendre la carte ?",true,2,"Jouer","Vendre");
+        this.SlotSelect = 2;
+    }
+
+    @FXML
+    void SlotCart3Clicked(MouseEvent event) {
+        MessagePop("Voulez-vous jouer ou vendre la carte ?",true,2,"Jouer","Vendre");
+        this.SlotSelect = 3;
+    }
+
+    @FXML
+    void PiocheClicked(MouseEvent event) {
+        String l = this.LabelJoueur.getText().split(":")[1];
+        this.partie.getJoueurbyname(l).piocher(this.partie.getPioche().get(0));
     }
 
     public void save(){
@@ -123,9 +180,9 @@ public class GameController{
         this.img_SlotCarte3.setImage(new Image("img/pp.PNG"));
         this.img_SlotFrontière.setImage(new Image("img/pp.PNG"));
         this.img_SlotDucat1.setImage(new Image("img/pp.PNG"));
-        this.img_SlotDucat2.setImage(new Image("img/pp.PNG"));
         this.img_SlotChevalier.setImage(new Image("img/pp.PNG"));
         this.img_SlotPioche.setImage(new Image("img/pp.PNG"));
+        this.img_SlotVendu.setImage(new Image("img/pp.PNG"));
     }
 
     public void initPlateau(){
@@ -191,7 +248,7 @@ public class GameController{
 
     }
 
-    public void MessagePop(String s,boolean yesno,int action) {
+    public void MessagePop(String s,boolean yesno,int action, String bt1, String bt2) {
         VBox v = new VBox();
         v.setStyle("-fx-background-color: WHITE");
         Text t = new Text();
@@ -200,7 +257,7 @@ public class GameController{
         if(yesno){
             HBox h = new HBox();
             Button yes = new Button();
-            yes.setText("Oui");
+            yes.setText(bt1);
             yes.setOnMousePressed((event) -> {
                 switch (action){
                     case 1 -> {
@@ -213,20 +270,34 @@ public class GameController{
                         this.Plateau.getChildren().remove(v);
                         this.stage.close();
                     }
+                    case  2 ->{
+                        this.JouerCarte = true;
+                        this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        this.Plateau.getChildren().remove(v);
+                    }
                 }
             });
             Button no = new Button();
-            no.setText("no");
+            no.setText(bt2);
             no.setOnMousePressed((event) -> {
-                this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                this.Plateau.getChildren().remove(v);
+                switch (action){
+                    case 1, 0 -> {
+                        this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        this.Plateau.getChildren().remove(v);
+                    }
+                    case  2 ->{
+                        this.VendreCarte = true;
+                        this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        this.Plateau.getChildren().remove(v);
+                    }
+                }
             });
             h.getChildren().add(yes);
             h.getChildren().add(no);
             v.getChildren().add(h);
         }else{
             Button ok = new Button();
-            ok.setText("OK");
+            ok.setText(bt1);
             ok.setOnMousePressed((event) -> {
                 this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 this.Plateau.getChildren().remove(v);
@@ -242,7 +313,7 @@ public class GameController{
         for (int i = 1; i <= 4; i++){
             addNbTour();
             for( Joueur j : this.partie.getJoueurs()) {
-                this.LabelJoueur.setText("Joueur : "+j.getNom());
+                this.LabelJoueur.setText("Joueur :"+j.getNom());
                 boolean WaitTour = true;
                 this.LabelInformation.setText("Placer votre château.");
                 while(WaitTour){
@@ -286,7 +357,9 @@ public class GameController{
             }
             y++;
         }
-        this.LabelInformation.setText("oui");
+        this.partie.creationDeck();
+        this.partie.distribuerCarte();
+        this.LabelInformation.setText("oui ...");
     }
 
     public void placer(Node node, Joueur j,Pion p){
@@ -305,13 +378,88 @@ public class GameController{
         setLabelNbTour();
     }
 
+    public void afficherBord(Joueur j){
+        this.img_SlotCarte1.setImage(new Image("img/pp.PNG")); //j.getMain()
+        this.img_SlotCarte2.setImage(new Image("img/pp.PNG"));
+        this.img_SlotCarte3.setImage(new Image("img/pp.PNG"));
+        this.LabelDucat1.setText(String.valueOf(j.getDucat()));
+        this.LabelChevalier.setText(String.valueOf(j.getChevalierNonPlacer()));
+        this.LabelPioche.setText(String.valueOf(this.partie.getPioche().size()));
+        this.LabelVendu.setText(String.valueOf(this.partie.getCartesVendu().size()));
+    }
+
+    public void Tour(){
+        pasClickable(false,false,false,true,true);
+        this.WaitTour = true;
+        this.SlotSelect = 0;
+        this.JouerCarte = false;
+        this.VendreCarte = false;
+        this.addNbTour();
+        this.setLabelNbTour();
+        for( Joueur j : this.partie.getJoueurs()) {
+            System.out.println("wee");
+            this.LabelJoueur.setText("Joueur :"+j.getNom());
+            afficherBord(j);
+            this.LabelInformation.setText("Choisissez une carte.");
+            while (this.WaitTour){
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(this.SlotSelect != 0){
+                    if(this.VendreCarte){
+                        VendreCarte(j);
+                        this.VendreCarte = false;
+                    }else if(this.JouerCarte){
+                        JouerCarte(j);
+                        this.JouerCarte = false;
+                    }
+                }
+            }
+        }
+    }
+
+    public void pasClickable(boolean slot1, boolean slot2, boolean slot3,boolean pioche, boolean vendu){
+        this.img_SlotCarte1.setDisable(slot1);
+        this.img_SlotCarte2.setDisable(slot2);
+        this.img_SlotCarte3.setDisable(slot3);
+        this.img_SlotPioche.setDisable(pioche);
+        this.img_SlotVendu.setDisable(vendu);
+    }
+
+    public void VendreCarte(Joueur j){
+        System.out.println("vendu");
+        Carte c = j.vendreCarte(this.SlotSelect-1);
+        this.partie.setCartesVendu(c);
+        afficherBord(j);
+        pasClickable(true,true,true,false,false);
+    }
+
+    public void JouerCarte(Joueur j){
+        System.out.println("jouer");
+        //j.jouerCarte(this.SlotSelect-1);
+        j.jouerCartetest(this.SlotSelect-1);
+        afficherBord(j);
+        pasClickable(true,true,true,false,false);
+    }
+
+
     public void Jeu(){
-        if(this.partie.getJoueurs().get(0).getChateaux().get(0).estPlace()){
-            setLabelNbTour();
-        }else{
+        if(!this.partie.getJoueurs().get(0).getChateaux().get(0).estPlace()){
             setLabelNbTour();
             new Thread(() -> {
                 PremierTour();
+                while (true){
+                    Tour();
+                }
+            }).start();
+        }else {
+            setLabelNbTour();
+            new Thread(() -> {
+                while (true){
+                    Tour();
+                }
             }).start();
         }
     }

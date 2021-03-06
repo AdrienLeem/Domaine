@@ -13,6 +13,10 @@ public class Partie implements Serializable {
     private ArrayList<Carte> cartesVendu;
     private int NbTour;
 
+    public ArrayList<Carte> getCartesVendu() {
+        return cartesVendu;
+    }
+
     public Partie() {
         this.plateau = new Plateau();
         this.joueurs = null;
@@ -365,5 +369,22 @@ public class Partie implements Serializable {
 
     public void setNbTour(int nbTour) {
         NbTour = nbTour;
+    }
+
+    public ArrayList<Carte> getPioche() {
+        return pioche;
+    }
+
+    public void setCartesVendu(Carte cartesVendu) {
+        this.cartesVendu.add(cartesVendu);
+    }
+
+    public Joueur getJoueurbyname(String n){
+        for(int i=0;i<this.joueurs.size();i++){
+            if(this.joueurs.get(i).getNom().equals(n)){
+                return this.joueurs.get(i);
+            }
+        }
+        return null;
     }
 }

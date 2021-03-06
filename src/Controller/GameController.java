@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,14 +11,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class GameController{
     private Partie partie;
@@ -38,6 +38,10 @@ public class GameController{
 
     @FXML
     private Button Button_Quitter;
+
+    @FXML
+    private Button Button_Tour;
+
 
     @FXML
     private ImageView img_SlotCarte1;
@@ -80,7 +84,7 @@ public class GameController{
 
     @FXML
     void SlotCarte1Clicked(MouseEvent event) {
-
+        System.out.println("coucou");
     }
 
     @FXML
@@ -132,20 +136,17 @@ public class GameController{
     public void initGame(){
         initPlateau();
         initSlot();
+        Jeu();
     }
 
     public void initSlot(){
         this.img_SlotCarte1.setImage(new Image("img/pp.PNG"));
         this.img_SlotCarte2.setImage(new Image("img/pp.PNG"));
         this.img_SlotCarte3.setImage(new Image("img/pp.PNG"));
-
         this.img_SlotFrontière.setImage(new Image("img/pp.PNG"));
-
         this.img_SlotDucat1.setImage(new Image("img/pp.PNG"));
         this.img_SlotDucat2.setImage(new Image("img/pp.PNG"));
-
         this.img_SlotChevalier.setImage(new Image("img/pp.PNG"));
-
         this.img_SlotPioche.setImage(new Image("img/pp.PNG"));
     }
 
@@ -159,7 +160,7 @@ public class GameController{
                 img.setFitWidth(65);
                 if(p.getCase(i,j) instanceof CaseForet){
                     img.setImage(new Image("img/Bush.png"));
-                }else if(p.getCase(i,j) instanceof CaseMine){
+                }else if(p.getCase(i,j) instanceof CaseMineOr){
                     img.setImage(new Image("img/MineOr.png"));
                 }else if(p.getCase(i,j) instanceof CaseMineArgent){
                     img.setImage(new Image("img/MineArgent.png"));
@@ -177,5 +178,54 @@ public class GameController{
                 this.Plateau.add(img,i,j);
             }
         }
+    }
+
+    public void MessagePop(String s,boolean yesno){
+        VBox v = new VBox();
+        Text t = new Text();
+        t.setText(s);
+        v.getChildren().add(t);
+        if(yesno){
+            HBox h = new HBox();
+            Button yes = new Button();
+            yes.setText("Oui");
+            Button no = new Button();
+            no.setText("no");
+            h.getChildren().add(yes);
+            h.getChildren().add(no);
+            v.getChildren().add(h);
+        }else{
+            Button ok = new Button();
+            ok.setText("OK");
+            ok.setOnMousePressed((event) -> {
+                this.Plateau.getChildren().remove(v);
+            });
+            v.getChildren().add(ok);
+        }
+        this.Plateau.getChildren().add(v);
+    }
+
+    public void Clickable(boolean Carte1, boolean Carte2, boolean Carte3, boolean frontiere, boolean ducat1, boolean ducat2, boolean chevalier, boolean pioche, boolean button_finTour){
+        this.img_SlotCarte1.setDisable(Carte1);
+        this.img_SlotCarte2.setDisable(Carte2);
+        this.img_SlotCarte3.setDisable(Carte3);
+        this.img_SlotFrontière.setDisable(frontiere);
+        this.img_SlotDucat1.setDisable(ducat1);
+        this.img_SlotDucat2.setDisable(ducat2);
+        this.img_SlotChevalier.setDisable(chevalier);
+        this.img_SlotPioche.setDisable(pioche);
+        this.Button_Tour.setDisable(button_finTour);
+    }
+
+    public void PremierTour(){
+        for (int i = 1; i <= 4 + 1; i++){
+            for(int j = 0; j < this.partie.getNbJoueurs(); j++) {
+                MessagePop("Placer votre "+i+" Pion château sur le terrain.",false);
+            }
+        }
+    }
+
+    public void Jeu(){
+        PremierTour();
     }
 }

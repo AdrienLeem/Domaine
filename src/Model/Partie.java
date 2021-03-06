@@ -25,40 +25,6 @@ public class Partie implements Serializable {
         this.cartesVendu = new ArrayList<Carte>();
     }
 
-    public void afficherPlateau() {
-        boolean bool = false;
-        for (int i = 0; i < 12; i++) {
-            System.out.print("|");
-            for(int j = 0; j < 12; j++) {
-                for (Joueur joueur : this.joueurs) {
-                    ArrayList<PionChevalier> jX = joueur.getChevaliers();
-                    ArrayList<PionChateau> jA = joueur.getChateaux();
-                    for (int l = 0; l < jX.size(); l++) {
-                        if (jX.get(l).getX() == i && jX.get(l).getY() == j){
-                            System.out.print(" X |");
-                            bool = true;
-                        }
-                    }
-                    for (int l = 0; l < jA.size(); l++) {
-                        if (jA.get(l).getX() == i && jA.get(l).getY() == j) {
-                            System.out.print(" A |");
-                            bool = true;
-                        }
-                    }
-                }
-                if (bool == false) {
-                    if (this.plateau.getCase(i, j) instanceof CaseMine) System.out.print(" M |");
-                    else if (this.plateau.getCase(i, j) instanceof CaseForet) System.out.print(" F |");
-                    else if (this.plateau.getCase(i, j) instanceof CaseCiteRoyale) System.out.print(" C |");
-                    else System.out.print(" P |");
-                }
-                bool = false;
-
-            }
-            System.out.println("");
-        }
-        System.out.println();
-    }
 
     public void melanger(ArrayList<Carte> cartes) {
         Collections.shuffle(cartes);
@@ -361,11 +327,9 @@ public class Partie implements Serializable {
         Partie p = new Partie(initJoueur());
         for (int i = 0; i < p.joueurs.size(); i++) System.out.println(p.joueurs.get(i).getNom());
         p.creationDeck();
-        p.afficherPlateau();
         p.distribuerCarte();
         p.commencer();
         p.jouerTour();
-        p.afficherPlateau();
         int i = 1;
         for (Joueur j : p.joueurs) {
             System.out.println("Joueur " + i + " : " + j.getNom() + " | Ducat : " + j.getDucat());

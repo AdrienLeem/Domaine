@@ -37,40 +37,40 @@ public class Plateau implements Serializable {
                             if ((k == 0 && l == 0) || (k == 0 && l == 3) || (k == 3 && l == 0) || (k == 3 && l == 3)) {
                                 int aleaMine = rand.nextInt(4) + 1;
                                 switch (aleaMine) {
-                                    case 1 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineCuivre(itx, ity, 0);
-                                    case 2 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineArgent(itx, ity, 0);
-                                    case 3 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineOr(itx, ity, 0);
-                                    case 4 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineDiamant(itx, ity, 0);
+                                    case 1 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineCuivre(itx, ity);
+                                    case 2 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineArgent(itx, ity);
+                                    case 3 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineOr(itx, ity);
+                                    case 4 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineDiamant(itx, ity);
                                 }
                             } else {
                                 int alea = rand.nextInt(2) + 1;
                                 switch (alea) {
-                                    case 1 -> this.tuiles[i][j].getCases()[k][l] = new CasePrairie(itx, ity, 0);
-                                    case 2 -> this.tuiles[i][j].getCases()[k][l] = new CaseForet(itx, ity, 1);
+                                    case 1 -> this.tuiles[i][j].getCases()[k][l] = new CasePrairie(itx, ity);
+                                    case 2 -> this.tuiles[i][j].getCases()[k][l] = new CaseForet(itx, ity);
                                 }
                             }
                         } else {
                             int alea = rand.nextInt(4) + 1;
                             switch (alea) {
-                                case 1 -> this.tuiles[i][j].getCases()[k][l] = new CasePrairie(itx, ity, 0);
-                                case 2 -> this.tuiles[i][j].getCases()[k][l] = new CaseForet(itx, ity, 1);
+                                case 1 -> this.tuiles[i][j].getCases()[k][l] = new CasePrairie(itx, ity);
+                                case 2 -> this.tuiles[i][j].getCases()[k][l] = new CaseForet(itx, ity);
                                 case 3 -> {
-                                    if (nbM == aleaM) this.tuiles[i][j].getCases()[k][l] = new CasePrairie(itx, ity, 0);
+                                    if (nbM == aleaM) this.tuiles[i][j].getCases()[k][l] = new CasePrairie(itx, ity);
                                     else {
                                         int aleaMine = rand.nextInt(4) + 1;
                                         switch (aleaMine) {
-                                            case 1 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineCuivre(itx, ity, 0);
-                                            case 2 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineArgent(itx, ity, 0);
-                                            case 3 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineOr(itx, ity, 0);
-                                            case 4 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineDiamant(itx, ity, 0);
+                                            case 1 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineCuivre(itx, ity);
+                                            case 2 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineArgent(itx, ity);
+                                            case 3 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineOr(itx, ity);
+                                            case 4 -> this.tuiles[i][j].getCases()[k][l] = new CaseMineDiamant(itx, ity);
                                         }
                                         nbM += 1;
                                     }
                                 }
                                 case 4 -> {
-                                    if (nbV == aleaV) this.tuiles[i][j].getCases()[k][l] = new CasePrairie(itx, ity, 0);
+                                    if (nbV == aleaV) this.tuiles[i][j].getCases()[k][l] = new CasePrairie(itx, ity);
                                     else {
-                                        this.tuiles[i][j].getCases()[k][l] = new CaseVillage(itx, ity, 3);
+                                        this.tuiles[i][j].getCases()[k][l] = new CaseVillage(itx, ity);
                                         nbV += 1;
                                     }
                                 }
@@ -83,10 +83,10 @@ public class Plateau implements Serializable {
         Random rand = new Random();
         int aleaC = rand.nextInt(4) +1;
         switch (aleaC) {
-            case 1 -> this.tuiles[1][1].getCases()[1][1] = new CaseCiteRoyale(5, 5, 5);
-            case 2 -> this.tuiles[1][1].getCases()[1][2] = new CaseCiteRoyale(5, 6, 5);
-            case 3 -> this.tuiles[1][1].getCases()[2][1] = new CaseCiteRoyale(6, 5, 5);
-            case 4 -> this.tuiles[1][1].getCases()[2][2] = new CaseCiteRoyale(6, 6, 5);
+            case 1 -> this.tuiles[1][1].getCases()[1][1] = new CaseCiteRoyale(5, 5);
+            case 2 -> this.tuiles[1][1].getCases()[1][2] = new CaseCiteRoyale(5, 6);
+            case 3 -> this.tuiles[1][1].getCases()[2][1] = new CaseCiteRoyale(6, 5);
+            case 4 -> this.tuiles[1][1].getCases()[2][2] = new CaseCiteRoyale(6, 6);
         }
         this.domaines = new ArrayList<Domaine>();
     }

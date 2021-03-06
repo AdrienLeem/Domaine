@@ -5,16 +5,16 @@ import java.io.Serializable;
 public abstract class Case implements Serializable {
     private int x;
     private int y;
-    private int valeur;
+    protected int valeur;
     private boolean fNord;
     private boolean fSud;
     private boolean fEst;
     private boolean fOuest;
 
-    public Case(int x, int y,int valeur) {
+    public Case(int x, int y) {
         this.x = x;
         this.y = y;
-        this.valeur = valeur;
+        this.valeur = 0;
         this.fNord = false;
         this.fSud = false;
         this.fEst = false;

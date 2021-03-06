@@ -160,23 +160,22 @@ public class GameController{
                 if(p.getCase(i,j) instanceof CaseForet){
                     img.setImage(new Image("img/Bush.png"));
                 }else if(p.getCase(i,j) instanceof CaseMine){
-                    img.setImage(new Image("img/Mine2.png"));
+                    img.setImage(new Image("img/MineOr.png"));
                 }else if(p.getCase(i,j) instanceof CaseMineArgent){
-                    img.setImage(new Image("img/Mine2.png"));
+                    img.setImage(new Image("img/MineArgent.png"));
                 }else if(p.getCase(i,j) instanceof CaseMineCuivre){
-                    img.setImage(new Image("img/Mine2.png"));
+                    img.setImage(new Image("img/MineCuivre.png"));
                 }else if(p.getCase(i,j) instanceof CaseMineDiamant){
-                    img.setImage(new Image("img/Mine2.png"));
+                    img.setImage(new Image("img/MineDiamant.png"));
                 }else if(p.getCase(i,j) instanceof CaseCiteRoyale){
-                    img.setImage(new Image("img/Pion_ChateauBleu.png"));
+                    img.setImage(new Image("img/CaseChateauRoi.png"));
                 }else if(p.getCase(i,j) instanceof CaseVillage){
-                    img.setImage(new Image("img/Pion_ChateauBleu.png"));
+                    img.setImage(new Image("img/TerrainVille.png"));
                 }else {
                     img.setImage(new Image("img/terrain.png"));
                 }
                 this.Plateau.add(img,i,j);
             }
         }
-
     }
 }

@@ -55,7 +55,17 @@
                      <children>
                         <Text fx:id="Label_Partie" strokeType="OUTSIDE" strokeWidth="0.0" text="Partie :">
                            <font>
-                              <Font size="30.0" />
+                              <Font size="22.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur : ">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tour n°">
+                           <font>
+                              <Font size="22.0" />
                            </font>
                         </Text>
                         <Button fx:id="Button_Sauvegarde" mnemonicParsing="false" onAction="#Sauvegarder" text="Sauvegarde">

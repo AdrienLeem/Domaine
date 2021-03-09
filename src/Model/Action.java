@@ -11,7 +11,9 @@ public abstract class Action implements Serializable {
         this.description = "";
     }
 
-    public abstract String getDescription();
-
     public abstract void run(Joueur j);
+
+    public String getDescription(){
+        return this.description;
+    }
 }

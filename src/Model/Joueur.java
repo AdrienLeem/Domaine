@@ -70,18 +70,12 @@ public class Joueur implements Serializable {
         pion.setY(y);
     }
 
-    public void jouerCartetest(int index){
-        this.main.remove(index);
-    }
 
-    public void jouerCarte(int index) {
-        Scanner scanner = new Scanner(System.in);
+    public void jouerCarte(int index, int choix) {
         if (this.main.get(index).getActions().size()==1){
             this.main.get(index).getActions().get(0).run(this);
         }
         else {
-            System.out.println("Choisir l'action : 1 || 2");
-            int choix = scanner.nextInt();
             if (choix==1) {
                 this.main.get(index).getActions().get(0).run(this);
             }

@@ -8,6 +8,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -35,9 +36,14 @@ public class GameController{
     private boolean VendreCarte;
     private int SlotSelect;
     private boolean WaitTour;
+    private int carteActionChoix;
+    private boolean carteAction;
 
     @FXML
     private ScrollPane MainPane;
+
+    @FXML
+    private AnchorPane anchorPane;
 
     @FXML
     private GridPane Plateau;
@@ -114,7 +120,7 @@ public class GameController{
 
     @FXML
     void CarteVendu(MouseEvent event) {
-        System.out.println("ya pa dégage la");
+        pasClickable(true,true,true,true,true,false);
     }
 
     @FXML
@@ -154,6 +160,8 @@ public class GameController{
     void PiocheClicked(MouseEvent event) {
         String l = this.LabelJoueur.getText().split(":")[1];
         this.partie.getJoueurbyname(l).piocher(this.partie.getPioche().get(0));
+        afficherBord(this.partie.getJoueurbyname(l));
+        pasClickable(true,true,true,true,true,false);
     }
 
     public void save(){
@@ -175,14 +183,14 @@ public class GameController{
     }
 
     public void initSlot(){
-        this.img_SlotCarte1.setImage(new Image("img/pp.PNG"));
-        this.img_SlotCarte2.setImage(new Image("img/pp.PNG"));
-        this.img_SlotCarte3.setImage(new Image("img/pp.PNG"));
-        this.img_SlotFrontière.setImage(new Image("img/pp.PNG"));
-        this.img_SlotDucat1.setImage(new Image("img/pp.PNG"));
-        this.img_SlotChevalier.setImage(new Image("img/pp.PNG"));
-        this.img_SlotPioche.setImage(new Image("img/pp.PNG"));
-        this.img_SlotVendu.setImage(new Image("img/pp.PNG"));
+        this.img_SlotCarte1.setImage(new Image("img/carte.PNG"));
+        this.img_SlotCarte2.setImage(new Image("img/carte.PNG"));
+        this.img_SlotCarte3.setImage(new Image("img/carte.PNG"));
+        this.img_SlotFrontière.setImage(new Image("img/Grenzen_gross.PNG"));
+        this.img_SlotDucat1.setImage(new Image("img/Dukaten_gross.PNG"));
+        this.img_SlotChevalier.setImage(new Image("img/PionChevalierBlanc.PNG"));
+        this.img_SlotPioche.setImage(new Image("img/cartePioche.PNG"));
+        this.img_SlotVendu.setImage(new Image("img/carteVendu.PNG"));
     }
 
     public void initPlateau(){
@@ -250,12 +258,19 @@ public class GameController{
 
     public void MessagePop(String s,boolean yesno,int action, String bt1, String bt2) {
         VBox v = new VBox();
+        v.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        v.setPrefHeight(Region.USE_COMPUTED_SIZE);
+        v.setAlignment(Pos.CENTER);
         v.setStyle("-fx-background-color: WHITE");
         Text t = new Text();
         t.setText(s);
         v.getChildren().add(t);
         if(yesno){
             HBox h = new HBox();
+            h.setSpacing(10);
+            h.setPrefWidth(Region.USE_COMPUTED_SIZE);
+            h.setPrefHeight(Region.USE_COMPUTED_SIZE);
+            h.setAlignment(Pos.CENTER);
             Button yes = new Button();
             yes.setText(bt1);
             yes.setOnMousePressed((event) -> {
@@ -263,17 +278,17 @@ public class GameController{
                     case 1 -> {
                         Sauvegarde.sauvegarder(this.partie,this.nomPartie);
                         this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        this.Plateau.getChildren().remove(v);
+                        this.anchorPane.getChildren().remove(v);
                     }
                     case 0 ->{
                         this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        this.Plateau.getChildren().remove(v);
+                        this.anchorPane.getChildren().remove(v);
                         this.stage.close();
                     }
                     case  2 ->{
                         this.JouerCarte = true;
                         this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        this.Plateau.getChildren().remove(v);
+                        this.anchorPane.getChildren().remove(v);
                     }
                 }
             });
@@ -283,12 +298,12 @@ public class GameController{
                 switch (action){
                     case 1, 0 -> {
                         this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        this.Plateau.getChildren().remove(v);
+                        this.anchorPane.getChildren().remove(v);
                     }
                     case  2 ->{
                         this.VendreCarte = true;
                         this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        this.Plateau.getChildren().remove(v);
+                        this.anchorPane.getChildren().remove(v);
                     }
                 }
             });
@@ -304,7 +319,9 @@ public class GameController{
             });
             v.getChildren().add(ok);
         }
-        this.Plateau.getChildren().add(v);
+        v.setLayoutX(this.Plateau.getWidth()/2 - 100);
+        v.setLayoutY(this.Plateau.getHeight()/2 - 100);
+        this.anchorPane.getChildren().add(v);
     }
 
 
@@ -379,9 +396,15 @@ public class GameController{
     }
 
     public void afficherBord(Joueur j){
-        this.img_SlotCarte1.setImage(new Image("img/pp.PNG")); //j.getMain()
-        this.img_SlotCarte2.setImage(new Image("img/pp.PNG"));
-        this.img_SlotCarte3.setImage(new Image("img/pp.PNG"));
+        if(j.getMain().size() == 3) {
+            this.img_SlotCarte1.setImage(new Image("img/carte.PNG")); //j.getMain()
+            this.img_SlotCarte2.setImage(new Image("img/carte.PNG"));
+            this.img_SlotCarte3.setImage(new Image("img/carte.PNG"));
+        }else {
+            this.img_SlotCarte1.setImage(new Image("img/cartebarrer.PNG"));
+            this.img_SlotCarte2.setImage(new Image("img/carte.PNG"));
+            this.img_SlotCarte3.setImage(new Image("img/carte.PNG"));
+        }
         this.LabelDucat1.setText(String.valueOf(j.getDucat()));
         this.LabelChevalier.setText(String.valueOf(j.getChevalierNonPlacer()));
         this.LabelPioche.setText(String.valueOf(this.partie.getPioche().size()));
@@ -389,15 +412,14 @@ public class GameController{
     }
 
     public void Tour(){
-        pasClickable(false,false,false,true,true);
-        this.WaitTour = true;
         this.SlotSelect = 0;
         this.JouerCarte = false;
         this.VendreCarte = false;
         this.addNbTour();
         this.setLabelNbTour();
         for( Joueur j : this.partie.getJoueurs()) {
-            System.out.println("wee");
+            pasClickable(false,false,false,true,true,true);
+            this.WaitTour = true;
             this.LabelJoueur.setText("Joueur :"+j.getNom());
             afficherBord(j);
             this.LabelInformation.setText("Choisissez une carte.");
@@ -420,30 +442,67 @@ public class GameController{
         }
     }
 
-    public void pasClickable(boolean slot1, boolean slot2, boolean slot3,boolean pioche, boolean vendu){
+    public void pasClickable(boolean slot1, boolean slot2, boolean slot3,boolean pioche, boolean vendu, boolean button){
         this.img_SlotCarte1.setDisable(slot1);
         this.img_SlotCarte2.setDisable(slot2);
         this.img_SlotCarte3.setDisable(slot3);
         this.img_SlotPioche.setDisable(pioche);
         this.img_SlotVendu.setDisable(vendu);
+        this.Button_Tour.setDisable(button);
     }
 
     public void VendreCarte(Joueur j){
-        System.out.println("vendu");
         Carte c = j.vendreCarte(this.SlotSelect-1);
         this.partie.setCartesVendu(c);
         afficherBord(j);
-        pasClickable(true,true,true,false,false);
+        pasClickable(true,true,true,false,false,true);
     }
 
     public void JouerCarte(Joueur j){
-        System.out.println("jouer");
-        //j.jouerCarte(this.SlotSelect-1);
-        j.jouerCartetest(this.SlotSelect-1);
-        afficherBord(j);
-        pasClickable(true,true,true,false,false);
-    }
+        this.carteAction = false;
 
+        VBox v = new VBox();
+        v.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        v.setPrefHeight(Region.USE_COMPUTED_SIZE);
+        v.setAlignment(Pos.CENTER);
+        v.setStyle("-fx-background-color: WHITE");
+        Text t = new Text();
+        t.setText("Quelle action ?");
+        v.getChildren().add(t);
+        HBox h = new HBox();
+        h.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        h.setPrefHeight(Region.USE_COMPUTED_SIZE);
+        h.setSpacing(10);
+        h.setAlignment(Pos.CENTER);
+        for(int i =0;i<j.getMain().get(this.SlotSelect-1).getActions().size();i++) {
+            Button yes = new Button();
+            yes.setPrefWidth(Region.USE_COMPUTED_SIZE);
+            yes.setPrefHeight(Region.USE_COMPUTED_SIZE);
+            yes.setText(j.getMain().get(this.SlotSelect-1).getActions().get(i).getDescription());
+            int finalI = i;
+            yes.setOnMousePressed((event) -> {
+                this.carteActionChoix = finalI;
+                this.carteAction = true;
+                this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                this.anchorPane.getChildren().remove(v);
+            });
+            h.getChildren().add(yes);
+        }
+        v.getChildren().add(h);
+        v.setLayoutX(this.Plateau.getWidth()/2 - 200);
+        v.setLayoutY(this.Plateau.getHeight()/2 - 100);
+        Platform.runLater(() -> this.anchorPane.getChildren().add(v));
+        while (!this.carteAction){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        j.jouerCarte(this.SlotSelect-1,this.carteActionChoix);
+        afficherBord(j);
+        pasClickable(true,true,true,false,false,true);
+    }
 
     public void Jeu(){
         if(!this.partie.getJoueurs().get(0).getChateaux().get(0).estPlace()){

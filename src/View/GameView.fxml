@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -17,7 +16,7 @@
 
 <ScrollPane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameController">
   <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0">
+    <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0">
          <children>
             <BorderPane minHeight="780.0" minWidth="780.0" prefWidth="780.0">
                <center>
@@ -103,45 +102,14 @@
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
-                                 <image>
-                                    <Image url="@../img/pp.PNG" />
-                                 </image>
                               </ImageView>
-                              <ImageView fx:id="img_SlotCarte2" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#SlotCart2Clicked" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/pp.PNG" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="img_SlotCarte3" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#SlotCart3Clicked" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/pp.PNG" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="img_SlotFrontière" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/pp.PNG" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="img_SlotDucat1" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/pp.PNG" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="img_SlotChevalier" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/pp.PNG" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="img_SlotPioche" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#PiocheClicked" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/pp.PNG" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="img_SlotVendu" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#CarteVendu" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/pp.PNG" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="img_SlotCarte2" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#SlotCart2Clicked" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="img_SlotCarte3" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#SlotCart3Clicked" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="img_SlotFrontière" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="img_SlotDucat1" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="img_SlotChevalier" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="img_SlotPioche" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#PiocheClicked" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="img_SlotVendu" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#CarteVendu" pickOnBounds="true" preserveRatio="true" />
                               <Button fx:id="Button_Tour" mnemonicParsing="false" onAction="#Finir_Tour" text="Finir le tour" />
                            </children>
                            <VBox.margin>

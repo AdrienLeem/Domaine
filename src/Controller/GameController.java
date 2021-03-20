@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import Model.Action;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ public class GameController{
     private boolean WaitTour;
     private int carteActionChoix;
     private boolean carteAction;
+    private int Dernierjoueur;
 
     @FXML
     private ScrollPane MainPane;
@@ -165,14 +168,11 @@ public class GameController{
         pasClickable(true,true,true,true,true,false);
     }
 
-    public void save(){
-        Sauvegarde.sauvegarder(this.partie,this.nomPartie);
-    }
-
     public void init(String message) {
         Label_Partie.setText("Partie : "+message);
         this.nomPartie = message;
         this.partie = Sauvegarde.charger(this.nomPartie);
+        this.Dernierjoueur = this.partie.getDernierjoueur();
         initGame();
     }
 
@@ -465,7 +465,10 @@ public class GameController{
         this.VendreCarte = false;
         this.addNbTour();
         this.setLabelNbTour();
-        for( Joueur j : this.partie.getJoueurs()) {
+
+        for (int i = this.Dernierjoueur;i<this.partie.getJoueurs().size();i++) {
+            this.partie.setDernierjoueur(i);
+            Joueur j = this.partie.getJoueurs().get(i);
             pasClickable(false,false,false,true,true,true);
             this.WaitTour = true;
             this.LabelJoueur.setText("Joueur :"+j.getNom());

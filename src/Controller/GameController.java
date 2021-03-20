@@ -402,20 +402,21 @@ public class GameController{
 
     public void afficherBord(Joueur j){
 
-
-        if(j.getMain().size() >=0){
+        if (j.getMain().size() == 3) {
             this.img_SlotCarte1.setImage(new Image("img/Carte_"+j.getMain().get(0).getNom()+".png"));
-        }else {
-            this.img_SlotCarte1.setImage(new Image("img/Carte_Face_Vierge.png"));
-        }
-        if(j.getMain().size() >=1){
             this.img_SlotCarte2.setImage(new Image("img/Carte_"+j.getMain().get(1).getNom()+".png"));
-        }else {
-            this.img_SlotCarte2.setImage(new Image("img/Carte_Face_Vierge.png"));
-        }
-        if(j.getMain().size() ==2){
             this.img_SlotCarte3.setImage(new Image("img/Carte_"+j.getMain().get(2).getNom()+".png"));
-        }else {
+        } else if (j.getMain().size() == 2) {
+            this.img_SlotCarte1.setImage(new Image("img/Carte_"+j.getMain().get(0).getNom()+".png"));
+            this.img_SlotCarte2.setImage(new Image("img/Carte_"+j.getMain().get(1).getNom()+".png"));
+            this.img_SlotCarte3.setImage(new Image("img/Carte_Face_Vierge.png"));
+        } else if (j.getMain().size() == 1) {
+            this.img_SlotCarte1.setImage(new Image("img/Carte_"+j.getMain().get(0).getNom()+".png"));
+            this.img_SlotCarte2.setImage(new Image("img/Carte_Face_Vierge.png"));
+            this.img_SlotCarte3.setImage(new Image("img/Carte_Face_Vierge.png"));
+        } else {
+            this.img_SlotCarte1.setImage(new Image("img/Carte_Face_Vierge.png"));
+            this.img_SlotCarte2.setImage(new Image("img/Carte_Face_Vierge.png"));
             this.img_SlotCarte3.setImage(new Image("img/Carte_Face_Vierge.png"));
         }
 

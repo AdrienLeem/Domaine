@@ -505,6 +505,7 @@ public class GameController{
         v.getChildren().add(h);
         v.setLayoutX(this.Plateau.getWidth()/2 - 200);
         v.setLayoutY(this.Plateau.getHeight()/2 - 100);
+
         Platform.runLater(() -> this.anchorPane.getChildren().add(v));
         while (!this.carteAction){
             try {
@@ -513,11 +514,31 @@ public class GameController{
                 e.printStackTrace();
             }
         }
-        Action a = j.getMain().get(SlotSelect-1).getActions().get(carteActionChoix);
-        if (a instanceof AjoutFrontiere || a instanceof Transfuge){
-            j.jouerCarte(this.SlotSelect-1,this.carteActionChoix);
+
+        Boolean WaitTour = true;
+        this.action = false;
+        while(WaitTour){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(this.action){
+                Action a = j.getMain().get(this.SlotSelect-1).getActions().get(this.carteActionChoix);
+                if (a instanceof AjoutFrontiere || a instanceof Transfuge){
+                    j.jouerCarte(this.SlotSelect-1,this.carteActionChoix);
+                }
+                else {
+                    j.jouerCarte(this.SlotSelect-1, this.carteActionChoix);
+                }
+
+                this.action = false;
+                this.WaitTour = false;
+            }
         }
-        else j.jouerCarte(this.SlotSelect-1, this.carteActionChoix);
+
+
+
         afficherBord(j);
         pasClickable(true,true,true,false,false,true);
     }

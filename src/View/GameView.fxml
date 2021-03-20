@@ -98,22 +98,22 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ImageView fx:id="img_SlotCarte1" fitHeight="95.0" fitWidth="75.0" onMouseClicked="#SlotCart1Clicked" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView id="Carte" fx:id="img_SlotCarte1" fitHeight="95.0" fitWidth="75.0" onMouseClicked="#SlotCart1Clicked" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ImageView fx:id="img_SlotCarte2" fitHeight="95.0" fitWidth="75.0" onMouseClicked="#SlotCart2Clicked" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView id="Carte" fx:id="img_SlotCarte2" fitHeight="95.0" fitWidth="75.0" onMouseClicked="#SlotCart2Clicked" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ImageView fx:id="img_SlotCarte3" fitHeight="95.0" fitWidth="75.0" onMouseClicked="#SlotCart3Clicked" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView id="Carte" fx:id="img_SlotCarte3" fitHeight="95.0" fitWidth="75.0" onMouseClicked="#SlotCart3Clicked" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ImageView fx:id="img_SlotFrontière" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView id="Carte" fx:id="img_SlotFrontière" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
                               <Text fx:id="LabelFrontiere" strokeType="OUTSIDE" strokeWidth="0.0" text="Frontiere">
                                  <font>
                                     <Font size="18.0" />
@@ -123,7 +123,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ImageView fx:id="img_SlotDucat1" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView id="Carte" fx:id="img_SlotDucat1" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
                               <Text fx:id="LabelDucat1" strokeType="OUTSIDE" strokeWidth="0.0" text="Ducat1">
                                  <font>
                                     <Font size="18.0" />
@@ -133,7 +133,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ImageView fx:id="img_SlotChevalier" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView id="Carte" fx:id="img_SlotChevalier" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
                               <Text fx:id="LabelChevalier" strokeType="OUTSIDE" strokeWidth="0.0" text="Chevalier">
                                  <font>
                                     <Font size="18.0" />
@@ -143,7 +143,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ImageView fx:id="img_SlotPioche" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#PiocheClicked" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView id="Carte" fx:id="img_SlotPioche" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#PiocheClicked" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
                               <Text fx:id="LabelPioche" strokeType="OUTSIDE" strokeWidth="0.0" text="Pioche">
                                  <font>
                                     <Font size="18.0" />
@@ -153,7 +153,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ImageView fx:id="img_SlotVendu" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#CarteVendu" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView id="Carte" fx:id="img_SlotVendu" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#CarteVendu" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
                               <Text fx:id="LabelVendu" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendu">
                                  <font>
                                     <Font size="18.0" />
@@ -163,6 +163,12 @@
                         </VBox>
                         <Button fx:id="Button_Tour" mnemonicParsing="false" onAction="#Finir_Tour" text="Finir le tour" />
                      </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <BorderPane.margin>
+                        <Insets top="3.0" />
+                     </BorderPane.margin>
                   </HBox>
                </bottom>
             </BorderPane>

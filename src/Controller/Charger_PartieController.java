@@ -50,6 +50,8 @@ public class Charger_PartieController implements Initializable {
                     //Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
+                    stage.setX(0);
+                    stage.setY(0);
                     stage.setTitle("Domaine :"+this.nomFichier.get(i));
                     stage.setScene(scene);
                     stage.show();

@@ -31,7 +31,7 @@ public class GameController{
     private String nomPartie;
     private Stage stage;
     private Boolean action;
-    private List<Integer> CaseClicked = new ArrayList<>();
+    private final List<Integer> CaseClicked = new ArrayList<>();
     private boolean JouerCarte;
     private boolean VendreCarte;
     private int SlotSelect;
@@ -221,9 +221,8 @@ public class GameController{
                     img.setImage(new Image("img/terrain.png"));
                 }
                 img.setOnMouseClicked(event -> {
-                    GridPane gridPane = (GridPane) img.getParent();
-                    int y = gridPane.getRowIndex(img);
-                    int x = gridPane.getColumnIndex(img);
+                    int y = GridPane.getRowIndex(img);
+                    int x = GridPane.getColumnIndex(img);
                     this.CaseClicked.clear();
                     this.CaseClicked.add(x);
                     this.CaseClicked.add(y);
@@ -514,7 +513,11 @@ public class GameController{
                 e.printStackTrace();
             }
         }
-        j.jouerCarte(this.SlotSelect-1,this.carteActionChoix);
+        Action a = j.getMain().get(SlotSelect-1).getActions().get(carteActionChoix);
+        if (a instanceof AjoutFrontiere || a instanceof Transfuge){
+            j.jouerCarte(this.SlotSelect-1,this.carteActionChoix);
+        }
+        else j.jouerCarte(this.SlotSelect-1, this.carteActionChoix);
         afficherBord(j);
         pasClickable(true,true,true,false,false,true);
     }

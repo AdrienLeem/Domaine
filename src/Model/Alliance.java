@@ -14,7 +14,7 @@ public class Alliance extends Action {
     }
 
     @Override
-    public void run(Joueur j) {
+    public void run(Joueur j, int... x) {
 
     }
 }

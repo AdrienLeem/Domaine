@@ -12,7 +12,7 @@ public class ExtensionDomaine extends Action {
     }
 
     @Override
-    public void run(Joueur j) {
+    public void run(Joueur j, int... x) {
 
     }
 

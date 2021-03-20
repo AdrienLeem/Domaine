@@ -71,16 +71,16 @@ public class Joueur implements Serializable {
     }
 
 
-    public void jouerCarte(int index, int choix) {
+    public void jouerCarte(int index, int choix, int... x) {
         if (this.main.get(index).getActions().size()==1){
-            this.main.get(index).getActions().get(0).run(this);
+            this.main.get(index).getActions().get(0).run(this, x);
         }
         else {
             if (choix==1) {
-                this.main.get(index).getActions().get(0).run(this);
+                this.main.get(index).getActions().get(0).run(this, x);
             }
             else {
-                this.main.get(index).getActions().get(1).run(this);
+                this.main.get(index).getActions().get(1).run(this, x);
             }
         }
     }

@@ -15,7 +15,7 @@ public class AjoutFrontiere extends Action {
     }
 
     @Override
-    public void run(Joueur j) {
+    public void run(Joueur j, int... x) {
         for (int i = 0; i<nombre; i++){
             System.out.println("Frontière n°"+nombre);
             System.out.print("Premiere case :");

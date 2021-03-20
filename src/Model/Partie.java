@@ -12,6 +12,7 @@ public class Partie implements Serializable {
     private ArrayList<Carte> pioche;
     private ArrayList<Carte> cartesVendu;
     private int NbTour;
+    private int dernierjoueur;
 
     public ArrayList<Carte> getCartesVendu() {
         return cartesVendu;
@@ -317,42 +318,6 @@ public class Partie implements Serializable {
         }
     }
 
-    public void jouerTour() {
-        for (Joueur joueur : this.joueurs) {
-            System.out.println("Tour de " + joueur.getNom());
-            System.out.println("Ducat : " + joueur.getDucat() );
-            for (int j = 1; j < joueur.getMain().size() + 1; j++) {
-                System.out.println("Carte " + j + " : (PA : " + joueur.getMain().get(j-1).getPrixAction() + " | PV : " + joueur.getMain().get(j-1).getPrixVente() + ")");
-                for (int k = 1; k < joueur.getMain().get(j-1).getActions().size() + 1; k++) {
-                    System.out.println("Action " + k + " : " + joueur.getMain().get(j-1).getActions().get(k-1).getDescription());
-                }
-            }
-            String choixAction;
-            System.out.print("Jouer ou vendre une carte ? >> [v/j]");
-            choixAction = new Scanner(System.in).nextLine();
-            if (choixAction.equals("j")) {
-                int numC;
-                System.out.print("Carte à jouer >> ");
-                numC = new Scanner(System.in).nextInt();
-                if (joueur.getMain().get(numC-1).getActions().size() > 1) {
-                    int numA;
-                    System.out.print("Action à jouer >> ");
-                    numA = new Scanner(System.in).nextInt();
-                    joueur.getMain().get(numC-1).getActions().get(numA-1).run(joueur);
-                    joueur.setDucat(-joueur.getMain().get(numC-1).getPrixAction());
-                } else {
-                    joueur.getMain().get(numC-1).getActions().get(0).run(joueur);
-                    joueur.setDucat(-joueur.getMain().get(numC-1).getPrixAction());
-                }
-            } else {
-                int numC;
-                System.out.print("Carte à vendre >> ");
-                numC = new Scanner(System.in).nextInt();
-                joueur.vendreCarte(numC-1);
-            }
-            System.out.println();
-        }
-    }
 
     public static ArrayList<Joueur> initJoueur() {
         ArrayList<Joueur> listJ = new ArrayList<>();
@@ -377,7 +342,6 @@ public class Partie implements Serializable {
         p.creationDeck();
         p.distribuerCarte();
         p.commencer();
-        p.jouerTour();
         int i = 1;
         for (Joueur j : p.joueurs) {
             System.out.println("Joueur " + i + " : " + j.getNom() + " | Ducat : " + j.getDucat());
@@ -419,5 +383,13 @@ public class Partie implements Serializable {
             }
         }
         return null;
+    }
+
+    public int getDernierjoueur() {
+        return dernierjoueur;
+    }
+
+    public void setDernierjoueur(int dernierjoueur) {
+        this.dernierjoueur = dernierjoueur;
     }
 }

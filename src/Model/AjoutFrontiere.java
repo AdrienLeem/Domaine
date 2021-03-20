@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class AjoutFrontiere extends Action {
@@ -15,7 +16,7 @@ public class AjoutFrontiere extends Action {
     }
 
     @Override
-    public void run(Joueur j, int... x) {
+    public void run(Joueur j, Optional<Plateau> p , int... x) {
         for (int i = 0; i<nombre; i++){
             System.out.println("Frontière n°"+nombre);
             System.out.print("Premiere case :");
@@ -30,6 +31,7 @@ public class AjoutFrontiere extends Action {
             int y2 = new Scanner(System.in).nextInt();
             System.out.println("La frontière a été placée !");
         }
+
 
     }
 }

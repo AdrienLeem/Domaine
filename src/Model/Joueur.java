@@ -2,6 +2,7 @@ package Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Joueur implements Serializable {
@@ -71,18 +72,11 @@ public class Joueur implements Serializable {
     }
 
 
-    public void jouerCarte(int index, int choix, int... x) {
-        if (this.main.get(index).getActions().size()==1){
-            this.main.get(index).getActions().get(0).run(this, x);
+    public void jouerCarte(int index, int choix,Plateau p,int... x) {
+        if (this.main.get(index).getActions().get(choix) instanceof AjoutFrontiere || this.main.get(index).getActions().get(choix) instanceof Transfuge ) {
+            this.main.get(index).getActions().get(choix).run(this,Optional.of(p),x);
         }
-        else {
-            if (choix==1) {
-                this.main.get(index).getActions().get(0).run(this, x);
-            }
-            else {
-                this.main.get(index).getActions().get(1).run(this, x);
-            }
-        }
+        else this.main.get(index).getActions().get(choix).run(this,Optional.empty(),x);
         this.main.remove(index);
     }
 

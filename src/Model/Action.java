@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 public abstract class Action implements Serializable {
     protected String description;
@@ -11,7 +12,8 @@ public abstract class Action implements Serializable {
         this.description = "";
     }
 
-    public abstract void run(Joueur j, int... x);
+    public abstract void run(Joueur j, Optional<Plateau> p, int... x);
+
 
     public String getDescription(){
         return this.description;

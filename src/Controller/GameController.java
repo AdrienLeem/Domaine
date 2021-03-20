@@ -574,13 +574,13 @@ public class GameController{
                         if(this.action){
                             int Case_2_X = this.CaseClicked.get(0);
                             int Case_2_Y = this.CaseClicked.get(1);
-                            j.jouerCarte(this.SlotSelect-1,this.carteActionChoix,Case_1_X,Case_1_Y,Case_2_X,Case_2_Y);
+                            j.jouerCarte(this.SlotSelect-1,this.carteActionChoix,partie.getPlateau(),Case_1_X,Case_1_Y,Case_2_X,Case_2_Y);
                         }
                         WaitTour2 = false;
                     }
                 }
                 else {
-                    j.jouerCarte(this.SlotSelect-1, this.carteActionChoix,Case_1_X,Case_1_Y);
+                    j.jouerCarte(this.SlotSelect-1, this.carteActionChoix, partie.getPlateau(),Case_1_X,Case_1_Y);
                 }
 
                 this.action = false;
@@ -589,7 +589,7 @@ public class GameController{
         }
 
 
-        Platform.runLater(() -> RefreshPlateau());
+        Platform.runLater(this::RefreshPlateau);
         afficherBord(j);
         this.LabelInformation.setText("Choisissez la pioche ou le marcher.");
         pasClickable(true,true,true,false,false,true);

@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Optional;
+
 public class Transfuge extends Action {
 
     @Override
@@ -8,7 +10,7 @@ public class Transfuge extends Action {
     }
 
     @Override
-    public void run(Joueur j, int... x) {
+    public void run(Joueur j, Optional<Plateau> p, int... x) {
 
     }
 }

@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Optional;
+
 public class ExtensionDomaine extends Action {
 
     public ExtensionDomaine() {
@@ -12,7 +14,7 @@ public class ExtensionDomaine extends Action {
     }
 
     @Override
-    public void run(Joueur j, int... x) {
+    public void run(Joueur j, Optional<Plateau> p, int... x) {
 
     }
 

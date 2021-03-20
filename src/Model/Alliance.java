@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Optional;
+
 public class Alliance extends Action {
 
 
@@ -14,7 +16,7 @@ public class Alliance extends Action {
     }
 
     @Override
-    public void run(Joueur j, int... x) {
+    public void run(Joueur j, Optional<Plateau> p, int... x) {
 
     }
 }

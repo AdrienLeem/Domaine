@@ -55,33 +55,39 @@ public class Partie implements Serializable {
             Carte carte = new Carte();
             if (i<2){
                 carte.setAction(new AjoutFrontiere(1));
+                carte.setNom("F_1_1_2");
                 carte.setPrixAction(1);
                 carte.setPrixVente(2);
             }
             else if (i<5){
                 carte.setAction(new AjoutFrontiere(2));
+                carte.setNom("F_2_3_3");
                 carte.setPrixAction(3);
                 carte.setPrixVente(3);
             }
             else if (i<8){
                 carte.setAction(new AjoutFrontiere(3));
+                carte.setNom("F_3_6_5");
                 carte.setPrixAction(6);
                 carte.setPrixVente(5);
             }
             else if (i<10){
                 carte.setAction(new AjoutChevalier(1));
+                carte.setNom("C_1_2_3");
                 carte.setPrixAction(2);
                 carte.setPrixVente(3);
             }
             else if (i<12){
                 carte.setAction(new AjoutChevalier(1));
                 carte.setAction(new AjoutFrontiere(2));
+                carte.setNom("CF_1_2_3_3");
                 carte.setPrixAction(3);
                 carte.setPrixVente(3);
             }
             else {
                 carte.setAction(new AjoutChevalier(1));
                 carte.setAction(new ExtensionDomaine());
+                carte.setNom("CE_1_1_3_3");
                 carte.setPrixAction(3);
                 carte.setPrixVente(3);
             }
@@ -91,54 +97,64 @@ public class Partie implements Serializable {
             Carte carte = new Carte();
             if (i<3){
                 carte.setAction(new AjoutFrontiere(2));
+                carte.setNom("F_2_3_2");
                 carte.setPrixAction(3);
                 carte.setPrixVente(2);
             }
             else if (i<5){
                 carte.setAction(new AjoutFrontiere(3));
+                carte.setNom("F_3_6_4");
                 carte.setPrixAction(6);
                 carte.setPrixVente(4);
             }
             else if (i<6){
                 carte.setAction(new AjoutChevalier(1));
+                carte.setNom("C_1_3_3");
                 carte.setPrixAction(3);
                 carte.setPrixVente(3);
             }
             else if (i<7){
                 carte.setAction(new AjoutChevalier(2));
+                carte.setNom("C_2_7_5");
                 carte.setPrixAction(7);
                 carte.setPrixVente(5);
             }
             else if (i<8){
                 carte.setAction(new ExtensionDomaine());
+                carte.setNom("E_1_4_3");
                 carte.setPrixAction(4);
                 carte.setPrixVente(3);
             }
             else if (i<9){
                 carte.setAction(new AjoutChevalier(1));
                 carte.setAction(new AjoutFrontiere(2));
+                carte.setNom("CF_1_2_4_3");
                 carte.setPrixAction(4);
                 carte.setPrixVente(3);
             }
             else if (i<11){
                 carte.setAction(new AjoutChevalier(1));
                 carte.setAction(new ExtensionDomaine());
+                carte.setNom("CE_1_1_4_3");
                 carte.setPrixAction(4);
                 carte.setPrixVente(3);
             }
             else if (i<13){
                 carte.setAction(new ExtensionDomaine());
                 carte.setAction(new AjoutFrontiere(2));
+                carte.setNom("EF_1_2_4_3");
                 carte.setPrixAction(4);
                 carte.setPrixVente(3);
             }
             else if (i<14){
                 carte.setAction(new Transfuge());
+                carte.setNom("CA_1_6_4");
                 carte.setPrixAction(6);
                 carte.setPrixVente(4);
             }
             else {
                 carte.setAction(new Alliance());
+                carte.setNom("A_1_5_5");
                 carte.setPrixAction(5);
                 carte.setPrixVente(5);
             }
@@ -148,49 +164,58 @@ public class Partie implements Serializable {
             Carte carte = new Carte();
             if (i<1){
                 carte.setAction(new AjoutFrontiere(2));
+                carte.setNom("F_2_4_3");
                 carte.setPrixAction(4);
                 carte.setPrixVente(3);
             }
             else if (i<2){
                 carte.setAction(new AjoutFrontiere(3));
+                carte.setNom("F_3_7_4");
                 carte.setPrixAction(7);
                 carte.setPrixVente(4);
             }
             else if (i<3){
                 carte.setAction(new AjoutChevalier(2));
+                carte.setNom("C_2_7_5");
                 carte.setPrixAction(7);
                 carte.setPrixVente(5);
             }
             else if (i<4){
                 carte.setAction(new ExtensionDomaine());
+                carte.setNom("E_1_5_3");
                 carte.setPrixAction(5);
                 carte.setPrixVente(3);
             }
             else if (i<5){
                 carte.setAction(new AjoutChevalier(1));
                 carte.setAction(new AjoutFrontiere(2));
+                carte.setNom("CF_1_2_5_3");
                 carte.setPrixAction(5);
                 carte.setPrixVente(3);
             }
             else if (i<8){
                 carte.setAction(new AjoutChevalier(1));
                 carte.setAction(new ExtensionDomaine());
+                carte.setNom("CE_1_1_5_3");
                 carte.setPrixAction(5);
                 carte.setPrixVente(3);
             }
             else if (i<11){
                 carte.setAction(new ExtensionDomaine());
                 carte.setAction(new AjoutFrontiere(2));
+                carte.setNom("EF_1_2_5_3");
                 carte.setPrixAction(5);
                 carte.setPrixVente(3);
             }
             else if (i<13){
                 carte.setAction(new Transfuge());
+                carte.setNom("CA_1_7_4");
                 carte.setPrixAction(7);
                 carte.setPrixVente(4);
             }
             else {
                 carte.setAction(new Alliance());
+                carte.setNom("A_1_5_5");
                 carte.setPrixAction(5);
                 carte.setPrixVente(5);
             }
@@ -200,45 +225,53 @@ public class Partie implements Serializable {
             Carte carte = new Carte();
             if (i<2){
                 carte.setAction(new AjoutFrontiere(2));
+                carte.setNom("F_2_4_2");
                 carte.setPrixAction(4);
                 carte.setPrixVente(2);
             }
             else if (i<3){
                 carte.setAction(new ExtensionDomaine());
+                carte.setNom("E_1_5_3");
                 carte.setPrixAction(5);
                 carte.setPrixVente(3);
             }
             else if (i<5){
                 carte.setAction(new AjoutChevalier(1));
                 carte.setAction(new AjoutFrontiere(2));
+                carte.setNom("CF_1_2_5_3");
                 carte.setPrixAction(5);
                 carte.setPrixVente(3);
             }
             else if (i<8){
                 carte.setAction(new AjoutChevalier(1));
                 carte.setAction(new ExtensionDomaine());
+                carte.setNom("CE_1_1_5_3");
                 carte.setPrixAction(5);
                 carte.setPrixVente(3);
             }
             else if (i<9){
                 carte.setAction(new AjoutChevalier(2));
                 carte.setAction(new ExtensionDomaine());
+                carte.setNom("CE_2_1_8_4");
                 carte.setPrixAction(8);
                 carte.setPrixVente(4);
             }
             else if (i<13){
                 carte.setAction(new ExtensionDomaine());
                 carte.setAction(new AjoutFrontiere(2));
+                carte.setNom("EF_1_2_5_3");
                 carte.setPrixAction(5);
                 carte.setPrixVente(3);
             }
             else if (i<14){
                 carte.setAction(new Transfuge());
+                carte.setNom("CA_1_8_4");
                 carte.setPrixAction(8);
                 carte.setPrixVente(4);
             }
             else {
                 carte.setAction(new Alliance());
+                carte.setNom("A_1_6_4");
                 carte.setPrixAction(6);
                 carte.setPrixVente(4);
             }

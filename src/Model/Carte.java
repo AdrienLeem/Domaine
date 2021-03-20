@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Carte implements Serializable {
     private ArrayList<Action> actions;
+    private String nom;
     private int prixAction;
     private int prixVente;
 
@@ -17,6 +18,13 @@ public class Carte implements Serializable {
         return actions;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
     public void setAction(Action action) {
         this.actions.add(action);

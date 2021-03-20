@@ -183,14 +183,15 @@ public class GameController{
     }
 
     public void initSlot(){
-        this.img_SlotCarte1.setImage(new Image("img/carte.PNG"));
-        this.img_SlotCarte2.setImage(new Image("img/carte.PNG"));
-        this.img_SlotCarte3.setImage(new Image("img/carte.PNG"));
+        this.img_SlotCarte1.setImage(new Image("img/Carte_Face_Vierge.png"));
+        this.img_SlotCarte2.setImage(new Image("img/Carte_Face_Vierge.png"));
+        this.img_SlotCarte3.setImage(new Image("img/Carte_Face_Vierge.png"));
+
         this.img_SlotFrontière.setImage(new Image("img/Grenzen_gross.PNG"));
         this.img_SlotDucat1.setImage(new Image("img/Dukaten_gross.PNG"));
         this.img_SlotChevalier.setImage(new Image("img/PionChevalierBlanc.PNG"));
-        this.img_SlotPioche.setImage(new Image("img/cartePioche.PNG"));
-        this.img_SlotVendu.setImage(new Image("img/carteVendu.PNG"));
+        this.img_SlotPioche.setImage(new Image("img/Carte_Verso_A.png"));
+        this.img_SlotVendu.setImage(new Image("img/Carte_Dos.png"));
     }
 
     public void initPlateau(){
@@ -340,6 +341,7 @@ public class GameController{
                         e.printStackTrace();
                     }
                     if(this.action){
+                        // If bonne case pour chateau
                         ImageView img = new ImageView();
                         img.setFitHeight(65);
                         img.setFitWidth(65);
@@ -349,6 +351,7 @@ public class GameController{
                         Platform.runLater(() -> placer(img,j,j.getChateaux().get(finalY)));
                         this.action = false;
                         WaitTour = false;
+                        // la
                     }
                 }
                 WaitTour = true;
@@ -360,6 +363,7 @@ public class GameController{
                         e.printStackTrace();
                     }
                     if(this.action){
+                        // If bonne case pour chevalier
                         ImageView img = new ImageView();
                         img.setFitHeight(65);
                         img.setFitWidth(65);
@@ -369,6 +373,7 @@ public class GameController{
                         Platform.runLater(() -> placer(img,j,j.getChevaliers().get(finalY)));
                         this.action = false;
                         WaitTour = false;
+                        // la
                     }
                 }
             }
@@ -396,15 +401,24 @@ public class GameController{
     }
 
     public void afficherBord(Joueur j){
-        if(j.getMain().size() == 3) {
-            this.img_SlotCarte1.setImage(new Image("img/carte.PNG")); //j.getMain()
-            this.img_SlotCarte2.setImage(new Image("img/carte.PNG"));
-            this.img_SlotCarte3.setImage(new Image("img/carte.PNG"));
+
+
+        if(j.getMain().size() >=0){
+            this.img_SlotCarte1.setImage(new Image("img/Carte_"+j.getMain().get(0).getNom()+".png"));
         }else {
-            this.img_SlotCarte1.setImage(new Image("img/cartebarrer.PNG"));
-            this.img_SlotCarte2.setImage(new Image("img/carte.PNG"));
-            this.img_SlotCarte3.setImage(new Image("img/carte.PNG"));
+            this.img_SlotCarte1.setImage(new Image("img/Carte_Face_Vierge.png"));
         }
+        if(j.getMain().size() >=1){
+            this.img_SlotCarte2.setImage(new Image("img/Carte_"+j.getMain().get(1).getNom()+".png"));
+        }else {
+            this.img_SlotCarte2.setImage(new Image("img/Carte_Face_Vierge.png"));
+        }
+        if(j.getMain().size() ==2){
+            this.img_SlotCarte3.setImage(new Image("img/Carte_"+j.getMain().get(2).getNom()+".png"));
+        }else {
+            this.img_SlotCarte3.setImage(new Image("img/Carte_Face_Vierge.png"));
+        }
+
         this.LabelDucat1.setText(String.valueOf(j.getDucat()));
         this.LabelChevalier.setText(String.valueOf(j.getChevalierNonPlacer()));
         this.LabelPioche.setText(String.valueOf(this.partie.getPioche().size()));

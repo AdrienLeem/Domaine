@@ -160,6 +160,7 @@ public class GameController{
     void PiocheClicked(MouseEvent event) {
         String l = this.LabelJoueur.getText().split(":")[1];
         this.partie.getJoueurbyname(l).piocher(this.partie.getPioche().get(0));
+        this.partie.getPioche().remove(0);
         afficherBord(this.partie.getJoueurbyname(l));
         pasClickable(true,true,true,true,true,false);
     }
@@ -250,6 +251,39 @@ public class GameController{
                     img.setDisable(true);
                     img.setImage(new Image("img/PionChevalier" + joueur.getCouleur() + ".png"));
                     this.Plateau.add(img, chevalier.getX(), chevalier.getY());
+                }
+            }
+        }
+        for(int i=0;i<12;i++) {
+            for (int j = 0; j < 12; j++) {
+                if(p.getCase(i,j).isfEst()){
+                    ImageView img = new ImageView();
+                    img.setFitHeight(65);
+                    img.setFitWidth(65);
+                    img.setDisable(true);
+                    img.setImage(new Image("FrontiereEst.png"));
+                    this.Plateau.add(img, i, j);
+                }else if(p.getCase(i,j).isfOuest()){
+                    ImageView img = new ImageView();
+                    img.setFitHeight(65);
+                    img.setFitWidth(65);
+                    img.setDisable(true);
+                    img.setImage(new Image("FrontiereOuest.png"));
+                    this.Plateau.add(img, i, j);
+                }else if(p.getCase(i,j).isfNord()) {
+                    ImageView img = new ImageView();
+                    img.setFitHeight(65);
+                    img.setFitWidth(65);
+                    img.setDisable(true);
+                    img.setImage(new Image("FrontiereNord.png"));
+                    this.Plateau.add(img, i, j);
+                }else if(p.getCase(i,j).isfSud()) {
+                    ImageView img = new ImageView();
+                    img.setFitHeight(65);
+                    img.setFitWidth(65);
+                    img.setDisable(true);
+                    img.setImage(new Image("FrontiereSud.png"));
+                    this.Plateau.add(img, i, j);
                 }
             }
         }
@@ -469,6 +503,7 @@ public class GameController{
         Carte c = j.vendreCarte(this.SlotSelect-1);
         this.partie.setCartesVendu(c);
         afficherBord(j);
+        this.LabelInformation.setText("Choisissez la pioche ou le marcher.");
         pasClickable(true,true,true,false,false,true);
     }
 
@@ -515,7 +550,7 @@ public class GameController{
             }
         }
 
-        Boolean WaitTour = true;
+        boolean WaitTour = true;
         this.action = false;
         while(WaitTour){
             try {
@@ -525,22 +560,100 @@ public class GameController{
             }
             if(this.action){
                 Action a = j.getMain().get(this.SlotSelect-1).getActions().get(this.carteActionChoix);
+                int Case_1_X = this.CaseClicked.get(0);
+                int Case_1_Y = this.CaseClicked.get(1);
                 if (a instanceof AjoutFrontiere || a instanceof Transfuge){
-                    j.jouerCarte(this.SlotSelect-1,this.carteActionChoix);
+                    this.action = false;
+                    boolean WaitTour2 = true;
+                    while(WaitTour2){
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if(this.action){
+                            int Case_2_X = this.CaseClicked.get(0);
+                            int Case_2_Y = this.CaseClicked.get(1);
+                            j.jouerCarte(this.SlotSelect-1,this.carteActionChoix,Case_1_X,Case_1_Y,Case_2_X,Case_2_Y);
+                        }
+                        WaitTour2 = false;
+                    }
                 }
                 else {
-                    j.jouerCarte(this.SlotSelect-1, this.carteActionChoix);
+                    j.jouerCarte(this.SlotSelect-1, this.carteActionChoix,Case_1_X,Case_1_Y);
                 }
 
                 this.action = false;
-                this.WaitTour = false;
+                WaitTour = false;
             }
         }
 
 
-
+        Platform.runLater(() -> RefreshPlateau());
         afficherBord(j);
+        this.LabelInformation.setText("Choisissez la pioche ou le marcher.");
         pasClickable(true,true,true,false,false,true);
+    }
+
+    public void RefreshPlateau(){
+        Model.Plateau p = this.partie.getPlateau();
+        ArrayList<Joueur> listjoueurs = this.partie.getJoueurs();
+
+        for(Joueur joueur : listjoueurs){
+            for(PionChateau chateau : joueur.getChateaux()){
+                if(chateau.estPlace()) {
+                    ImageView img = new ImageView();
+                    img.setFitHeight(65);
+                    img.setFitWidth(65);
+                    img.setDisable(true);
+                    img.setImage(new Image("img/Pion_Chateau_" + joueur.getCouleur() + ".png"));
+                    this.Plateau.add(img, chateau.getX(), chateau.getY());
+                }
+            }
+            for(PionChevalier chevalier : joueur.getChevaliers()){
+                if(chevalier.estPlace()) {
+                    ImageView img = new ImageView();
+                    img.setFitHeight(65);
+                    img.setFitWidth(65);
+                    img.setDisable(true);
+                    img.setImage(new Image("img/PionChevalier" + joueur.getCouleur() + ".png"));
+                    this.Plateau.add(img, chevalier.getX(), chevalier.getY());
+                }
+            }
+            for(int i=0;i<12;i++) {
+                for (int j = 0; j < 12; j++) {
+                    if(p.getCase(i,j).isfEst()){
+                        ImageView img = new ImageView();
+                        img.setFitHeight(65);
+                        img.setFitWidth(65);
+                        img.setDisable(true);
+                        img.setImage(new Image("FrontiereEst.png"));
+                        this.Plateau.add(img, i, j);
+                    }else if(p.getCase(i,j).isfOuest()){
+                        ImageView img = new ImageView();
+                        img.setFitHeight(65);
+                        img.setFitWidth(65);
+                        img.setDisable(true);
+                        img.setImage(new Image("FrontiereOuest.png"));
+                        this.Plateau.add(img, i, j);
+                    }else if(p.getCase(i,j).isfNord()) {
+                        ImageView img = new ImageView();
+                        img.setFitHeight(65);
+                        img.setFitWidth(65);
+                        img.setDisable(true);
+                        img.setImage(new Image("FrontiereNord.png"));
+                        this.Plateau.add(img, i, j);
+                    }else if(p.getCase(i,j).isfSud()) {
+                        ImageView img = new ImageView();
+                        img.setFitHeight(65);
+                        img.setFitWidth(65);
+                        img.setDisable(true);
+                        img.setImage(new Image("FrontiereSud.png"));
+                        this.Plateau.add(img, i, j);
+                    }
+                }
+            }
+        }
     }
 
     public void Jeu(){

@@ -7,6 +7,7 @@ public class AjoutChevalier extends Action {
 
     public AjoutChevalier(int i) {
         this.description = "Place "+ i +" chevalier(s) sur le plateau";
+        this.nombre = i;
     }
 
     @Override

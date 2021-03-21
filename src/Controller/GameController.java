@@ -494,6 +494,7 @@ public class GameController{
                 }
             }
         }
+        this.Dernierjoueur = 0;
     }
 
     public void pasClickable(boolean slot1, boolean slot2, boolean slot3,boolean pioche, boolean vendu, boolean button){
@@ -566,36 +567,38 @@ public class GameController{
             }
             if(this.action){
                 Action a = j.getMain().get(this.SlotSelect-1).getActions().get(this.carteActionChoix);
-                int Case_1_X = this.CaseClicked.get(0);
-                int Case_1_Y = this.CaseClicked.get(1);
-                if (a instanceof AjoutFrontiere || a instanceof Transfuge){
-                    this.action = false;
-                    boolean WaitTour2 = true;
-                    while(WaitTour2){
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        if(this.action){
-                            int Case_2_X = this.CaseClicked.get(0);
-                            int Case_2_Y = this.CaseClicked.get(1);
-                            if (((Case_2_X-Case_1_X)==1 && (Case_2_Y-Case_1_Y)==0)|| ((Case_2_X-Case_1_X)==-1 && (Case_2_Y-Case_1_Y)==0) || ((Case_2_X-Case_1_X)==0 && (Case_2_Y-Case_1_Y)==-1) || ((Case_2_X-Case_1_X)==0 && (Case_2_Y-Case_1_Y)==1)){
-                                j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y, Case_2_X, Case_2_Y);
-                                WaitTour2 = false;
+                int nbAction = a.getNombre();
+                for (int i =0; i<nbAction; i++){
+                    int Case_1_X = this.CaseClicked.get(0);
+                    int Case_1_Y = this.CaseClicked.get(1);
+                    System.out.println("labas");
+                    if (a instanceof AjoutFrontiere || a instanceof Transfuge){
+                        this.action = false;
+                        boolean WaitTour2 = true;
+                        while(WaitTour2){
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
                             }
-
-
+                            if(this.action){
+                                int Case_2_X = this.CaseClicked.get(0);
+                                int Case_2_Y = this.CaseClicked.get(1);
+                                if (((Case_2_X-Case_1_X)==1 && (Case_2_Y-Case_1_Y)==0)|| ((Case_2_X-Case_1_X)==-1 && (Case_2_Y-Case_1_Y)==0) || ((Case_2_X-Case_1_X)==0 && (Case_2_Y-Case_1_Y)==-1) || ((Case_2_X-Case_1_X)==0 && (Case_2_Y-Case_1_Y)==1)){
+                                    j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y, Case_2_X, Case_2_Y);
+                                    WaitTour2 = false;
+                                }
+                            }
                         }
                     }
+                    else {
+                        j.jouerCarte(this.SlotSelect-1, this.carteActionChoix, partie.getPlateau(),Case_1_X,Case_1_Y);
+                    }
+                    this.action = false;
+                    WaitTour = false;
                 }
-                else {
-                    j.jouerCarte(this.SlotSelect-1, this.carteActionChoix, partie.getPlateau(),Case_1_X,Case_1_Y);
-                }
-
-                this.action = false;
-                WaitTour = false;
             }
+
         }
 
 

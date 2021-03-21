@@ -77,7 +77,10 @@ public class Joueur implements Serializable {
             this.main.get(index).getActions().get(choix).run(this,Optional.of(p),x);
         }
         else this.main.get(index).getActions().get(choix).run(this,Optional.empty(),x);
-        this.main.remove(index);
+        this.main.get(index).getActions().get(choix).setNombre(this.main.get(index).getActions().get(choix).getNombre()-1);
+        if (getMain().get(index).getActions().get(choix).getNombre()==0){
+            this.main.remove(index);
+        }
     }
 
     public Carte vendreCarte(int index) {

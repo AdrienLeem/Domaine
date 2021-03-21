@@ -14,6 +14,13 @@ public abstract class Action implements Serializable {
 
     public abstract void run(Joueur j, Optional<Plateau> p, int... x);
 
+    public Integer getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(Integer nombre) {
+        this.nombre = nombre;
+    }
 
     public String getDescription(){
         return this.description;

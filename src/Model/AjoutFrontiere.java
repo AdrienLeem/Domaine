@@ -17,21 +17,13 @@ public class AjoutFrontiere extends Action {
 
     @Override
     public void run(Joueur j, Optional<Plateau> p , int... x) {
-        for (int i = 0; i<nombre; i++){
-            System.out.println("Frontière n°"+nombre);
-            System.out.print("Premiere case :");
-            System.out.print("x >> ");
-            int x1 = new Scanner(System.in).nextInt();
-            System.out.print("y >> ");
-            int y1 = new Scanner(System.in).nextInt();
-            System.out.print("Deuxieme case :");
-            System.out.print("x >> ");
-            int x2 = new Scanner(System.in).nextInt();
-            System.out.print("y >> ");
-            int y2 = new Scanner(System.in).nextInt();
-            System.out.println("La frontière a été placée !");
+        if (p.isPresent()){
+            Case a1 = p.get().getCase(x[0],x[1]);
+            Case a2 = p.get().getCase(x[2],x[3]);
+            if (a1.getX() == a2.getX() && (a2.getY()-a1.getY()) == 1) { a1.setfSud(true); a2.setfNord(true);}
+            else if (a1.getX() == a2.getX() && (a2.getY()-a1.getY()) == -1) { a1.setfNord(true); a2.setfSud(true);}
+            else if (a1.getY() == a2.getY() && (a2.getX()-a1.getX()) == 1) { a1.setfEst(true); a2.setfOuest(true);}
+            else if (a1.getY() == a2.getY() && (a2.getX()-a1.getX()) == -1) { a1.setfOuest(true); a2.setfEst(true);}
         }
-
-
     }
 }

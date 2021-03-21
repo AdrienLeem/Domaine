@@ -261,28 +261,31 @@ public class GameController{
                     img.setFitHeight(65);
                     img.setFitWidth(65);
                     img.setDisable(true);
-                    img.setImage(new Image("FrontiereEst.png"));
+                    img.setImage(new Image("img/FrontiereEst.png"));
                     this.Plateau.add(img, i, j);
-                }else if(p.getCase(i,j).isfOuest()){
+                }
+                if(p.getCase(i,j).isfOuest()){
                     ImageView img = new ImageView();
                     img.setFitHeight(65);
                     img.setFitWidth(65);
                     img.setDisable(true);
-                    img.setImage(new Image("FrontiereOuest.png"));
+                    img.setImage(new Image("img/FrontiereOuest.png"));
                     this.Plateau.add(img, i, j);
-                }else if(p.getCase(i,j).isfNord()) {
+                }
+                if(p.getCase(i,j).isfNord()) {
                     ImageView img = new ImageView();
                     img.setFitHeight(65);
                     img.setFitWidth(65);
                     img.setDisable(true);
-                    img.setImage(new Image("FrontiereNord.png"));
+                    img.setImage(new Image("img/FrontiereNord.png"));
                     this.Plateau.add(img, i, j);
-                }else if(p.getCase(i,j).isfSud()) {
+                }
+                if(p.getCase(i,j).isfSud()) {
                     ImageView img = new ImageView();
                     img.setFitHeight(65);
                     img.setFitWidth(65);
                     img.setDisable(true);
-                    img.setImage(new Image("FrontiereSud.png"));
+                    img.setImage(new Image("img/FrontiereSud.png"));
                     this.Plateau.add(img, i, j);
                 }
             }
@@ -577,9 +580,13 @@ public class GameController{
                         if(this.action){
                             int Case_2_X = this.CaseClicked.get(0);
                             int Case_2_Y = this.CaseClicked.get(1);
-                            j.jouerCarte(this.SlotSelect-1,this.carteActionChoix,partie.getPlateau(),Case_1_X,Case_1_Y,Case_2_X,Case_2_Y);
+                            if (((Case_2_X-Case_1_X)==1 && (Case_2_Y-Case_1_Y)==0)|| ((Case_2_X-Case_1_X)==-1 && (Case_2_Y-Case_1_Y)==0) || ((Case_2_X-Case_1_X)==0 && (Case_2_Y-Case_1_Y)==-1) || ((Case_2_X-Case_1_X)==0 && (Case_2_Y-Case_1_Y)==1)){
+                                j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y, Case_2_X, Case_2_Y);
+                                WaitTour2 = false;
+                            }
+
+
                         }
-                        WaitTour2 = false;
                     }
                 }
                 else {
@@ -630,28 +637,31 @@ public class GameController{
                         img.setFitHeight(65);
                         img.setFitWidth(65);
                         img.setDisable(true);
-                        img.setImage(new Image("FrontiereEst.png"));
+                        img.setImage(new Image("img/FrontiereEst.png"));
                         this.Plateau.add(img, i, j);
-                    }else if(p.getCase(i,j).isfOuest()){
+                    }
+                    if(p.getCase(i,j).isfOuest()){
                         ImageView img = new ImageView();
                         img.setFitHeight(65);
                         img.setFitWidth(65);
                         img.setDisable(true);
-                        img.setImage(new Image("FrontiereOuest.png"));
+                        img.setImage(new Image("img/FrontiereOuest.png"));
                         this.Plateau.add(img, i, j);
-                    }else if(p.getCase(i,j).isfNord()) {
+                    }
+                    if(p.getCase(i,j).isfNord()) {
                         ImageView img = new ImageView();
                         img.setFitHeight(65);
                         img.setFitWidth(65);
                         img.setDisable(true);
-                        img.setImage(new Image("FrontiereNord.png"));
+                        img.setImage(new Image("img/FrontiereNord.png"));
                         this.Plateau.add(img, i, j);
-                    }else if(p.getCase(i,j).isfSud()) {
+                    }
+                    if(p.getCase(i,j).isfSud()) {
                         ImageView img = new ImageView();
                         img.setFitHeight(65);
                         img.setFitWidth(65);
                         img.setDisable(true);
-                        img.setImage(new Image("FrontiereSud.png"));
+                        img.setImage(new Image("img/FrontiereSud.png"));
                         this.Plateau.add(img, i, j);
                     }
                 }

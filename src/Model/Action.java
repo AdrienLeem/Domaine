@@ -18,8 +18,8 @@ public abstract class Action implements Serializable {
         return nombre;
     }
 
-    public void setNombre(Integer nombre) {
-        this.nombre = nombre;
+    public void setNombre(Integer nb) {
+        this.nombre = nb;
     }
 
     public String getDescription(){

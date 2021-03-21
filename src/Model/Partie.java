@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Partie implements Serializable {
     private final Plateau plateau;
@@ -336,16 +337,115 @@ public class Partie implements Serializable {
     }
 
     public static void main(String[] args) {
-        System.out.println("Parametrage de la partie");
-        Partie p = new Partie(initJoueur());
-        for (int i = 0; i < p.joueurs.size(); i++) System.out.println(p.joueurs.get(i).getNom());
-        p.creationDeck();
-        p.distribuerCarte();
-        p.commencer();
-        int i = 1;
-        for (Joueur j : p.joueurs) {
-            System.out.println("Joueur " + i + " : " + j.getNom() + " | Ducat : " + j.getDucat());
+        Plateau p = new Plateau();
+        p.getCase(0,2).setfEst(true);
+        p.getCase(1,2).setfEst(true);
+        p.getCase(1,0).setfSud(true);
+        p.getCase(1,1).setfSud(true);
+        p.getCase(1,2).setfSud(true);
+
+        p.getCase(1,6).setfNord(true);
+        p.getCase(1,6).setfEst(true);
+        p.getCase(1,6).setfOuest(true);
+
+        p.getCase(2,3).setfNord(true);
+        p.getCase(2,3).setfSud(true);
+        p.getCase(2,3).setfOuest(true);
+
+        p.getCase(2,4).setfNord(true);
+        p.getCase(2,4).setfSud(true);
+
+        p.getCase(2,5).setfNord(true);
+
+        p.getCase(2,7).setfNord(true);
+        p.getCase(2,7).setfSud(true);
+        p.getCase(2,7).setfEst(true);
+
+        p.getCase(3,5).setfOuest(true);
+
+        p.getCase(3,6).setfEst(true);
+
+        p.getCase(4,3).setfNord(true);
+        p.getCase(4,3).setfSud(true);
+        p.getCase(4,3).setfOuest(true);
+
+        p.getCase(4,4).setfNord(true);
+        p.getCase(4,4).setfSud(true);
+
+        p.getCase(5,5).setfSud(true);
+        p.getCase(5,5).setfEst(true);
+        p.getCase(5,5).setfOuest(true);
+
+        p.getCase(4,6).setfSud(true);
+
+        p.getCase(4,7).setfNord(true);
+        p.getCase(4,7).setfSud(true);
+        p.getCase(4,7).setfEst(true);
+
+        ArrayList<Case> domaines = new ArrayList<>(explore(p));
+        for (Case domaine : domaines) {
+            System.out.print(domaine.getX() + " ");
+            System.out.println(domaine.getY());
         }
+    }
+
+    public static ArrayList<Case> voisin(Case c, Plateau p) {
+        ArrayList<Case> cases = new ArrayList<>();
+        if (c.getX() == 0 && c.getY() == 0) {
+            if (!c.isfEst()) cases.add(p.getCase(c.getX(),c.getY()+1));
+            if (!c.isfSud()) cases.add(p.getCase(c.getX()+1,c.getY()));
+        }
+        else if (c.getX() == 0 && c.getY() == 11) {
+            if (!c.isfOuest()) cases.add(p.getCase(c.getX(),c.getY()-1));
+            if (!c.isfSud()) cases.add(p.getCase(c.getX()+1,c.getY()));
+        }
+        else if (c.getX() == 11 && c.getY() == 0) {
+            if (!c.isfEst()) cases.add(p.getCase(c.getX(),c.getY()+1));
+            if (!c.isfNord()) cases.add(p.getCase(c.getX()-1,c.getY()));
+        }
+        else if (c.getX() == 11 && c.getY() == 11) {
+            if (!c.isfNord()) cases.add(p.getCase(c.getX()-1,c.getY()));
+            if (!c.isfOuest()) cases.add(p.getCase(c.getX(),c.getY()-1));
+        }
+        else if (c.getX() == 0) {
+            if (!c.isfEst()) cases.add(p.getCase(c.getX(),c.getY()+1));
+            if (!c.isfSud()) cases.add(p.getCase(c.getX()+1,c.getY()));
+            if (!c.isfOuest()) cases.add(p.getCase(c.getX(),c.getY()-1));
+        }
+        else if (c.getY() == 0) {
+            if (!c.isfNord()) cases.add(p.getCase(c.getX()-1,c.getY()));
+            if (!c.isfEst()) cases.add(p.getCase(c.getX(),c.getY()+1));
+            if (!c.isfSud()) cases.add(p.getCase(c.getX()+1,c.getY()));
+        }
+        else if (c.getX() == 11) {
+            if (!c.isfNord()) cases.add(p.getCase(c.getX()-1,c.getY()));
+            if (!c.isfEst()) cases.add(p.getCase(c.getX(),c.getY()+1));
+            if (!c.isfOuest()) cases.add(p.getCase(c.getX(),c.getY()-1));
+        }
+        else if (c.getY() == 11) {
+            if (!c.isfNord()) cases.add(p.getCase(c.getX()-1,c.getY()));
+            if (!c.isfSud()) cases.add(p.getCase(c.getX()+1,c.getY()));
+            if (!c.isfOuest()) cases.add(p.getCase(c.getX(),c.getY()-1));
+        }
+        else {
+            if (!c.isfNord()) cases.add(p.getCase(c.getX()-1,c.getY()));
+            if (!c.isfEst()) cases.add(p.getCase(c.getX(),c.getY()+1));
+            if (!c.isfSud()) cases.add(p.getCase(c.getX()+1,c.getY()));
+            if (!c.isfOuest()) cases.add(p.getCase(c.getX(),c.getY()-1));
+        }
+        return cases;
+    }
+
+    public static ArrayList<Case> explore(Plateau p) {
+        ArrayList<Case> domaine = new ArrayList<>();
+        domaine.add(p.getCase(2,6));
+        for (int i = 0; i < domaine.size(); i++) {
+            domaine.addAll(voisin(domaine.get(i),p));
+            List<Case> listWithoutDuplicates = domaine.stream().distinct().collect(Collectors.toList());
+            domaine.clear();
+            domaine.addAll(listWithoutDuplicates);
+        }
+        return domaine;
     }
 
     public int getNbJoueurs(){

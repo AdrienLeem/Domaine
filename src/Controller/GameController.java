@@ -222,14 +222,15 @@ public class GameController{
                     img.setImage(new Image("img/terrain.png"));
                 }
                 img.setOnMouseClicked(event -> {
-                    int y = GridPane.getRowIndex(img);
-                    int x = GridPane.getColumnIndex(img);
+                    int x = GridPane.getRowIndex(img);
+                    int y = GridPane.getColumnIndex(img);
+
                     this.CaseClicked.clear();
                     this.CaseClicked.add(x);
                     this.CaseClicked.add(y);
                     this.action = true;
                 });
-                this.Plateau.add(img,i,j);
+                this.Plateau.add(img,j,i);
             }
         }
         for(Joueur joueur : listjoueurs){
@@ -240,7 +241,7 @@ public class GameController{
                     img.setFitWidth(65);
                     img.setDisable(true);
                     img.setImage(new Image("img/Pion_Chateau_" + joueur.getCouleur() + ".png"));
-                    this.Plateau.add(img, chateau.getX(), chateau.getY());
+                    this.Plateau.add(img, chateau.getY(), chateau.getX());
                 }
             }
             for(PionChevalier chevalier : joueur.getChevaliers()){
@@ -250,7 +251,7 @@ public class GameController{
                     img.setFitWidth(65);
                     img.setDisable(true);
                     img.setImage(new Image("img/PionChevalier" + joueur.getCouleur() + ".png"));
-                    this.Plateau.add(img, chevalier.getX(), chevalier.getY());
+                    this.Plateau.add(img, chevalier.getY(), chevalier.getX());
                 }
             }
         }
@@ -262,7 +263,7 @@ public class GameController{
                     img.setFitWidth(65);
                     img.setDisable(true);
                     img.setImage(new Image("img/FrontiereEst.png"));
-                    this.Plateau.add(img, i, j);
+                    this.Plateau.add(img, j, i);
                 }
                 if(p.getCase(i,j).isfOuest()){
                     ImageView img = new ImageView();
@@ -270,7 +271,7 @@ public class GameController{
                     img.setFitWidth(65);
                     img.setDisable(true);
                     img.setImage(new Image("img/FrontiereOuest.png"));
-                    this.Plateau.add(img, i, j);
+                    this.Plateau.add(img, j, i);
                 }
                 if(p.getCase(i,j).isfNord()) {
                     ImageView img = new ImageView();
@@ -278,7 +279,7 @@ public class GameController{
                     img.setFitWidth(65);
                     img.setDisable(true);
                     img.setImage(new Image("img/FrontiereNord.png"));
-                    this.Plateau.add(img, i, j);
+                    this.Plateau.add(img, j, i);
                 }
                 if(p.getCase(i,j).isfSud()) {
                     ImageView img = new ImageView();
@@ -286,7 +287,7 @@ public class GameController{
                     img.setFitWidth(65);
                     img.setDisable(true);
                     img.setImage(new Image("img/FrontiereSud.png"));
-                    this.Plateau.add(img, i, j);
+                    this.Plateau.add(img, j, i);
                 }
             }
         }
@@ -423,7 +424,7 @@ public class GameController{
     public void placer(Node node, Joueur j,Pion p){
         int x = this.CaseClicked.get(0);
         int y = this.CaseClicked.get(1);
-        this.Plateau.add(node,x,y);
+        this.Plateau.add(node,y,x);
         j.placePion(p,x,y);
     }
 
@@ -622,7 +623,7 @@ public class GameController{
                     img.setFitWidth(65);
                     img.setDisable(true);
                     img.setImage(new Image("img/Pion_Chateau_" + joueur.getCouleur() + ".png"));
-                    this.Plateau.add(img, chateau.getX(), chateau.getY());
+                    this.Plateau.add(img, chateau.getY(), chateau.getX());
                 }
             }
             for(PionChevalier chevalier : joueur.getChevaliers()){
@@ -632,7 +633,7 @@ public class GameController{
                     img.setFitWidth(65);
                     img.setDisable(true);
                     img.setImage(new Image("img/PionChevalier" + joueur.getCouleur() + ".png"));
-                    this.Plateau.add(img, chevalier.getX(), chevalier.getY());
+                    this.Plateau.add(img, chevalier.getY(), chevalier.getX());
                 }
             }
             for(int i=0;i<12;i++) {
@@ -643,7 +644,7 @@ public class GameController{
                         img.setFitWidth(65);
                         img.setDisable(true);
                         img.setImage(new Image("img/FrontiereEst.png"));
-                        this.Plateau.add(img, i, j);
+                        this.Plateau.add(img, j, i);
                     }
                     if(p.getCase(i,j).isfOuest()){
                         ImageView img = new ImageView();
@@ -651,7 +652,7 @@ public class GameController{
                         img.setFitWidth(65);
                         img.setDisable(true);
                         img.setImage(new Image("img/FrontiereOuest.png"));
-                        this.Plateau.add(img, i, j);
+                        this.Plateau.add(img, j, i);
                     }
                     if(p.getCase(i,j).isfNord()) {
                         ImageView img = new ImageView();
@@ -659,7 +660,7 @@ public class GameController{
                         img.setFitWidth(65);
                         img.setDisable(true);
                         img.setImage(new Image("img/FrontiereNord.png"));
-                        this.Plateau.add(img, i, j);
+                        this.Plateau.add(img, j, i);
                     }
                     if(p.getCase(i,j).isfSud()) {
                         ImageView img = new ImageView();
@@ -667,7 +668,7 @@ public class GameController{
                         img.setFitWidth(65);
                         img.setDisable(true);
                         img.setImage(new Image("img/FrontiereSud.png"));
-                        this.Plateau.add(img, i, j);
+                        this.Plateau.add(img, j, i);
                     }
                 }
             }

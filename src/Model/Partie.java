@@ -332,7 +332,7 @@ public class Partie implements Serializable {
             }
             if (cpt == 1) {
                 for (int i1 = 0; i1 < lint.size(); i1++) {
-                    if (lint.get(i) == 1) this.joueurs.get(i).getDomaine().add(this.plateau.getDomaines().get(i));
+                    if (lint.get(i1) == 1) this.joueurs.get(i1).getDomaine().add(this.plateau.getDomaines().get(i));
                 }
             }
         }

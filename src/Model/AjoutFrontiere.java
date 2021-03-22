@@ -20,10 +20,10 @@ public class AjoutFrontiere extends Action {
         if (p.isPresent()){
             Case a1 = p.get().getCase(x[0],x[1]);
             Case a2 = p.get().getCase(x[2],x[3]);
-            if (a1.getX() == a2.getX() && (a2.getY()-a1.getY()) == 1) { a1.setfSud(true); a2.setfNord(true);}
-            else if (a1.getX() == a2.getX() && (a2.getY()-a1.getY()) == -1) { a1.setfNord(true); a2.setfSud(true);}
-            else if (a1.getY() == a2.getY() && (a2.getX()-a1.getX()) == 1) { a1.setfEst(true); a2.setfOuest(true);}
-            else if (a1.getY() == a2.getY() && (a2.getX()-a1.getX()) == -1) { a1.setfOuest(true); a2.setfEst(true);}
+            if (a1.getX() == a2.getX() && (a2.getY()-a1.getY()) == 1) { a1.setfEst(true); a2.setfOuest(true);}
+            else if (a1.getX() == a2.getX() && (a2.getY()-a1.getY()) == -1) { a1.setfOuest(true); a2.setfEst(true);}
+            else if (a1.getY() == a2.getY() && (a2.getX()-a1.getX()) == 1) { a1.setfSud(true); a2.setfNord(true);}
+            else if (a1.getY() == a2.getY() && (a2.getX()-a1.getX()) == -1) { a1.setfNord(true); a2.setfSud(true);}
         }
     }
 }

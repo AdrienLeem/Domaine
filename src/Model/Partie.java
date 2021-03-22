@@ -303,6 +303,9 @@ public class Partie implements Serializable {
     }
 
     public void assignDomaine() {
+        for (Joueur joueur : this.joueurs) {
+            joueur.getDomaine().clear();
+        }
         ArrayList<Integer> lint = new ArrayList<>();
         for (int i = 0; i < this.plateau.getDomaines().size(); i++) {
             lint.clear();

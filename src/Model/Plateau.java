@@ -95,6 +95,7 @@ public class Plateau implements Serializable {
     }
 
     public void setDomaine() {
+        this.domaines.clear();
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 12; j++) {
                 if (!isPresent(this.getCase(i,j))) this.domaines.add(new Domaine(explore(this.getCase(i,j))));

@@ -495,6 +495,7 @@ public class GameController{
             }
         }
         this.Dernierjoueur = 0;
+        this.partie.refreshDomaine();
     }
 
     public void pasClickable(boolean slot1, boolean slot2, boolean slot3,boolean pioche, boolean vendu, boolean button){

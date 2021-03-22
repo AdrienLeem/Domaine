@@ -344,6 +344,7 @@ public class Partie implements Serializable {
             for (int i = 0; i < j.getDomaine().size(); i++) {
                 nbPoint += j.getDomaine().get(i).calculPoint();
             }
+            j.setPoint(nbPoint);
         }
     }
 

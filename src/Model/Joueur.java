@@ -42,6 +42,10 @@ public class Joueur implements Serializable {
         return point;
     }
 
+    public void setPoint(int point) {
+        this.point = point;
+    }
+
     public ArrayList<Carte> getMain() {
         return main;
     }

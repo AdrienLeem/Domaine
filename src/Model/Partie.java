@@ -298,154 +298,56 @@ public class Partie implements Serializable {
         }
     }
 
-    public void commencer() {
-        int x1,y1,x2,y2;
-        for (int k = 1; k < 4 + 1; k++){
-            for(int i = 0; i < this.joueurs.size(); i++) {
-                Joueur j = this.joueurs.get(i);
-                System.out.println("Tour de " + j.getNom());
-                System.out.println();
-                if (k == 1) System.out.print("Placez votre " + k + "er Chateau :");
-                else System.out.print("Placez votre " + k + "eme Chateau :");
-                x1 = new Scanner(System.in).nextInt();
-                y1 = new Scanner(System.in).nextInt();
-                j.placePion(j.getChateaux().get(k-1), x1, y1);
-                if (k == 1) System.out.print("Placez votre " + k + "er Chevalier :");
-                else System.out.print("Placez votre " + k + "eme Chevalier :");
-                x2 = new Scanner(System.in).nextInt();
-                y2 = new Scanner(System.in).nextInt();
-                j.placePion(j.getChevaliers().get(k-1), x2, y2);
+    public static void main(String[] args) {
+
+    }
+
+    public void assignDomaine() {
+        ArrayList<Integer> lint = new ArrayList<>();
+        for (int i = 0; i < this.plateau.getDomaines().size(); i++) {
+            lint.clear();
+            for (int a = 0; a < this.joueurs.size(); a++) {
+                lint.add(0);
+            }
+            for (int j = 0; j < this.plateau.getDomaines().get(i).getDomaine().size(); j++) {
+                for (Joueur joueur : this.joueurs) {
+                    for (int k = 0; k < joueur.getChateaux().size(); k++) {
+                        if (this.plateau.getDomaines().get(i).getDomaine().get(j).getX() == joueur.getChateaux().get(k).getX() && this.plateau.getDomaines().get(i).getDomaine().get(j).getY() == joueur.getChateaux().get(k).getY()) {
+                            switch (joueur.getCouleur()) {
+                                case "Rouge" -> lint.set(0, lint.get(0) + 1);
+                                case "Bleu" -> lint.set(1, lint.get(1) + 1);
+                                case "Orange" -> lint.set(2, lint.get(2) + 1);
+                                case "Blanc" -> lint.set(3, lint.get(3) + 1);
+                            }
+                        }
+                    }
+                }
+            }
+            int cpt = 0;
+            for (Integer integer : lint) {
+                cpt += integer;
+            }
+            if (cpt == 1) {
+                for (int i1 = 0; i1 < lint.size(); i1++) {
+                    if (lint.get(i) == 1) this.joueurs.get(i).getDomaine().add(this.plateau.getDomaines().get(i));
+                }
             }
         }
     }
 
-
-    public static ArrayList<Joueur> initJoueur() {
-        ArrayList<Joueur> listJ = new ArrayList<>();
-        int nbJ;
-        System.out.print("Nombre de joueurs >> ");
-        nbJ = new Scanner(System.in).nextInt();
-        for (int i = 1; i < nbJ+1; i++) {
-            String nomJ;
-            if (i == 1) System.out.print("Nom du " + i + "er joueur >> ");
-            else System.out.print("Nom du " + i + "eme joueur >> ");
-            nomJ = new Scanner(System.in).nextLine();
-            Joueur j = new Joueur(nomJ);
-            listJ.add(j);
-        }
-        return listJ;
-    }
-
-    public static void main(String[] args) {
-        Plateau p = new Plateau();
-        p.getCase(0,2).setfEst(true);
-        p.getCase(1,2).setfEst(true);
-        p.getCase(1,0).setfSud(true);
-        p.getCase(1,1).setfSud(true);
-        p.getCase(1,2).setfSud(true);
-
-        p.getCase(1,6).setfNord(true);
-        p.getCase(1,6).setfEst(true);
-        p.getCase(1,6).setfOuest(true);
-
-        p.getCase(2,3).setfNord(true);
-        p.getCase(2,3).setfSud(true);
-        p.getCase(2,3).setfOuest(true);
-
-        p.getCase(2,4).setfNord(true);
-        p.getCase(2,4).setfSud(true);
-
-        p.getCase(2,5).setfNord(true);
-
-        p.getCase(2,7).setfNord(true);
-        p.getCase(2,7).setfSud(true);
-        p.getCase(2,7).setfEst(true);
-
-        p.getCase(3,5).setfOuest(true);
-
-        p.getCase(3,6).setfEst(true);
-
-        p.getCase(4,3).setfNord(true);
-        p.getCase(4,3).setfSud(true);
-        p.getCase(4,3).setfOuest(true);
-
-        p.getCase(4,4).setfNord(true);
-        p.getCase(4,4).setfSud(true);
-
-        p.getCase(5,5).setfSud(true);
-        p.getCase(5,5).setfEst(true);
-        p.getCase(5,5).setfOuest(true);
-
-        p.getCase(4,6).setfSud(true);
-
-        p.getCase(4,7).setfNord(true);
-        p.getCase(4,7).setfSud(true);
-        p.getCase(4,7).setfEst(true);
-
-        ArrayList<Case> domaines = new ArrayList<>(explore(p));
-        for (Case domaine : domaines) {
-            System.out.print(domaine.getX() + " ");
-            System.out.println(domaine.getY());
+    public void calculPoint() {
+        for (Joueur j : this.joueurs) {
+            int nbPoint = 0;
+            for (int i = 0; i < j.getDomaine().size(); i++) {
+                nbPoint += j.getDomaine().get(i).calculPoint();
+            }
         }
     }
 
-    public static ArrayList<Case> voisin(Case c, Plateau p) {
-        ArrayList<Case> cases = new ArrayList<>();
-        if (c.getX() == 0 && c.getY() == 0) {
-            if (!c.isfEst()) cases.add(p.getCase(c.getX(),c.getY()+1));
-            if (!c.isfSud()) cases.add(p.getCase(c.getX()+1,c.getY()));
-        }
-        else if (c.getX() == 0 && c.getY() == 11) {
-            if (!c.isfOuest()) cases.add(p.getCase(c.getX(),c.getY()-1));
-            if (!c.isfSud()) cases.add(p.getCase(c.getX()+1,c.getY()));
-        }
-        else if (c.getX() == 11 && c.getY() == 0) {
-            if (!c.isfEst()) cases.add(p.getCase(c.getX(),c.getY()+1));
-            if (!c.isfNord()) cases.add(p.getCase(c.getX()-1,c.getY()));
-        }
-        else if (c.getX() == 11 && c.getY() == 11) {
-            if (!c.isfNord()) cases.add(p.getCase(c.getX()-1,c.getY()));
-            if (!c.isfOuest()) cases.add(p.getCase(c.getX(),c.getY()-1));
-        }
-        else if (c.getX() == 0) {
-            if (!c.isfEst()) cases.add(p.getCase(c.getX(),c.getY()+1));
-            if (!c.isfSud()) cases.add(p.getCase(c.getX()+1,c.getY()));
-            if (!c.isfOuest()) cases.add(p.getCase(c.getX(),c.getY()-1));
-        }
-        else if (c.getY() == 0) {
-            if (!c.isfNord()) cases.add(p.getCase(c.getX()-1,c.getY()));
-            if (!c.isfEst()) cases.add(p.getCase(c.getX(),c.getY()+1));
-            if (!c.isfSud()) cases.add(p.getCase(c.getX()+1,c.getY()));
-        }
-        else if (c.getX() == 11) {
-            if (!c.isfNord()) cases.add(p.getCase(c.getX()-1,c.getY()));
-            if (!c.isfEst()) cases.add(p.getCase(c.getX(),c.getY()+1));
-            if (!c.isfOuest()) cases.add(p.getCase(c.getX(),c.getY()-1));
-        }
-        else if (c.getY() == 11) {
-            if (!c.isfNord()) cases.add(p.getCase(c.getX()-1,c.getY()));
-            if (!c.isfSud()) cases.add(p.getCase(c.getX()+1,c.getY()));
-            if (!c.isfOuest()) cases.add(p.getCase(c.getX(),c.getY()-1));
-        }
-        else {
-            if (!c.isfNord()) cases.add(p.getCase(c.getX()-1,c.getY()));
-            if (!c.isfEst()) cases.add(p.getCase(c.getX(),c.getY()+1));
-            if (!c.isfSud()) cases.add(p.getCase(c.getX()+1,c.getY()));
-            if (!c.isfOuest()) cases.add(p.getCase(c.getX(),c.getY()-1));
-        }
-        return cases;
-    }
-
-    public static ArrayList<Case> explore(Plateau p) {
-        ArrayList<Case> domaine = new ArrayList<>();
-        domaine.add(p.getCase(2,6));
-        for (int i = 0; i < domaine.size(); i++) {
-            domaine.addAll(voisin(domaine.get(i),p));
-            List<Case> listWithoutDuplicates = domaine.stream().distinct().collect(Collectors.toList());
-            domaine.clear();
-            domaine.addAll(listWithoutDuplicates);
-        }
-        return domaine;
+    public void refreshDomaine() {
+        this.plateau.setDomaine();
+        this.assignDomaine();
+        this.calculPoint();
     }
 
     public int getNbJoueurs(){

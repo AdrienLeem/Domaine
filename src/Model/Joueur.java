@@ -66,6 +66,10 @@ public class Joueur implements Serializable {
         this.ducat += ducat;
     }
 
+    public ArrayList<Domaine> getDomaine() {
+        return domaine;
+    }
+
     public void placePion(Pion pion, int x, int y) {
         pion.setX(x);
         pion.setY(y);

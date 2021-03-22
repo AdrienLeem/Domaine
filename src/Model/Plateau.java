@@ -2,7 +2,10 @@ package Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Plateau implements Serializable {
     private Tuile[][] tuiles;
@@ -92,7 +95,72 @@ public class Plateau implements Serializable {
     }
 
     public void setDomaine() {
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                if (!isPresent(this.getCase(i,j))) this.domaines.add(new Domaine(explore(this.getCase(i,j))));
+            }
+        }
+    }
 
+    public ArrayList<Case> voisin(Case c) {
+        ArrayList<Case> cases = new ArrayList<>();
+        if (c.getX() == 0 && c.getY() == 0) {
+            if (!c.isfEst()) cases.add(this.getCase(c.getX(),c.getY()+1));
+            if (!c.isfSud()) cases.add(this.getCase(c.getX()+1,c.getY()));
+        }
+        else if (c.getX() == 0 && c.getY() == 11) {
+            if (!c.isfOuest()) cases.add(this.getCase(c.getX(),c.getY()-1));
+            if (!c.isfSud()) cases.add(this.getCase(c.getX()+1,c.getY()));
+        }
+        else if (c.getX() == 11 && c.getY() == 0) {
+            if (!c.isfEst()) cases.add(this.getCase(c.getX(),c.getY()+1));
+            if (!c.isfNord()) cases.add(this.getCase(c.getX()-1,c.getY()));
+        }
+        else if (c.getX() == 11 && c.getY() == 11) {
+            if (!c.isfNord()) cases.add(this.getCase(c.getX()-1,c.getY()));
+            if (!c.isfOuest()) cases.add(this.getCase(c.getX(),c.getY()-1));
+        }
+        else if (c.getX() == 0) {
+            if (!c.isfEst()) cases.add(this.getCase(c.getX(),c.getY()+1));
+            if (!c.isfSud()) cases.add(this.getCase(c.getX()+1,c.getY()));
+            if (!c.isfOuest()) cases.add(this.getCase(c.getX(),c.getY()-1));
+        }
+        else if (c.getY() == 0) {
+            if (!c.isfNord()) cases.add(this.getCase(c.getX()-1,c.getY()));
+            if (!c.isfEst()) cases.add(this.getCase(c.getX(),c.getY()+1));
+            if (!c.isfSud()) cases.add(this.getCase(c.getX()+1,c.getY()));
+        }
+        else if (c.getX() == 11) {
+            if (!c.isfNord()) cases.add(this.getCase(c.getX()-1,c.getY()));
+            if (!c.isfEst()) cases.add(this.getCase(c.getX(),c.getY()+1));
+            if (!c.isfOuest()) cases.add(this.getCase(c.getX(),c.getY()-1));
+        }
+        else if (c.getY() == 11) {
+            if (!c.isfNord()) cases.add(this.getCase(c.getX()-1,c.getY()));
+            if (!c.isfSud()) cases.add(this.getCase(c.getX()+1,c.getY()));
+            if (!c.isfOuest()) cases.add(this.getCase(c.getX(),c.getY()-1));
+        }
+        else {
+            if (!c.isfNord()) cases.add(this.getCase(c.getX()-1,c.getY()));
+            if (!c.isfEst()) cases.add(this.getCase(c.getX(),c.getY()+1));
+            if (!c.isfSud()) cases.add(this.getCase(c.getX()+1,c.getY()));
+            if (!c.isfOuest()) cases.add(this.getCase(c.getX(),c.getY()-1));
+        }
+        return cases;
+    }
+
+    public ArrayList<Case> explore(Case c) {
+        ArrayList<Case> domaine = new ArrayList<>();
+        if (!isPresent(c)) {
+            domaine.add(c);
+            for (int i = 0; i < domaine.size(); i++) {
+                domaine.addAll(voisin(domaine.get(i)));
+                List<Case> listWithoutDuplicates = domaine.stream().distinct().collect(Collectors.toList());
+                domaine.clear();
+                domaine.addAll(listWithoutDuplicates);
+            }
+        }
+        return domaine;
     }
 
     public Case getCase(int x, int y) {
@@ -106,5 +174,19 @@ public class Plateau implements Serializable {
             }
         }
         return null;
+    }
+
+    public ArrayList<Domaine> getDomaines() {
+        return domaines;
+    }
+
+    public boolean isPresent(Case c) {
+        for (Domaine domaine : this.domaines) {
+            for (int j = 0; j < domaine.getDomaine().size(); j++) {
+                if (c.getX() == domaine.getDomaine().get(j).getX() && c.getY() == domaine.getDomaine().get(j).getY())
+                    return true;
+            }
+        }
+        return false;
     }
 }

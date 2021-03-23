@@ -466,7 +466,7 @@ public class GameController{
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(this.action){
+                    if(this.action && this.partie.pionValide(j.getChateaux().get(y),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,true)){
                         // If bonne case pour chateau
                         ImageView img = new ImageView();
                         img.setFitHeight(65);
@@ -488,15 +488,15 @@ public class GameController{
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(this.action){
+                    if(this.action && this.partie.pionValide(j.getChevaliers().get(y),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,true)){
                         // If bonne case pour chevalier
                         ImageView img = new ImageView();
                         img.setFitHeight(65);
                         img.setFitWidth(65);
                         img.setDisable(true);
-                        img.setImage(new Image("img/PionChevalier"+j.getCouleur()+".png"));
+                        img.setImage(new Image("img/PionChevalier" + j.getCouleur() + ".png"));
                         int finalY = y;
-                        Platform.runLater(() -> placer(img,j,j.getChevaliers().get(finalY)));
+                        Platform.runLater(() -> placer(img, j, j.getChevaliers().get(finalY)));
                         this.action = false;
                         WaitTour = false;
                         // la

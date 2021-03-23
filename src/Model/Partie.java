@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Partie implements Serializable {
     private final Plateau plateau;
@@ -312,10 +310,10 @@ public class Partie implements Serializable {
             for (int a = 0; a < this.joueurs.size(); a++) {
                 lint.add(0);
             }
-            for (int j = 0; j < this.plateau.getDomaines().get(i).getDomaine().size(); j++) {
+            for (int j = 0; j < this.plateau.getDomaines().get(i).getCases().size(); j++) {
                 for (Joueur joueur : this.joueurs) {
                     for (int k = 0; k < joueur.getChateaux().size(); k++) {
-                        if (this.plateau.getDomaines().get(i).getDomaine().get(j).getX() == joueur.getChateaux().get(k).getX() && this.plateau.getDomaines().get(i).getDomaine().get(j).getY() == joueur.getChateaux().get(k).getY()) {
+                        if (this.plateau.getDomaines().get(i).getCases().get(j).getX() == joueur.getChateaux().get(k).getX() && this.plateau.getDomaines().get(i).getCases().get(j).getY() == joueur.getChateaux().get(k).getY()) {
                             switch (joueur.getCouleur()) {
                                 case "Rouge" -> lint.set(0, lint.get(0) + 1);
                                 case "Bleu" -> lint.set(1, lint.get(1) + 1);
@@ -397,5 +395,35 @@ public class Partie implements Serializable {
 
     public void setDernierjoueur(int dernierjoueur) {
         this.dernierjoueur = dernierjoueur;
+    }
+
+    public boolean pionValide(Pion p, Case c, Joueur a, boolean init)
+    {
+        boolean verif = false;
+        for (Joueur j : getJoueurs()) {
+            for (Pion chateau : j.getChateaux()) {
+                if (chateau.getX() == c.getX() && chateau.getY() == c.getY()) return false;
+            }
+            for (Pion chevalier : j.getChevaliers()){
+                if (chevalier.getX() == c.getX() && chevalier.getY() == c.getY()) return false;
+            }
+            if (!j.equals(a))
+                for (Domaine d : j.getDomaine())
+                    for (Case e : d.getCases())
+                        if (c.getX() == e.getX() && c.getY() == e.getY())
+                            return false;
+
+        }
+        if (!(c instanceof CasePrairie || c instanceof CaseForet)) return false;
+        else if (c instanceof CaseForet) {
+            if (p instanceof PionChateau) return false;
+            else {
+                if (!init) {
+                    if (a.getDucat()>0) a.setDucat(-1);
+                    else return false;
+                }
+            }
+        }
+        return true;
     }
 }

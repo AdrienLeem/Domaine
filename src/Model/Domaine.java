@@ -30,7 +30,7 @@ public class Domaine implements Serializable {
         return nbChateau != 1;
     }
 
-    public ArrayList<Case> getDomaine() {
+    public ArrayList<Case> getCases() {
         return domaine;
     }
 }

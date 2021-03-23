@@ -2,7 +2,6 @@ package Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -183,8 +182,8 @@ public class Plateau implements Serializable {
 
     public boolean isPresent(Case c) {
         for (Domaine domaine : this.domaines) {
-            for (int j = 0; j < domaine.getDomaine().size(); j++) {
-                if (c.getX() == domaine.getDomaine().get(j).getX() && c.getY() == domaine.getDomaine().get(j).getY())
+            for (int j = 0; j < domaine.getCases().size(); j++) {
+                if (c.getX() == domaine.getCases().get(j).getX() && c.getY() == domaine.getCases().get(j).getY())
                     return true;
             }
         }

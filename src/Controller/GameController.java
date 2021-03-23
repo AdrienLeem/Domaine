@@ -375,8 +375,8 @@ public class GameController{
 
     public void PremierTour(){
         int y =0;
+        addNbTour();
         for (int i = 1; i <= 4; i++){
-            addNbTour();
             for( Joueur j : this.partie.getJoueurs()) {
                 this.LabelJoueur.setText("Joueur :"+j.getNom());
                 boolean WaitTour = true;

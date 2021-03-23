@@ -87,6 +87,7 @@ public class Joueur implements Serializable {
         else this.main.get(index).getActions().get(choix).run(this,Optional.empty(),x);
         this.main.get(index).getActions().get(choix).setNombre(this.main.get(index).getActions().get(choix).getNombre()-1);
         if (getMain().get(index).getActions().get(choix).getNombre()==0){
+            setDucat(-this.main.get(index).getPrixAction());
             this.main.remove(index);
         }
     }

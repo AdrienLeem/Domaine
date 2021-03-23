@@ -143,20 +143,20 @@ public class GameController{
 
     @FXML
     void SlotCart1Clicked(MouseEvent event) {
-        MessagePop("Voulez-vous jouer ou vendre la carte ?",true,2,"Jouer","Vendre");
         this.SlotSelect = 1;
+        MessagePop("Voulez-vous jouer ou vendre la carte ?",true,2,"Jouer","Vendre");
     }
 
     @FXML
     void SlotCart2Clicked(MouseEvent event) {
-        MessagePop("Voulez-vous jouer ou vendre la carte ?",true,2,"Jouer","Vendre");
         this.SlotSelect = 2;
+        MessagePop("Voulez-vous jouer ou vendre la carte ?",true,2,"Jouer","Vendre");
     }
 
     @FXML
     void SlotCart3Clicked(MouseEvent event) {
-        MessagePop("Voulez-vous jouer ou vendre la carte ?",true,2,"Jouer","Vendre");
         this.SlotSelect = 3;
+        MessagePop("Voulez-vous jouer ou vendre la carte ?",true,2,"Jouer","Vendre");
     }
 
     @FXML
@@ -345,8 +345,18 @@ public class GameController{
                     }
                 }
             });
-            h.getChildren().add(yes);
-            h.getChildren().add(no);
+            String l = this.LabelJoueur.getText().split(":")[1];
+            Joueur j = this.partie.getJoueurbyname(l);
+            if (action==2){
+                if (j.getDucat() >= j.getMain().get(SlotSelect-1).getPrixAction()) {
+                    h.getChildren().add(yes);
+                }
+                h.getChildren().add(no);
+            }
+            else {
+                h.getChildren().add(yes);
+                h.getChildren().add(no);
+            }
             v.getChildren().add(h);
         }else{
             Button ok = new Button();

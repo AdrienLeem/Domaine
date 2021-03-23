@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Domaine {
+public class Domaine implements Serializable {
     private ArrayList<Case> domaine;
 
     public Domaine(ArrayList<Case> d) {

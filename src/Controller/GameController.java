@@ -123,6 +123,30 @@ public class GameController{
     private Text LabelVendu;
 
     @FXML
+    private Text PointJ2;
+
+    @FXML
+    private Text PointJ4;
+
+    @FXML
+    private Text PointJ1;
+
+    @FXML
+    private Text PointJ3;
+
+    @FXML
+    private ImageView imgJ1;
+
+    @FXML
+    private ImageView imgJ2;
+
+    @FXML
+    private ImageView imgJ3;
+
+    @FXML
+    private ImageView imgJ4;
+
+    @FXML
     void CarteVendu(MouseEvent event) {
         pasClickable(true,true,true,true,true,true);
         VBox LaVBoxPrimardiale = new VBox();
@@ -223,6 +247,17 @@ public class GameController{
     public void initGame(){
         this.action =false;
         initPlateau();
+
+        if(this.partie.getNbJoueurs()==2) {
+            this.imgJ3.setVisible(false);
+            this.PointJ3.setVisible(false);
+            this.imgJ4.setVisible(false);
+            this.PointJ4.setVisible(false);
+        }else if(this.partie.getNbJoueurs()==3) {
+            this.imgJ4.setVisible(false);
+            this.PointJ4.setVisible(false);
+        }
+
         initSlot();
         Jeu();
     }
@@ -766,12 +801,31 @@ public class GameController{
         }
     }
 
+    public void setPoint(){
+        if(this.partie.getNbJoueurs() == 2){
+            this.PointJ1.setText(String.valueOf(this.partie.getJoueurs().get(0).getPoint()));
+            this.PointJ2.setText(String.valueOf(this.partie.getJoueurs().get(1).getPoint()));
+        }
+        if(this.partie.getNbJoueurs() == 3){
+            this.PointJ1.setText(String.valueOf(this.partie.getJoueurs().get(0).getPoint()));
+            this.PointJ2.setText(String.valueOf(this.partie.getJoueurs().get(1).getPoint()));
+            this.PointJ3.setText(String.valueOf(this.partie.getJoueurs().get(2).getPoint()));
+        }
+        if(this.partie.getNbJoueurs() == 4){
+            this.PointJ1.setText(String.valueOf(this.partie.getJoueurs().get(0).getPoint()));
+            this.PointJ2.setText(String.valueOf(this.partie.getJoueurs().get(1).getPoint()));
+            this.PointJ3.setText(String.valueOf(this.partie.getJoueurs().get(2).getPoint()));
+            this.PointJ4.setText(String.valueOf(this.partie.getJoueurs().get(3).getPoint()));
+        }
+    }
+
     public void Jeu(){
         if(!this.partie.getJoueurs().get(0).getChateaux().get(0).estPlace()){
             setLabelNbTour();
             new Thread(() -> {
                 PremierTour();
                 while (true){
+                    setPoint();
                     Tour();
                 }
             }).start();
@@ -779,6 +833,7 @@ public class GameController{
             setLabelNbTour();
             new Thread(() -> {
                 while (true){
+                    setPoint();
                     Tour();
                 }
             }).start();

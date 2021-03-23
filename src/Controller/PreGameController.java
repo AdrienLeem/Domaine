@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.IA;
 import Model.Joueur;
 import Model.Partie;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -30,6 +32,7 @@ public class PreGameController implements Initializable {
     private int nbJoueur;
     private boolean levier = false;
     private ArrayList<TextField> listField = new ArrayList<TextField>();
+    private ArrayList<CheckBox> listcheckbox = new ArrayList<CheckBox>();
     private ArrayList<Joueur> listJoueur = new ArrayList<Joueur>();
 
     @FXML
@@ -46,7 +49,7 @@ public class PreGameController implements Initializable {
 
     @FXML
     void Suivant(ActionEvent event) {
-        if(this.levier == false) {
+        if(!this.levier) {
             if (!this.comboBox.getSelectionModel().isEmpty() && !this.nomPartie.getText().isEmpty()) {
                 this.nom = this.nomPartie.getText();
                 this.nbJoueur = this.comboBox.getSelectionModel().getSelectedItem();
@@ -54,17 +57,25 @@ public class PreGameController implements Initializable {
                 for (int i = 1; i <= this.nbJoueur; i++) {
                     HBox v = new HBox();
                     TextField t = new TextField();
+                    CheckBox checkBox = new CheckBox();
+                    this.listcheckbox.add(checkBox);
                     this.listField.add(t);
                     t.setPromptText("Nom Joueur " + i);
                     v.setAlignment(Pos.CENTER);
                     v.getChildren().add(t);
+                    checkBox.setText("IA ");
+                    v.getChildren().add(checkBox);
                     this.vBox.getChildren().add(v);
                 }
                 this.levier = true;
             }
         }else{
             for (int i = 0; i < this.nbJoueur; i++) {
-                this.listJoueur.add(new Joueur(this.listField.get(i).getText()));
+                if(this.listcheckbox.get(i).isArmed()){
+                    this.listJoueur.add(new IA(this.listField.get(i).getText()));
+                }else{
+                    this.listJoueur.add(new Joueur(this.listField.get(i).getText()));
+                }
             }
             this.partie = new Partie(this.listJoueur);
             Sauvegarde.sauvegarder(this.partie,this.nom);

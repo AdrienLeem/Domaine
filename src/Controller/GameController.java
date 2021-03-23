@@ -41,6 +41,7 @@ public class GameController{
     private int carteActionChoix;
     private boolean carteAction;
     private int Dernierjoueur;
+    private boolean isCarteVendu;
 
     @FXML
     private ScrollPane MainPane;
@@ -123,12 +124,55 @@ public class GameController{
 
     @FXML
     void CarteVendu(MouseEvent event) {
-        pasClickable(true,true,true,true,true,false);
+        pasClickable(true,true,true,true,true,true);
+        VBox LaVBoxPrimardiale = new VBox();
+        LaVBoxPrimardiale.setAlignment(Pos.CENTER);
+        LaVBoxPrimardiale.setStyle("-fx-background-color: WHITE");
+        VBox v = new VBox();
+        HBox h = new HBox();
+
+        for(int i =0;i<this.partie.getCartesVendu().size();i++) {
+            ImageView img = new ImageView();
+            img.setFitHeight(100);
+            img.setFitWidth(65);
+            if(i==this.partie.getCartesVendu().size()-1){
+                img.setDisable(this.isCarteVendu);
+            }
+            img.setImage(new Image("img/Carte_" + this.partie.getCartesVendu().get(i).getNom() + ".png"));
+            int finalI = i;
+            img.setOnMouseClicked(event2 -> {
+                pasClickable(true,true,true,true,true,false);
+                String l = this.LabelJoueur.getText().split(":")[1];
+                this.partie.getJoueurbyname(l).getMain().add(this.partie.getCartesVendu().get(finalI));
+                this.partie.getCartesVendu().remove(finalI);
+                afficherBord(this.partie.getJoueurbyname(l));
+                this.anchorPane.getChildren().remove(LaVBoxPrimardiale);
+            });
+            h.getChildren().add(img);
+            if(h.getChildren().size() == 5 ){
+                v.getChildren().add(h);
+                h.getChildren().clear();
+            }
+        }
+        v.getChildren().add(h);
+        Button butonPRIMORDIAU = new Button();
+        butonPRIMORDIAU.setText("Retour");
+        butonPRIMORDIAU.setOnMousePressed((event3) -> {
+            pasClickable(true,true,true,false,false,true);
+            this.anchorPane.getChildren().remove(LaVBoxPrimardiale);
+        });
+        LaVBoxPrimardiale.getChildren().add(butonPRIMORDIAU);
+        LaVBoxPrimardiale.getChildren().add(v);
+
+        LaVBoxPrimardiale.setLayoutX(this.Plateau.getWidth()/2 - 100);
+        LaVBoxPrimardiale.setLayoutY(this.Plateau.getHeight()/2 - 100);
+        this.anchorPane.getChildren().add(LaVBoxPrimardiale);
     }
 
     @FXML
     void Finir_Tour(ActionEvent event) {
         this.WaitTour = false;
+        this.isCarteVendu = false;
     }
 
     @FXML
@@ -519,6 +563,7 @@ public class GameController{
     }
 
     public void VendreCarte(Joueur j){
+        this.isCarteVendu = true;
         Carte c = j.vendreCarte(this.SlotSelect-1);
         this.partie.setCartesVendu(c);
         afficherBord(j);
@@ -624,6 +669,42 @@ public class GameController{
     public void RefreshPlateau(){
         Model.Plateau p = this.partie.getPlateau();
         ArrayList<Joueur> listjoueurs = this.partie.getJoueurs();
+
+        this.Plateau.getChildren().clear();
+        for(int i=0;i<12;i++){
+            for(int j=0;j<12;j++){
+                ImageView img = new ImageView();
+                img.setFitHeight(65);
+                img.setFitWidth(65);
+                if(p.getCase(i,j) instanceof CaseForet){
+                    img.setImage(new Image("img/Bush.png"));
+                }else if(p.getCase(i,j) instanceof CaseMineOr){
+                    img.setImage(new Image("img/MineOr.png"));
+                }else if(p.getCase(i,j) instanceof CaseMineArgent){
+                    img.setImage(new Image("img/MineArgent.png"));
+                }else if(p.getCase(i,j) instanceof CaseMineCuivre){
+                    img.setImage(new Image("img/MineCuivre.png"));
+                }else if(p.getCase(i,j) instanceof CaseMineDiamant){
+                    img.setImage(new Image("img/MineDiamant.png"));
+                }else if(p.getCase(i,j) instanceof CaseCiteRoyale){
+                    img.setImage(new Image("img/CaseChateauRoi.png"));
+                }else if(p.getCase(i,j) instanceof CaseVillage){
+                    img.setImage(new Image("img/TerrainVille.png"));
+                }else {
+                    img.setImage(new Image("img/terrain.png"));
+                }
+                img.setOnMouseClicked(event -> {
+                    int x = GridPane.getRowIndex(img);
+                    int y = GridPane.getColumnIndex(img);
+
+                    this.CaseClicked.clear();
+                    this.CaseClicked.add(x);
+                    this.CaseClicked.add(y);
+                    this.action = true;
+                });
+                this.Plateau.add(img,j,i);
+            }
+        }
 
         for(Joueur joueur : listjoueurs){
             for(PionChateau chateau : joueur.getChateaux()){

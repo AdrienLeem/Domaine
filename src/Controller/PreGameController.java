@@ -100,7 +100,7 @@ public class PreGameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.comboBox.getItems().addAll(1,2,3,4);
+        this.comboBox.getItems().addAll(2,3,4);
     }
 
 

@@ -665,7 +665,9 @@ public class GameController{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
                 if (this.action) {
+                    this.LabelInformation.setText("Veuillez selectionner une case valide");
                     int Case_1_X = this.CaseClicked.get(0);
                     int Case_1_Y = this.CaseClicked.get(1);
                     if (a instanceof AjoutFrontiere || a instanceof Transfuge) {
@@ -680,19 +682,27 @@ public class GameController{
                             if (this.action) {
                                 int Case_2_X = this.CaseClicked.get(0);
                                 int Case_2_Y = this.CaseClicked.get(1);
-                                if (((Case_2_X - Case_1_X) == 1 && (Case_2_Y - Case_1_Y) == 0) || ((Case_2_X - Case_1_X) == -1 && (Case_2_Y - Case_1_Y) == 0) || ((Case_2_X - Case_1_X) == 0 && (Case_2_Y - Case_1_Y) == -1) || ((Case_2_X - Case_1_X) == 0 && (Case_2_Y - Case_1_Y) == 1)) {
-                                    j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y, Case_2_X, Case_2_Y);
-                                    Platform.runLater(this::RefreshPlateau);
-                                    WaitTour2 = false;
+                                if (a instanceof AjoutFrontiere && this.partie.frontiereValide(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y),this.partie.getPlateau().getCase(Case_2_X,Case_2_Y))) {
+                                    j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y, Case_2_X, Case_2_Y);//AddFrontiere
+
+                                }else if (a instanceof Transfuge) {
+                                    j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y, Case_2_X, Case_2_Y);//Transfuge
                                 }
+                                else this.LabelInformation.setText("Cases non Valides");
+                                Platform.runLater(this::RefreshPlateau);
+                                WaitTour2 = false;
                             }
                         }
-                    } else {
-                        j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y);
-                    }
-                    this.action = false;
-                    WaitTour = false;
+                    } else if (a instanceof AjoutChevalier)
+                        if (this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,false))
+                            j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y);//Addchevalier
+                      else if (a instanceof ExtensionDomaine) {
+                          j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y); //extension
+                      }
+                      else this.LabelInformation.setText("Case non Valide");
                 }
+                this.action = false;
+                WaitTour = false;
             }
         }
         Platform.runLater(this::RefreshPlateau);

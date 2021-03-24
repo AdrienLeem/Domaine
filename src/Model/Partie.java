@@ -399,7 +399,6 @@ public class Partie implements Serializable {
 
     public boolean pionValide(Pion p, Case c, Joueur a, boolean init)
     {
-        boolean verif = false;
         for (Joueur j : getJoueurs()) {
             for (Pion chateau : j.getChateaux()) {
                 if (chateau.getX() == c.getX() && chateau.getY() == c.getY()) return false;
@@ -412,6 +411,8 @@ public class Partie implements Serializable {
                     for (Case e : d.getCases())
                         if (c.getX() == e.getX() && c.getY() == e.getY())
                             return false;
+            //manque chevalier prend chateau ou autre chevalier
+            //manque chateau a plus de 6 cases entre eux
 
         }
         if (!(c instanceof CasePrairie || c instanceof CaseForet)) return false;
@@ -425,5 +426,19 @@ public class Partie implements Serializable {
             }
         }
         return true;
+    }
+
+    public boolean frontiereValide(Case c1, Case c2) {
+        if (!(c2.getX() - c1.getX() == 1 && (c2.getY() - c1.getY()) == 0)
+                && !(c2.getX() - c1.getX() == -1 && (c2.getY() - c1.getY()) == 0)
+                && !(c2.getX() - c1.getX() == 0 && (c2.getY() - c1.getY()) == -1)
+                && !(c2.getX() - c1.getX() == 0 && (c2.getY() - c1.getY()) == 1)){
+            return false;
+        }
+        //MANQUE si case font partie d'un domaine
+        return (!c1.isfNord() || (c2.getX() != c1.getX() - 1 || c2.getY() != c1.getY()))
+                && (!c1.isfSud() || (c2.getX() != c1.getX() + 1 || c2.getY() != c1.getY()))
+                && (!c1.isfEst() || (c2.getX() != c1.getX() || c2.getY() != c1.getY() + 1))
+                && (!c1.isfOuest() || (c2.getX() != c1.getX() || c2.getY() != c1.getY() - 1));
     }
 }

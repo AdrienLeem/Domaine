@@ -455,51 +455,56 @@ public class GameController{
     public void PremierTour(){
         int y =0;
         addNbTour();
-        for (int i = 1; i <= 4; i++){
+        for (int i = 0; i < 4; i++){
             for( Joueur j : this.partie.getJoueurs()) {
                 this.LabelJoueur.setText("Joueur :"+j.getNom());
                 boolean WaitTour = true;
-                this.LabelInformation.setText("Placer votre château.");
                 while(WaitTour){
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(this.action && this.partie.pionValide(j.getChateaux().get(y),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,true)){
-                        // If bonne case pour chateau
-                        ImageView img = new ImageView();
-                        img.setFitHeight(65);
-                        img.setFitWidth(65);
-                        img.setDisable(true);
-                        img.setImage(new Image("img/Pion_Chateau_"+j.getCouleur()+".png"));
-                        int finalY = y;
-                        Platform.runLater(() -> placer(img,j,j.getChateaux().get(finalY)));
+                    this.LabelInformation.setText("Placer votre château.");
+                    if (this.action) {
+                        if (this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)), j, true, i)) {
+                            // If bonne case pour chateau
+                            ImageView img = new ImageView();
+                            img.setFitHeight(65);
+                            img.setFitWidth(65);
+                            img.setDisable(true);
+                            img.setImage(new Image("img/Pion_Chateau_" + j.getCouleur() + ".png"));
+                            int finalY = y;
+                            Platform.runLater(() -> placer(img, j, j.getChateaux().get(finalY)));
+                            WaitTour = false;
+                            // la
+                        } else this.LabelInformation.setText("Case non Valide");
                         this.action = false;
-                        WaitTour = false;
-                        // la
                     }
                 }
                 WaitTour = true;
-                this.LabelInformation.setText("Placer votre chevalier.");
+
                 while(WaitTour){
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(this.action && this.partie.pionValide(j.getChevaliers().get(y),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,true)){
-                        // If bonne case pour chevalier
-                        ImageView img = new ImageView();
-                        img.setFitHeight(65);
-                        img.setFitWidth(65);
-                        img.setDisable(true);
-                        img.setImage(new Image("img/PionChevalier" + j.getCouleur() + ".png"));
-                        int finalY = y;
-                        Platform.runLater(() -> placer(img, j, j.getChevaliers().get(finalY)));
+                    this.LabelInformation.setText("Placer votre chevalier.");
+                    if (this.action) {
+                        if (this.partie.pionValide(j.getChevaliers().get(y), this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)), j, true, i)) {
+                            // If bonne case pour chevalier
+                            ImageView img = new ImageView();
+                            img.setFitHeight(65);
+                            img.setFitWidth(65);
+                            img.setDisable(true);
+                            img.setImage(new Image("img/PionChevalier" + j.getCouleur() + ".png"));
+                            int finalY = y;
+                            Platform.runLater(() -> placer(img, j, j.getChevaliers().get(finalY)));
+                            WaitTour = false;
+                            // la
+                        } else this.LabelInformation.setText("Case non Valide");
                         this.action = false;
-                        WaitTour = false;
-                        // la
                     }
                 }
             }

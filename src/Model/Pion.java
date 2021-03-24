@@ -7,8 +7,8 @@ public abstract class Pion implements Serializable {
     private Integer y;
 
     public Pion() {
-        this.x = -1;
-        this.y = -1;
+        this.x = -100;
+        this.y = -100;
     }
 
     public Integer getX() {
@@ -28,6 +28,6 @@ public abstract class Pion implements Serializable {
     }
 
     public boolean estPlace() {
-        return this.x != -1 && this.y != -1;
+        return this.x != -100 && this.y != -100;
     }
 }

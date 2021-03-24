@@ -2,8 +2,11 @@ package Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static java.lang.Math.abs;
 
 public class Partie implements Serializable {
     private final Plateau plateau;
@@ -349,9 +352,41 @@ public class Partie implements Serializable {
     public void refreshDomaine() {
         this.plateau.setDomaine();
         this.assignDomaine();
+        this.verifFrontieredomaine();
         this.calculPoint();
     }
 
+    public void verifFrontieredomaine(){
+        for (Joueur j : this.getJoueurs())
+            for (Domaine d: j.getDomaine())
+                for (Case c: d.getCases()) {
+                    if (c.isfOuest()) {
+                        Case c2 = this.plateau.getCase(c.getX(),c.getY()-1);
+                        if (d.getCases().contains(c2)){
+                            c.setfOuest(false);
+                            c2.setfEst(false);
+                        }
+                    } if (c.isfEst()) {
+                        Case c2 = this.plateau.getCase(c.getX(),c.getY()+1);
+                        if (d.getCases().contains(c2)){
+                            c.setfEst(false);
+                            c2.setfOuest(false);
+                        }
+                    } if (c.isfSud()) {
+                        Case c2 = this.plateau.getCase(c.getX()+1,c.getY());
+                        if (d.getCases().contains(c2)){
+                            c.setfSud(false);
+                            c2.setfNord(false);
+                        }
+                    } if (c.isfNord()) {
+                        Case c2 = this.plateau.getCase(c.getX()-1,c.getY());
+                        if (d.getCases().contains(c2)){
+                            c.setfNord(false);
+                            c2.setfSud(false);
+                        }
+                    }
+                }
+    }
     public int getNbJoueurs(){
         return this.joueurs.size();
     }
@@ -381,9 +416,9 @@ public class Partie implements Serializable {
     }
 
     public Joueur getJoueurbyname(String n){
-        for(int i=0;i<this.joueurs.size();i++){
-            if(this.joueurs.get(i).getNom().equals(n)){
-                return this.joueurs.get(i);
+        for (Joueur joueur : this.joueurs) {
+            if (joueur.getNom().equals(n)) {
+                return joueur;
             }
         }
         return null;
@@ -397,11 +432,12 @@ public class Partie implements Serializable {
         this.dernierjoueur = dernierjoueur;
     }
 
-    public boolean pionValide(Pion p, Case c, Joueur a, boolean init)
+    public boolean pionValide(Pion p, Case c, Joueur a, boolean init, int... i)
     {
         for (Joueur j : getJoueurs()) {
             for (Pion chateau : j.getChateaux()) {
                 if (chateau.getX() == c.getX() && chateau.getY() == c.getY()) return false;
+
             }
             for (Pion chevalier : j.getChevaliers()){
                 if (chevalier.getX() == c.getX() && chevalier.getY() == c.getY()) return false;
@@ -411,9 +447,6 @@ public class Partie implements Serializable {
                     for (Case e : d.getCases())
                         if (c.getX() == e.getX() && c.getY() == e.getY())
                             return false;
-            //manque chevalier prend chateau ou autre chevalier
-            //manque chateau a plus de 6 cases entre eux
-
         }
         if (!(c instanceof CasePrairie || c instanceof CaseForet)) return false;
         else if (c instanceof CaseForet) {
@@ -424,6 +457,45 @@ public class Partie implements Serializable {
                     else return false;
                 }
             }
+        }
+        if (p instanceof PionChevalier){
+            return chevalierValide(c, a, init, i);
+        } else {
+            if (init)
+                return chateauValide(c, a);
+        }
+        return true;
+    }
+
+    private boolean chevalierValide(Case c, Joueur j, boolean init, int[] i) {
+        if (init){
+            return j.getChateaux().get(i[0]).getX() - c.getX() == 0 && j.getChateaux().get(i[0]).getY() - c.getY() == -1
+                    || j.getChateaux().get(i[0]).getX() - c.getX() == 0 && j.getChateaux().get(i[0]).getY() - c.getY() == 1
+                    || j.getChateaux().get(i[0]).getX() - c.getX() == -1 && j.getChateaux().get(i[0]).getY() - c.getY() == 0
+                    || j.getChateaux().get(i[0]).getX() - c.getX() == 1 && j.getChateaux().get(i[0]).getY() - c.getY() == 0;
+        }
+        else {
+            for (Pion chevalier : j.getChevaliers())
+                if (chevalier.getX() == c.getX() && chevalier.getY() == c.getY() - 1
+                        || chevalier.getX() == c.getX() && chevalier.getY() == c.getY() + 1
+                        || chevalier.getX() == c.getX() - 1 && chevalier.getY() == c.getY()
+                        || chevalier.getX() == c.getX() + 1 && chevalier.getY() == c.getY())
+                    return true;
+            for (Pion chateau : j.getChateaux()) {
+                if (chateau.getX() - c.getX() == 0 && chateau.getY() - c.getY() == -1
+                        || chateau.getX() - c.getX() == 0 && chateau.getY() - c.getY() == 1
+                        || chateau.getX() - c.getX() == -1 && chateau.getY() - c.getY() == 0
+                        || chateau.getX() - c.getX() == 1 && chateau.getY() - c.getY() == 0)
+                    return true;
+            }
+        }
+            return false;
+    }
+
+    public boolean chateauValide(Case c, Joueur j) {
+        for (Pion chateau : j.getChateaux()) {
+            if (!(abs(chateau.getX() - c.getX()) + abs(chateau.getY() - c.getY()) > 5))
+                return false;
         }
         return true;
     }

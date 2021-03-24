@@ -109,7 +109,7 @@ public class Joueur implements Serializable {
 
     public int getChevalierNonPlacer(){
         int res = 0;
-        for(int i =0;i<this.getChevaliers().size();i++){
+        for(int i = 0;i<this.getChevaliers().size();i++){
             if(!this.chevaliers.get(i).estPlace()){
                 res++;
             }

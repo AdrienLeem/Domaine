@@ -453,9 +453,14 @@ public class GameController{
 
 
     public void PremierTour(){
+        pasClickable(true,true,true,true,true,true);
         int y =0;
         addNbTour();
-        for (int i = 0; i < 4; i++){
+        int nbpieces;
+        if (this.partie.getJoueurs().size()<4){
+            nbpieces = 4;
+        } else nbpieces =3;
+        for (int i = 0; i < nbpieces; i++){
             for( Joueur j : this.partie.getJoueurs()) {
                 this.LabelJoueur.setText("Joueur :"+j.getNom());
                 boolean WaitTour = true;
@@ -663,7 +668,6 @@ public class GameController{
             }
 
             Action a = j.getMain().get(this.SlotSelect - 1).getActions().get(this.carteActionChoix);
-            System.out.println(a);
             while (a.getNombre() != 0) {
                 try {
                     Thread.sleep(100);

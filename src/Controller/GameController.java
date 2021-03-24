@@ -585,7 +585,6 @@ public class GameController{
             }
         }
         this.Dernierjoueur = 0;
-        this.partie.refreshDomaine();
     }
 
     public void pasClickable(boolean slot1, boolean slot2, boolean slot3,boolean pioche, boolean vendu, boolean button){
@@ -659,6 +658,7 @@ public class GameController{
             }
 
             Action a = j.getMain().get(this.SlotSelect - 1).getActions().get(this.carteActionChoix);
+            System.out.println(a);
             while (a.getNombre() != 0) {
                 try {
                     Thread.sleep(100);
@@ -693,14 +693,17 @@ public class GameController{
                                 WaitTour2 = false;
                             }
                         }
-                    } else if (a instanceof AjoutChevalier)
+                    } else if (a instanceof AjoutChevalier) {
                         if (this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,false))
                             j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y);//Addchevalier
-                      else if (a instanceof ExtensionDomaine) {
-                          j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y); //extension
+
+                    } else if (a instanceof ExtensionDomaine) {
+                            j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y); //extension
                       }
                       else this.LabelInformation.setText("Case non Valide");
                 }
+                this.partie.refreshDomaine();
+                setPoint();
                 this.action = false;
                 WaitTour = false;
             }
@@ -835,7 +838,6 @@ public class GameController{
             new Thread(() -> {
                 PremierTour();
                 while (true){
-                    setPoint();
                     Tour();
                 }
             }).start();
@@ -843,7 +845,6 @@ public class GameController{
             setLabelNbTour();
             new Thread(() -> {
                 while (true){
-                    setPoint();
                     Tour();
                 }
             }).start();

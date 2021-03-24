@@ -435,7 +435,10 @@ public class Partie implements Serializable {
                 && !(c2.getX() - c1.getX() == 0 && (c2.getY() - c1.getY()) == 1)){
             return false;
         }
-        //MANQUE si case font partie d'un domaine
+        for (Joueur j : this.getJoueurs())
+            for (Domaine d : j.getDomaine())
+                for (Case c : d.getCases())
+                    if (c.equals(c1) || c.equals(c2)) return false;
         return (!c1.isfNord() || (c2.getX() != c1.getX() - 1 || c2.getY() != c1.getY()))
                 && (!c1.isfSud() || (c2.getX() != c1.getX() + 1 || c2.getY() != c1.getY()))
                 && (!c1.isfEst() || (c2.getX() != c1.getX() || c2.getY() != c1.getY() + 1))

@@ -9,6 +9,7 @@ public abstract class Action implements Serializable {
     protected Integer nombre;
 
     public Action() {
+        this.nombre=1;
         this.description = "";
     }
 

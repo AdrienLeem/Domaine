@@ -5,7 +5,8 @@ import java.util.Optional;
 public class ExtensionDomaine extends Action {
 
     public ExtensionDomaine() {
-        this.description = "";
+        super();
+        this.description = "Entendre un de vos domaines de 1 ou 2 cases ";
     }
 
     @Override

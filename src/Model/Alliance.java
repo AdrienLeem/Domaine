@@ -17,7 +17,7 @@ public class Alliance extends Action {
     }
 
     @Override
-    public void run(Joueur j, Optional<Plateau> p, int... x) {
+    public void run(Joueur j,Optional<Pion> pion,Optional<Plateau> p, int... x) {
 
     }
 }

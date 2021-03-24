@@ -16,7 +16,7 @@ public class AjoutChevalier extends Action {
     }
 
     @Override
-    public void run(Joueur j, Optional<Plateau> p,int... x) {
+    public void run(Joueur j,Optional<Pion> pion ,Optional<Plateau> p,int... x) {
         j.placePion(j.getChevaliers().get(j.getChevalierNonPlacer()),x[0], x[1]);
         System.out.println(j.getChevaliers().get(4).getX());
         System.out.println(j.getChevaliers().get(4).getY());

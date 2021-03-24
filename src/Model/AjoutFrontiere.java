@@ -16,7 +16,7 @@ public class AjoutFrontiere extends Action {
     }
 
     @Override
-    public void run(Joueur j, Optional<Plateau> p , int... x) {
+    public void run(Joueur j,Optional<Pion> pion,Optional<Plateau> p , int... x) {
         if (p.isPresent()){
             Case a1 = p.get().getCase(x[0],x[1]);
             Case a2 = p.get().getCase(x[2],x[3]);

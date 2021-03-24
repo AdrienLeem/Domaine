@@ -80,11 +80,14 @@ public class Joueur implements Serializable {
     }
 
 
-    public void jouerCarte(int index, int choix,Plateau p,int... x) {
-        if (this.main.get(index).getActions().get(choix) instanceof AjoutFrontiere || this.main.get(index).getActions().get(choix) instanceof Transfuge ) {
-            this.main.get(index).getActions().get(choix).run(this,Optional.of(p),x);
-        }
-        else this.main.get(index).getActions().get(choix).run(this,Optional.empty(),x);
+    public void jouerCarte(int index, int choix,Plateau p,Optional<Pion> pion,int... x) {
+        if (this.main.get(index).getActions().get(choix) instanceof AjoutFrontiere)
+            this.main.get(index).getActions().get(choix).run(this,Optional.empty(),Optional.of(p),x);
+
+        else if (this.main.get(index).getActions().get(choix) instanceof Transfuge)
+            this.main.get(index).getActions().get(choix).run(this,pion,Optional.empty(),x);
+
+        else this.main.get(index).getActions().get(choix).run(this,Optional.empty(),Optional.empty(),x);
         this.main.get(index).getActions().get(choix).setNombre(this.main.get(index).getActions().get(choix).getNombre()-1);
         if (getMain().get(index).getActions().get(choix).getNombre()==0){
             setDucat(-this.main.get(index).getPrixAction());

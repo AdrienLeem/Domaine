@@ -13,7 +13,7 @@ public abstract class Action implements Serializable {
         this.description = "";
     }
 
-    public abstract void run(Joueur j, Optional<Plateau> p, int... x);
+    public abstract void run(Joueur j, Optional<Pion> pion,Optional<Plateau> p, int... x);
 
     public Integer getNombre() {
         return nombre;

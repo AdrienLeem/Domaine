@@ -23,10 +23,7 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameController{
     private Partie partie;
@@ -675,8 +672,8 @@ public class GameController{
                     e.printStackTrace();
                 }
 
+                this.LabelInformation.setText("selectionner une case valide");
                 if (this.action) {
-                    this.LabelInformation.setText("Veuillez selectionner une case valide");
                     int Case_1_X = this.CaseClicked.get(0);
                     int Case_1_Y = this.CaseClicked.get(1);
                     if (a instanceof AjoutFrontiere || a instanceof Transfuge) {
@@ -688,14 +685,16 @@ public class GameController{
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
+                            this.LabelInformation.setText("selectionner une case valide supplementaire");
                             if (this.action) {
+                                Pion p = this.partie.pionOncase(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y));
                                 int Case_2_X = this.CaseClicked.get(0);
                                 int Case_2_Y = this.CaseClicked.get(1);
                                 if (a instanceof AjoutFrontiere && this.partie.frontiereValide(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y),this.partie.getPlateau().getCase(Case_2_X,Case_2_Y))) {
-                                    j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y, Case_2_X, Case_2_Y);//AddFrontiere
+                                    j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Optional.empty(),Case_1_X, Case_1_Y, Case_2_X, Case_2_Y);//AddFrontiere
 
-                                }else if (a instanceof Transfuge) {
-                                    j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y, Case_2_X, Case_2_Y);//Transfuge
+                                }else if (a instanceof Transfuge && p!=null && this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(Case_2_X, Case_2_Y),j,false)) {
+                                    j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix,partie.getPlateau(), Optional.of(p), Case_2_X, Case_2_Y);//Transfuge
                                 }
                                 else this.LabelInformation.setText("Cases non Valides");
                                 Platform.runLater(this::RefreshPlateau);
@@ -704,10 +703,10 @@ public class GameController{
                         }
                     } else if (a instanceof AjoutChevalier) {
                         if (this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,false))
-                            j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y);//Addchevalier
+                            j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y);//Addchevalier
 
                     } else if (a instanceof ExtensionDomaine) {
-                            j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Case_1_X, Case_1_Y); //extension
+                            j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y); //extension
                       }
                       else this.LabelInformation.setText("Case non Valide");
                 }

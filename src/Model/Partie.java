@@ -1,10 +1,7 @@
 package Model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static java.lang.Math.abs;
 
@@ -515,5 +512,19 @@ public class Partie implements Serializable {
                 && (!c1.isfSud() || (c2.getX() != c1.getX() + 1 || c2.getY() != c1.getY()))
                 && (!c1.isfEst() || (c2.getX() != c1.getX() || c2.getY() != c1.getY() + 1))
                 && (!c1.isfOuest() || (c2.getX() != c1.getX() || c2.getY() != c1.getY() - 1));
+    }
+
+    public Pion pionOncase(Case c) {
+        for (Joueur j: getJoueurs()) {
+            for (PionChevalier chevalier : j.getChevaliers()){
+                if (c.getX() == chevalier.getX() && c.getY() == chevalier.getY())
+                    return chevalier;
+            }
+            for (PionChateau chateau: j.getChateaux()) {
+                if (c.getX() == chateau.getX() && c.getY() == chateau.getY())
+                    return chateau;
+            }
+        }
+        return null;
     }
 }

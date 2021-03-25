@@ -527,4 +527,26 @@ public class Partie implements Serializable {
         }
         return null;
     }
+
+    public Domaine caseOnDomaine(Case c) {
+        for (Joueur joueur : getJoueurs()){
+            for (Domaine d : joueur.getDomaine())
+                for (Case c2 : d.getCases())
+                    if (c.getX() == c2.getX() && c.getY() == c2.getY())
+                        return d;
+
+
+        }
+        return null;
+    }
+
+    public boolean domaineAdjacent(Domaine d1, Domaine d2){
+        for (Case c1 : d1.getCases()){
+            if (d2.getCases().contains(this.plateau.getCase(c1.getX()+1,c1.getY()))
+                    || d2.getCases().contains(this.plateau.getCase(c1.getX()-1,c1.getY()))
+                    || d2.getCases().contains(this.plateau.getCase(c1.getX(),c1.getY()-1))
+                    || d2.getCases().contains(this.plateau.getCase(c1.getX(),c1.getY()+1))) return true;
+        }
+        return false;
+    }
 }

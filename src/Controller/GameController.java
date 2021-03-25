@@ -367,7 +367,6 @@ public class GameController{
                 }
             }
         }
-
     }
 
     public void MessagePop(String s,boolean yesno,int action, String bt1, String bt2) {
@@ -676,7 +675,7 @@ public class GameController{
                 if (this.action) {
                     int Case_1_X = this.CaseClicked.get(0);
                     int Case_1_Y = this.CaseClicked.get(1);
-                    if (a instanceof AjoutFrontiere || a instanceof Transfuge) {
+                    if (a instanceof AjoutFrontiere || a instanceof Transfuge || a instanceof Alliance) {
                         this.action = false;
                         boolean WaitTour2 = true;
                         while (WaitTour2) {
@@ -687,16 +686,27 @@ public class GameController{
                             }
                             this.LabelInformation.setText("selectionner une case valide supplementaire");
                             if (this.action) {
-                                Pion p = this.partie.pionOncase(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y));
                                 int Case_2_X = this.CaseClicked.get(0);
                                 int Case_2_Y = this.CaseClicked.get(1);
-                                if (a instanceof AjoutFrontiere && this.partie.frontiereValide(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y),this.partie.getPlateau().getCase(Case_2_X,Case_2_Y))) {
+                                Domaine d1 = this.partie.caseOnDomaine(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y));
+                                Domaine d2 = this.partie.caseOnDomaine(this.partie.getPlateau().getCase(Case_2_X, Case_2_Y));
+                                Pion p = this.partie.pionOncase(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y));
+                                if (a instanceof AjoutFrontiere
+                                        && this.partie.frontiereValide(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y),this.partie.getPlateau().getCase(Case_2_X,Case_2_Y))) {
                                     j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Optional.empty(),Case_1_X, Case_1_Y, Case_2_X, Case_2_Y);//AddFrontiere
-
-                                }else if (a instanceof Transfuge && p!=null && this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(Case_2_X, Case_2_Y),j,false)) {
+                                }
+                                else if (a instanceof Transfuge
+                                        && (d1 != null && d2 != null)
+                                        && this.partie.domaineAdjacent(d1,d2)
+                                        && p!=null
+                                        && this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(Case_2_X, Case_2_Y),j,false)) {
                                     j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix,partie.getPlateau(), Optional.of(p), Case_2_X, Case_2_Y);//Transfuge
                                 }
-                                else this.LabelInformation.setText("Cases non Valides");
+                                else if (a instanceof Alliance){}
+                                else {
+                                    this.LabelInformation.setText("Cases non Valides");
+                                    System.out.println("YOLO");
+                                }
                                 Platform.runLater(this::RefreshPlateau);
                                 WaitTour2 = false;
                             }
@@ -704,11 +714,9 @@ public class GameController{
                     } else if (a instanceof AjoutChevalier) {
                         if (this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,false))
                             j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y);//Addchevalier
-
                     } else if (a instanceof ExtensionDomaine) {
                             j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y); //extension
-                      }
-                      else this.LabelInformation.setText("Case non Valide");
+                    } else this.LabelInformation.setText("Case non Valide");
                 }
                 this.partie.refreshDomaine();
                 setPoint();
@@ -762,9 +770,45 @@ public class GameController{
             }
         }
 
-        for(Joueur joueur : listjoueurs){
-            for(PionChateau chateau : joueur.getChateaux()){
-                if(chateau.estPlace()) {
+        for(int i=0;i<12;i++) {
+            for (int j = 0; j < 12; j++) {
+                if(p.getCase(i,j).isfEst()){
+                    ImageView img = new ImageView();
+                    img.setFitHeight(65);
+                    img.setFitWidth(65);
+                    img.setDisable(true);
+                    img.setImage(new Image("img/FrontiereEst.png"));
+                    this.Plateau.add(img, j, i);
+                }
+                if(p.getCase(i,j).isfOuest()){
+                    ImageView img = new ImageView();
+                    img.setFitHeight(65);
+                    img.setFitWidth(65);
+                    img.setDisable(true);
+                    img.setImage(new Image("img/FrontiereOuest.png"));
+                    this.Plateau.add(img, j, i);
+                }
+                if(p.getCase(i,j).isfNord()) {
+                    ImageView img = new ImageView();
+                    img.setFitHeight(65);
+                    img.setFitWidth(65);
+                    img.setDisable(true);
+                    img.setImage(new Image("img/FrontiereNord.png"));
+                    this.Plateau.add(img, j, i);
+                }
+                if(p.getCase(i,j).isfSud()) {
+                    ImageView img = new ImageView();
+                    img.setFitHeight(65);
+                    img.setFitWidth(65);
+                    img.setDisable(true);
+                    img.setImage(new Image("img/FrontiereSud.png"));
+                    this.Plateau.add(img, j, i);
+                }
+            }
+        }
+        for(Joueur joueur : listjoueurs) {
+            for (PionChateau chateau : joueur.getChateaux()) {
+                if (chateau.estPlace()) {
                     ImageView img = new ImageView();
                     img.setFitHeight(65);
                     img.setFitWidth(65);
@@ -773,50 +817,14 @@ public class GameController{
                     this.Plateau.add(img, chateau.getY(), chateau.getX());
                 }
             }
-            for(PionChevalier chevalier : joueur.getChevaliers()){
-                if(chevalier.estPlace()) {
+            for (PionChevalier chevalier : joueur.getChevaliers()) {
+                if (chevalier.estPlace()) {
                     ImageView img = new ImageView();
                     img.setFitHeight(65);
                     img.setFitWidth(65);
                     img.setDisable(true);
                     img.setImage(new Image("img/PionChevalier" + joueur.getCouleur() + ".png"));
                     this.Plateau.add(img, chevalier.getY(), chevalier.getX());
-                }
-            }
-            for(int i=0;i<12;i++) {
-                for (int j = 0; j < 12; j++) {
-                    if(p.getCase(i,j).isfEst()){
-                        ImageView img = new ImageView();
-                        img.setFitHeight(65);
-                        img.setFitWidth(65);
-                        img.setDisable(true);
-                        img.setImage(new Image("img/FrontiereEst.png"));
-                        this.Plateau.add(img, j, i);
-                    }
-                    if(p.getCase(i,j).isfOuest()){
-                        ImageView img = new ImageView();
-                        img.setFitHeight(65);
-                        img.setFitWidth(65);
-                        img.setDisable(true);
-                        img.setImage(new Image("img/FrontiereOuest.png"));
-                        this.Plateau.add(img, j, i);
-                    }
-                    if(p.getCase(i,j).isfNord()) {
-                        ImageView img = new ImageView();
-                        img.setFitHeight(65);
-                        img.setFitWidth(65);
-                        img.setDisable(true);
-                        img.setImage(new Image("img/FrontiereNord.png"));
-                        this.Plateau.add(img, j, i);
-                    }
-                    if(p.getCase(i,j).isfSud()) {
-                        ImageView img = new ImageView();
-                        img.setFitHeight(65);
-                        img.setFitWidth(65);
-                        img.setDisable(true);
-                        img.setImage(new Image("img/FrontiereSud.png"));
-                        this.Plateau.add(img, j, i);
-                    }
                 }
             }
         }

@@ -71,7 +71,7 @@ public class PreGameController implements Initializable {
             }
         }else{
             for (int i = 0; i < this.nbJoueur; i++) {
-                if(this.listcheckbox.get(i).isArmed()){
+                if(this.listcheckbox.get(i).isSelected()){
                     this.listJoueur.add(new IA(this.listField.get(i).getText()));
                 }else{
                     this.listJoueur.add(new Joueur(this.listField.get(i).getText()));

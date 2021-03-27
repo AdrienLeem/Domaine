@@ -434,7 +434,6 @@ public class Partie implements Serializable {
         for (Joueur j : getJoueurs()) {
             for (Pion chateau : j.getChateaux()) {
                 if (chateau.getX() == c.getX() && chateau.getY() == c.getY()) return false;
-
             }
             for (Pion chevalier : j.getChevaliers()){
                 if (chevalier.getX() == c.getX() && chevalier.getY() == c.getY()) return false;

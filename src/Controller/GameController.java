@@ -2,17 +2,12 @@ package Controller;
 
 import Model.*;
 import Model.Action;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,8 +16,6 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.net.URL;
 import java.util.*;
 
 public class GameController{
@@ -146,9 +139,9 @@ public class GameController{
     @FXML
     void CarteVendu(MouseEvent event) {
         pasClickable(true,true,true,true,true,true);
-        VBox LaVBoxPrimardiale = new VBox();
-        LaVBoxPrimardiale.setAlignment(Pos.CENTER);
-        LaVBoxPrimardiale.setStyle("-fx-background-color: WHITE");
+        VBox LVbox = new VBox();
+        LVbox.setAlignment(Pos.CENTER);
+        LVbox.setStyle("-fx-background-color: WHITE");
         VBox v = new VBox();
         HBox h = new HBox();
 
@@ -167,7 +160,7 @@ public class GameController{
                 this.partie.getJoueurbyname(l).getMain().add(this.partie.getCartesVendu().get(finalI));
                 this.partie.getCartesVendu().remove(finalI);
                 afficherBord(this.partie.getJoueurbyname(l));
-                this.anchorPane.getChildren().remove(LaVBoxPrimardiale);
+                this.anchorPane.getChildren().remove(LVbox);
             });
             h.getChildren().add(img);
             if(h.getChildren().size() == 5 ){
@@ -176,18 +169,18 @@ public class GameController{
             }
         }
         v.getChildren().add(h);
-        Button butonPRIMORDIAU = new Button();
-        butonPRIMORDIAU.setText("Retour");
-        butonPRIMORDIAU.setOnMousePressed((event3) -> {
+        Button buttonP = new Button();
+        buttonP.setText("Retour");
+        buttonP.setOnMousePressed((event3) -> {
             pasClickable(true,true,true,false,false,true);
-            this.anchorPane.getChildren().remove(LaVBoxPrimardiale);
+            this.anchorPane.getChildren().remove(LVbox);
         });
-        LaVBoxPrimardiale.getChildren().add(butonPRIMORDIAU);
-        LaVBoxPrimardiale.getChildren().add(v);
+        LVbox.getChildren().add(buttonP);
+        LVbox.getChildren().add(v);
 
-        LaVBoxPrimardiale.setLayoutX(this.Plateau.getWidth()/2 - 100);
-        LaVBoxPrimardiale.setLayoutY(this.Plateau.getHeight()/2 - 100);
-        this.anchorPane.getChildren().add(LaVBoxPrimardiale);
+        LVbox.setLayoutX(this.Plateau.getWidth()/2 - 100);
+        LVbox.setLayoutY(this.Plateau.getHeight()/2 - 100);
+        this.anchorPane.getChildren().add(LVbox);
     }
 
     @FXML
@@ -459,53 +452,90 @@ public class GameController{
         for (int i = 0; i < nbpieces; i++){
             for( Joueur j : this.partie.getJoueurs()) {
                 this.LabelJoueur.setText("Joueur :"+j.getNom());
-                boolean WaitTour = true;
-                while(WaitTour){
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    this.LabelInformation.setText("Placer votre château.");
-                    if (this.action) {
-                        if (this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)), j, true, i)) {
-                            // If bonne case pour chateau
-                            ImageView img = new ImageView();
-                            img.setFitHeight(65);
-                            img.setFitWidth(65);
-                            img.setDisable(true);
-                            img.setImage(new Image("img/Pion_Chateau_" + j.getCouleur() + ".png"));
-                            int finalY = y;
-                            Platform.runLater(() -> placer(img, j, j.getChateaux().get(finalY)));
-                            WaitTour = false;
-                            // la
-                        } else this.LabelInformation.setText("Case non Valide");
-                        this.action = false;
-                    }
+                if (j instanceof IA) {
+                    int xIA = -1;
+                    int yIA = -1;
+                    do {
+                        xIA = ((IA) j).getRandomNumberBetween(0,11);
+                        yIA = ((IA) j).getRandomNumberBetween(0,11);
+                    } while (!(this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(xIA, yIA), j, true, i)));
+                    ImageView img1 = new ImageView();
+                    img1.setFitHeight(65);
+                    img1.setFitWidth(65);
+                    img1.setDisable(true);
+                    img1.setImage(new Image("img/Pion_Chateau_" + j.getCouleur() + ".png"));
+                    int finalY1 = y;
+                    int finalXIA = xIA;
+                    int finalYIA = yIA;
+                    Platform.runLater(() -> placer(img1, j, j.getChateaux().get(finalY1), finalXIA, finalYIA));
+                    int rand;
+                    Case c = null;
+                    do {
+                        rand = ((IA) j).getRandomNumberBetween(1,4);
+                        switch (rand) {
+                            case 1: c = this.partie.getPlateau().getCase(xIA+1, yIA);
+                            case 2: c = this.partie.getPlateau().getCase(xIA-1, yIA);
+                            case 3: c = this.partie.getPlateau().getCase(xIA, yIA+1);
+                            case 4: c = this.partie.getPlateau().getCase(xIA, yIA-1);
+                        }
+                    } while (!(this.partie.pionValide(j.getChevaliers().get(y), c, j, true, i)));
+                    ImageView img2 = new ImageView();
+                    img2.setFitHeight(65);
+                    img2.setFitWidth(65);
+                    img2.setDisable(true);
+                    img2.setImage(new Image("img/PionChevalier" + j.getCouleur() + ".png"));
+                    Case finalC = c;
+                    Platform.runLater(() -> placer(img2, j, j.getChevaliers().get(finalY1), finalC.getX(), finalC.getY()));
                 }
-                WaitTour = true;
-
-                while(WaitTour){
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                else {
+                    boolean WaitTour = true;
+                    while(WaitTour){
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        this.LabelInformation.setText("Placer votre château.");
+                        if (this.action) {
+                            if (this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)), j, true, i)) {
+                                // If bonne case pour chateau
+                                ImageView img = new ImageView();
+                                img.setFitHeight(65);
+                                img.setFitWidth(65);
+                                img.setDisable(true);
+                                img.setImage(new Image("img/Pion_Chateau_" + j.getCouleur() + ".png"));
+                                int finalY = y;
+                                Platform.runLater(() -> placer(img, j, j.getChateaux().get(finalY)));
+                                WaitTour = false;
+                                // la
+                            } else this.LabelInformation.setText("Case non Valide");
+                            this.action = false;
+                        }
                     }
-                    this.LabelInformation.setText("Placer votre chevalier.");
-                    if (this.action) {
-                        if (this.partie.pionValide(j.getChevaliers().get(y), this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)), j, true, i)) {
-                            // If bonne case pour chevalier
-                            ImageView img = new ImageView();
-                            img.setFitHeight(65);
-                            img.setFitWidth(65);
-                            img.setDisable(true);
-                            img.setImage(new Image("img/PionChevalier" + j.getCouleur() + ".png"));
-                            int finalY = y;
-                            Platform.runLater(() -> placer(img, j, j.getChevaliers().get(finalY)));
-                            WaitTour = false;
-                            // la
-                        } else this.LabelInformation.setText("Case non Valide");
-                        this.action = false;
+                    WaitTour = true;
+
+                    while(WaitTour){
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        this.LabelInformation.setText("Placer votre chevalier.");
+                        if (this.action) {
+                            if (this.partie.pionValide(j.getChevaliers().get(y), this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)), j, true, i)) {
+                                // If bonne case pour chevalier
+                                ImageView img = new ImageView();
+                                img.setFitHeight(65);
+                                img.setFitWidth(65);
+                                img.setDisable(true);
+                                img.setImage(new Image("img/PionChevalier" + j.getCouleur() + ".png"));
+                                int finalY = y;
+                                Platform.runLater(() -> placer(img, j, j.getChevaliers().get(finalY)));
+                                WaitTour = false;
+                                // la
+                            } else this.LabelInformation.setText("Case non Valide");
+                            this.action = false;
+                        }
                     }
                 }
             }
@@ -516,9 +546,17 @@ public class GameController{
         this.LabelInformation.setText("oui ...");
     }
 
-    public void placer(Node node, Joueur j,Pion p){
-        int x = this.CaseClicked.get(0);
-        int y = this.CaseClicked.get(1);
+    public void placer(Node node, Joueur j,Pion p, int...coord) {
+        int x;
+        int y;
+        if (j instanceof IA) {
+            x = coord[0];
+            y = coord[1];
+        }
+        else {
+            x = this.CaseClicked.get(0);
+            y = this.CaseClicked.get(1);
+        }
         this.Plateau.add(node,y,x);
         j.placePion(p,x,y);
     }

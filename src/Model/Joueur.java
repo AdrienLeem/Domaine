@@ -118,4 +118,14 @@ public class Joueur implements Serializable {
         }
         return res;
     }
+
+    public int getProchainchevalier(){
+        int res = 0;
+        for(int i = 0;i<this.getChevaliers().size();i++){
+            if(this.chevaliers.get(i).estPlace()){
+                res++;
+            }
+        }
+        return res;
+    }
 }

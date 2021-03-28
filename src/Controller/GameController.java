@@ -770,7 +770,7 @@ public class GameController{
                     do {
                         x1IA = ((IA) j).getRandomNumberBetween(0, 11);
                         y1IA = ((IA) j).getRandomNumberBetween(0, 11);
-                    } while (!(this.partie.pionValide(j.getChevaliers().get((j.getChevaliers().size()-1)-j.getChevalierNonPlacer()), this.partie.getPlateau().getCase(x1IA, y1IA), j, false)));
+                    } while (!(this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()), this.partie.getPlateau().getCase(x1IA, y1IA), j, false)));
                     j.jouerCarte(carte.get(0), carte.get(1), this.partie.getPlateau(), Optional.empty(), x1IA, y1IA);
                 } else {
                     System.out.println("frontiere");
@@ -941,7 +941,7 @@ public class GameController{
                                             && (d1 != null && d2 != null)
                                             && this.partie.domaineAdjacent(d1,d2)
                                             && p!=null
-                                            && this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(Case_2_X, Case_2_Y),j,false)) {
+                                            && this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()),this.partie.getPlateau().getCase(Case_2_X, Case_2_Y),j,false)) {
                                         j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix,partie.getPlateau(), Optional.of(p), Case_2_X, Case_2_Y);//Transfuge
                                     }
                                     else if (a instanceof Alliance){}
@@ -953,7 +953,7 @@ public class GameController{
                                 }
                             }
                         } else if (a instanceof AjoutChevalier) {
-                            if (this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,false))
+                            if (this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,false))
                                 j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y);//Addchevalier
                         } else if (a instanceof ExtensionDomaine) {
                             j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y); //extension

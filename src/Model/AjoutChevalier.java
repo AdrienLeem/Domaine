@@ -17,6 +17,6 @@ public class AjoutChevalier extends Action {
 
     @Override
     public void run(Joueur j,Optional<Pion> pion ,Optional<Plateau> p,int... x) {
-        j.placePion(j.getChevaliers().get((j.getChevaliers().size()-1)-j.getChevalierNonPlacer()),x[0], x[1]);
+        j.placePion(j.getChevaliers().get(j.getProchainchevalier()),x[0], x[1]);
     }
 }

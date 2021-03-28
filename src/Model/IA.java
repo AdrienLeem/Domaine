@@ -18,7 +18,7 @@ public class IA extends Joueur {
         ArrayList<Integer> res = new ArrayList<>();
         for (int i = 0; i < this.getMain().size(); i++) {
             for (int j = 0; j < this.getMain().get(i).getActions().size(); j++) {
-                if (this.getMain().get(i).getActions().get(j) instanceof AjoutFrontiere && this.getMain().get(i).getActions().get(j) instanceof AjoutChevalier) {
+                if (this.getMain().get(i).getActions().get(j) instanceof AjoutFrontiere || this.getMain().get(i).getActions().get(j) instanceof AjoutChevalier) {
                     res.add(i);
                     res.add(j);
                     return res;

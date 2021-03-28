@@ -451,7 +451,6 @@ public class GameController{
         } else nbpieces =3;
         for (int i = 0; i < nbpieces; i++){
             for( Joueur j : this.partie.getJoueurs()) {
-                System.out.println(j.getChevaliers().get(0).toString());
                 this.LabelJoueur.setText("Joueur :"+j.getNom());
                 if (j instanceof IA) {
                     int xIA = -1;
@@ -459,7 +458,7 @@ public class GameController{
                     do {
                         xIA = ((IA) j).getRandomNumberBetween(0,11);
                         yIA = ((IA) j).getRandomNumberBetween(0,11);
-                    } while (!(this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(xIA, yIA), j, true)));
+                    } while (!(this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(xIA, yIA), j, true, i)));
                     ImageView img1 = new ImageView();
                     img1.setFitHeight(65);
                     img1.setFitWidth(65);
@@ -473,13 +472,75 @@ public class GameController{
                     Case c = null;
                     do {
                         rand = ((IA) j).getRandomNumberBetween(1,4);
-                        switch (rand) {
-                            case 1: c = this.partie.getPlateau().getCase(xIA+1, yIA);
-                            case 2: c = this.partie.getPlateau().getCase(xIA-1, yIA);
-                            case 3: c = this.partie.getPlateau().getCase(xIA, yIA+1);
-                            case 4: c = this.partie.getPlateau().getCase(xIA, yIA-1);
+                        if (xIA == 0 && yIA == 0) {
+                            switch (rand) {
+                                case 1 -> c = this.partie.getPlateau().getCase(xIA + 1, yIA);
+                                case 2 -> c = this.partie.getPlateau().getCase(xIA, yIA + 1);
+                                default -> c = this.partie.getPlateau().getCase(xIA + 1, yIA);
+                            }
                         }
-                    } while (!(this.partie.pionValide(j.getChevaliers().get(y), c, j, true)));
+                        else if (xIA == 0 && yIA == 11) {
+                            switch (rand) {
+                                case 1 -> c = this.partie.getPlateau().getCase(xIA + 1, yIA);
+                                case 2 -> c = this.partie.getPlateau().getCase(xIA, yIA - 1);
+                                default -> c = this.partie.getPlateau().getCase(xIA + 1, yIA);
+                            }
+                        }
+                        else if (xIA == 11 && yIA == 0) {
+                            switch (rand) {
+                                case 1 -> c = this.partie.getPlateau().getCase(xIA - 1, yIA);
+                                case 2 -> c = this.partie.getPlateau().getCase(xIA, yIA + 1);
+                                default -> c = this.partie.getPlateau().getCase(xIA - 1, yIA);
+                            }
+                        }
+                        else if (xIA == 11 && yIA == 11) {
+                            switch (rand) {
+                                case 1 -> c = this.partie.getPlateau().getCase(xIA - 1, yIA);
+                                case 2 -> c = this.partie.getPlateau().getCase(xIA, yIA - 1);
+                                default -> c = this.partie.getPlateau().getCase(xIA - 1, yIA);
+                            }
+                        }
+                        else if (xIA == 0) {
+                            switch (rand) {
+                                case 1 -> c = this.partie.getPlateau().getCase(xIA + 1, yIA);
+                                case 2 -> c = this.partie.getPlateau().getCase(xIA, yIA + 1);
+                                case 3 -> c = this.partie.getPlateau().getCase(xIA, yIA - 1);
+                                default -> c = this.partie.getPlateau().getCase(xIA + 1, yIA);
+                            }
+                        }
+                        else if (yIA == 0) {
+                            switch (rand) {
+                                case 1 -> c = this.partie.getPlateau().getCase(xIA + 1, yIA);
+                                case 2 -> c = this.partie.getPlateau().getCase(xIA - 1, yIA);
+                                case 3 -> c = this.partie.getPlateau().getCase(xIA, yIA + 1);
+                                default -> c = this.partie.getPlateau().getCase(xIA + 1, yIA);
+                            }
+                        }
+                        else if (xIA == 11) {
+                            switch (rand) {
+                                case 1 -> c = this.partie.getPlateau().getCase(xIA, yIA + 1);
+                                case 2 -> c = this.partie.getPlateau().getCase(xIA - 1, yIA);
+                                case 3 -> c = this.partie.getPlateau().getCase(xIA, yIA - 1);
+                                default -> c = this.partie.getPlateau().getCase(xIA - 1, yIA);
+                            }
+                        }
+                        else if (yIA == 11) {
+                            switch (rand) {
+                                case 1 -> c = this.partie.getPlateau().getCase(xIA + 1, yIA);
+                                case 2 -> c = this.partie.getPlateau().getCase(xIA - 1, yIA);
+                                case 3 -> c = this.partie.getPlateau().getCase(xIA, yIA - 1);
+                                default -> c = this.partie.getPlateau().getCase(xIA + 1, yIA);
+                            }
+                        }
+                        else {
+                            switch (rand) {
+                                case 1 -> c = this.partie.getPlateau().getCase(xIA+1, yIA);
+                                case 2 -> c = this.partie.getPlateau().getCase(xIA-1, yIA);
+                                case 3 -> c = this.partie.getPlateau().getCase(xIA, yIA+1);
+                                case 4 -> c = this.partie.getPlateau().getCase(xIA, yIA-1);
+                            }
+                        }
+                    } while (!(this.partie.pionValide(j.getChevaliers().get(y), c, j, true, i)));
                     ImageView img2 = new ImageView();
                     img2.setFitHeight(65);
                     img2.setFitWidth(65);
@@ -635,6 +696,9 @@ public class GameController{
                         }
                     }
                 }
+                j.piocher(this.partie.getPioche().get(0));
+                this.partie.getPioche().remove(0);
+                afficherBord(j);
             }
             else {
                 pasClickable(false,false,false,true,true,true);
@@ -674,19 +738,21 @@ public class GameController{
 
     public void VendreCarte(Joueur j){
         if (j instanceof IA) {
+            System.out.println("vendre");
             int index = 0;
             int prixVente = 0;
             for (int i = 0; i < j.getMain().size(); i++) {
                 if (j.getMain().get(i).getPrixVente() > prixVente) index = i;
             }
-            j.vendreCarte(index);
+            Carte c = j.vendreCarte(index);
+            this.partie.setCartesVendu(c);
         }
         else {
             this.isCarteVendu = true;
             Carte c = j.vendreCarte(this.SlotSelect-1);
             this.partie.setCartesVendu(c);
             afficherBord(j);
-            this.LabelInformation.setText("Choisissez la pioche ou le marcher.");
+            this.LabelInformation.setText("Choisissez la pioche ou le marché.");
             pasClickable(true,true,true,false,false,true);
         }
     }
@@ -694,10 +760,12 @@ public class GameController{
     public void JouerCarte(Joueur j){
         this.carteAction = false;
         if (j instanceof IA) {
+            System.out.println("jouer");
             ArrayList<Integer> carte = ((IA) j).getCarteChevalierFrontiere();
             Action a = j.getMain().get(carte.get(0)).getActions().get(carte.get(1));
             while (a.getNombre() != 0) {
                 if (j.getMain().get(carte.get(0)).getActions().get(carte.get(1)) instanceof AjoutChevalier) {
+                    System.out.println("cheval");
                     int x1IA, y1IA;
                     do {
                         x1IA = ((IA) j).getRandomNumberBetween(0, 11);
@@ -705,22 +773,87 @@ public class GameController{
                     } while (!(this.partie.pionValide(j.getChateaux().get(j.getChevaliers().size() - 1 - j.getChevalierNonPlacer()), this.partie.getPlateau().getCase(x1IA, y1IA), j, true)));
                     j.jouerCarte(carte.get(0), carte.get(1), this.partie.getPlateau(), Optional.empty(), x1IA, y1IA);
                 } else {
+                    System.out.println("frontiere");
                     int x2IA, y2IA;
                     Case c = null;
                     do {
                         x2IA = ((IA) j).getRandomNumberBetween(0, 11);
                         y2IA = ((IA) j).getRandomNumberBetween(0, 11);
                         int choix = ((IA) j).getRandomNumberBetween(1, 4);
-                        switch (choix) {
-                            case 1: c = this.partie.getPlateau().getCase(x2IA+1, y2IA);
-                            case 2: c = this.partie.getPlateau().getCase(x2IA-1, y2IA);
-                            case 3: c = this.partie.getPlateau().getCase(x2IA, y2IA+1);
-                            case 4: c = this.partie.getPlateau().getCase(x2IA, y2IA-1);
+                        if (x2IA == 0 && y2IA == 0) {
+                            switch (choix) {
+                                case 1 -> c = this.partie.getPlateau().getCase(x2IA + 1, y2IA);
+                                case 2 -> c = this.partie.getPlateau().getCase(x2IA, y2IA + 1);
+                                default -> c = this.partie.getPlateau().getCase(x2IA + 1, y2IA);
+                            }
                         }
-                    } while (this.partie.frontiereValide(this.partie.getPlateau().getCase(x2IA, y2IA), c));
+                        else if (x2IA == 0 && y2IA == 11) {
+                            switch (choix) {
+                                case 1 -> c = this.partie.getPlateau().getCase(x2IA + 1, y2IA);
+                                case 2 -> c = this.partie.getPlateau().getCase(x2IA, y2IA - 1);
+                                default -> c = this.partie.getPlateau().getCase(x2IA + 1, y2IA);
+                            }
+                        }
+                        else if (x2IA == 11 && y2IA == 0) {
+                            switch (choix) {
+                                case 1 -> c = this.partie.getPlateau().getCase(x2IA - 1, y2IA);
+                                case 2 -> c = this.partie.getPlateau().getCase(x2IA, y2IA + 1);
+                                default -> c = this.partie.getPlateau().getCase(x2IA - 1, y2IA);
+                            }
+                        }
+                        else if (x2IA == 11 && y2IA == 11) {
+                            switch (choix) {
+                                case 1 -> c = this.partie.getPlateau().getCase(x2IA - 1, y2IA);
+                                case 2 -> c = this.partie.getPlateau().getCase(x2IA, y2IA - 1);
+                                default -> c = this.partie.getPlateau().getCase(x2IA - 1, y2IA);
+                            }
+                        }
+                        else if (x2IA == 0) {
+                            switch (choix) {
+                                case 1 -> c = this.partie.getPlateau().getCase(x2IA + 1, y2IA);
+                                case 2 -> c = this.partie.getPlateau().getCase(x2IA, y2IA + 1);
+                                case 3 -> c = this.partie.getPlateau().getCase(x2IA, y2IA - 1);
+                                default -> c = this.partie.getPlateau().getCase(x2IA + 1, y2IA);
+                            }
+                        }
+                        else if (y2IA == 0) {
+                            switch (choix) {
+                                case 1 -> c = this.partie.getPlateau().getCase(x2IA + 1, y2IA);
+                                case 2 -> c = this.partie.getPlateau().getCase(x2IA - 1, y2IA);
+                                case 3 -> c = this.partie.getPlateau().getCase(x2IA, y2IA + 1);
+                                default -> c = this.partie.getPlateau().getCase(x2IA + 1, y2IA);
+                            }
+                        }
+                        else if (x2IA == 11) {
+                            switch (choix) {
+                                case 1 -> c = this.partie.getPlateau().getCase(x2IA, y2IA + 1);
+                                case 2 -> c = this.partie.getPlateau().getCase(x2IA - 1, y2IA);
+                                case 3 -> c = this.partie.getPlateau().getCase(x2IA, y2IA - 1);
+                                default -> c = this.partie.getPlateau().getCase(x2IA - 1, y2IA);
+                            }
+                        }
+                        else if (y2IA == 11) {
+                            switch (choix) {
+                                case 1 -> c = this.partie.getPlateau().getCase(x2IA + 1, y2IA);
+                                case 2 -> c = this.partie.getPlateau().getCase(x2IA - 1, y2IA);
+                                case 3 -> c = this.partie.getPlateau().getCase(x2IA, y2IA - 1);
+                                default -> c = this.partie.getPlateau().getCase(x2IA + 1, y2IA);
+                            }
+                        }
+                        else {
+                            switch (choix) {
+                                case 1 -> c = this.partie.getPlateau().getCase(x2IA + 1, y2IA);
+                                case 2 -> c = this.partie.getPlateau().getCase(x2IA - 1, y2IA);
+                                case 3 -> c = this.partie.getPlateau().getCase(x2IA, y2IA + 1);
+                                case 4 -> c = this.partie.getPlateau().getCase(x2IA, y2IA - 1);
+                            }
+                        }
+                    } while (!(this.partie.frontiereValide(this.partie.getPlateau().getCase(x2IA, y2IA), c)));
                     j.jouerCarte(carte.get(0), carte.get(1), this.partie.getPlateau(), Optional.empty(), x2IA, y2IA, c.getX(), c.getY());
                 }
             }
+            this.partie.refreshDomaine();
+            setPoint();
 ;       }
         else {
             VBox v = new VBox();
@@ -835,7 +968,7 @@ public class GameController{
         }
         Platform.runLater(this::RefreshPlateau);
         afficherBord(j);
-        this.LabelInformation.setText("Choisissez la pioche ou le marche.");
+        this.LabelInformation.setText("Choisissez la pioche ou le marché.");
         pasClickable(true,true,true,false,false,true);
     }
 

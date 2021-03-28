@@ -451,6 +451,7 @@ public class GameController{
         } else nbpieces =3;
         for (int i = 0; i < nbpieces; i++){
             for( Joueur j : this.partie.getJoueurs()) {
+                System.out.println(j.getChevaliers().get(0).toString());
                 this.LabelJoueur.setText("Joueur :"+j.getNom());
                 if (j instanceof IA) {
                     int xIA = -1;
@@ -458,7 +459,7 @@ public class GameController{
                     do {
                         xIA = ((IA) j).getRandomNumberBetween(0,11);
                         yIA = ((IA) j).getRandomNumberBetween(0,11);
-                    } while (!(this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(xIA, yIA), j, true, i)));
+                    } while (!(this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(xIA, yIA), j, true)));
                     ImageView img1 = new ImageView();
                     img1.setFitHeight(65);
                     img1.setFitWidth(65);
@@ -478,7 +479,7 @@ public class GameController{
                             case 3: c = this.partie.getPlateau().getCase(xIA, yIA+1);
                             case 4: c = this.partie.getPlateau().getCase(xIA, yIA-1);
                         }
-                    } while (!(this.partie.pionValide(j.getChevaliers().get(y), c, j, true, i)));
+                    } while (!(this.partie.pionValide(j.getChevaliers().get(y), c, j, true)));
                     ImageView img2 = new ImageView();
                     img2.setFitHeight(65);
                     img2.setFitWidth(65);
@@ -606,24 +607,55 @@ public class GameController{
         for (int i = this.Dernierjoueur;i<this.partie.getJoueurs().size();i++) {
             this.partie.setDernierjoueur(i);
             Joueur j = this.partie.getJoueurs().get(i);
-            pasClickable(false,false,false,true,true,true);
-            this.WaitTour = true;
-            this.LabelJoueur.setText("Joueur :"+j.getNom());
-            afficherBord(j);
-            this.LabelInformation.setText("Choisissez une carte.");
-            while (this.WaitTour){
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            if (j instanceof IA) {
+                pasClickable(true,true,true,true,true,true);
+                if (j.getDucat() <= 2) {
+                    VendreCarte(j);
                 }
-                if(this.SlotSelect != 0){
-                    if(this.VendreCarte){
+                else {
+                    boolean bool = false;
+                    for (int a = 0; a < j.getMain().size(); a++) {
+                        if (j.getMain().get(a).getPrixAction() < j.getDucat()) {
+                            bool = true;
+                            break;
+                        }
+                    }
+                    if (!bool) {
                         VendreCarte(j);
-                        this.VendreCarte = false;
-                    }else if(this.JouerCarte){
-                        JouerCarte(j);
-                        this.JouerCarte = false;
+                    }
+                    else {
+                        int rand = ((IA) j).getRandomNumberBetween(1,10);
+                        if (rand == 10) {
+                            VendreCarte(j);
+                        }
+                        else {
+                            ArrayList<Integer> carte = ((IA) j).getCarteChevalierFrontiere();
+                            if (carte.size() == 0) VendreCarte(j);
+                            else JouerCarte(j);
+                        }
+                    }
+                }
+            }
+            else {
+                pasClickable(false,false,false,true,true,true);
+                this.WaitTour = true;
+                this.LabelJoueur.setText("Joueur :"+j.getNom());
+                afficherBord(j);
+                this.LabelInformation.setText("Choisissez une carte.");
+                while (this.WaitTour){
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if(this.SlotSelect != 0){
+                        if(this.VendreCarte){
+                            VendreCarte(j);
+                            this.VendreCarte = false;
+                        }else if(this.JouerCarte){
+                            JouerCarte(j);
+                            this.JouerCarte = false;
+                        }
                     }
                 }
             }
@@ -641,125 +673,164 @@ public class GameController{
     }
 
     public void VendreCarte(Joueur j){
-        this.isCarteVendu = true;
-        Carte c = j.vendreCarte(this.SlotSelect-1);
-        this.partie.setCartesVendu(c);
-        afficherBord(j);
-        this.LabelInformation.setText("Choisissez la pioche ou le marcher.");
-        pasClickable(true,true,true,false,false,true);
+        if (j instanceof IA) {
+            int index = 0;
+            int prixVente = 0;
+            for (int i = 0; i < j.getMain().size(); i++) {
+                if (j.getMain().get(i).getPrixVente() > prixVente) index = i;
+            }
+            j.vendreCarte(index);
+        }
+        else {
+            this.isCarteVendu = true;
+            Carte c = j.vendreCarte(this.SlotSelect-1);
+            this.partie.setCartesVendu(c);
+            afficherBord(j);
+            this.LabelInformation.setText("Choisissez la pioche ou le marcher.");
+            pasClickable(true,true,true,false,false,true);
+        }
     }
 
     public void JouerCarte(Joueur j){
         this.carteAction = false;
-
-        VBox v = new VBox();
-        v.setPrefWidth(Region.USE_COMPUTED_SIZE);
-        v.setPrefHeight(Region.USE_COMPUTED_SIZE);
-        v.setAlignment(Pos.CENTER);
-        v.setStyle("-fx-background-color: WHITE");
-        Text t = new Text();
-        t.setText("Quelle action ?");
-        v.getChildren().add(t);
-        HBox h = new HBox();
-        h.setPrefWidth(Region.USE_COMPUTED_SIZE);
-        h.setPrefHeight(Region.USE_COMPUTED_SIZE);
-        h.setSpacing(10);
-        h.setAlignment(Pos.CENTER);
-        for(int i =0;i<j.getMain().get(this.SlotSelect-1).getActions().size();i++) {
-            Button yes = new Button();
-            yes.setPrefWidth(Region.USE_COMPUTED_SIZE);
-            yes.setPrefHeight(Region.USE_COMPUTED_SIZE);
-            yes.setText(j.getMain().get(this.SlotSelect-1).getActions().get(i).getDescription());
-            int finalI = i;
-            yes.setOnMousePressed((event) -> {
-                this.carteActionChoix = finalI;
-                this.carteAction = true;
-                this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                this.anchorPane.getChildren().remove(v);
-            });
-            h.getChildren().add(yes);
-        }
-        v.getChildren().add(h);
-        v.setLayoutX(this.Plateau.getWidth()/2 - 200);
-        v.setLayoutY(this.Plateau.getHeight()/2 - 100);
-
-        Platform.runLater(() -> this.anchorPane.getChildren().add(v));
-        while (!this.carteAction){
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        boolean WaitTour = true;
-        this.action = false;
-        while(WaitTour) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            Action a = j.getMain().get(this.SlotSelect - 1).getActions().get(this.carteActionChoix);
+        if (j instanceof IA) {
+            ArrayList<Integer> carte = ((IA) j).getCarteChevalierFrontiere();
+            Action a = j.getMain().get(carte.get(0)).getActions().get(carte.get(1));
             while (a.getNombre() != 0) {
+                if (j.getMain().get(carte.get(0)).getActions().get(carte.get(1)) instanceof AjoutChevalier) {
+                    int x1IA, y1IA;
+                    do {
+                        x1IA = ((IA) j).getRandomNumberBetween(0, 11);
+                        y1IA = ((IA) j).getRandomNumberBetween(0, 11);
+                    } while (!(this.partie.pionValide(j.getChateaux().get(j.getChevaliers().size() - 1 - j.getChevalierNonPlacer()), this.partie.getPlateau().getCase(x1IA, y1IA), j, true)));
+                    j.jouerCarte(carte.get(0), carte.get(1), this.partie.getPlateau(), Optional.empty(), x1IA, y1IA);
+                } else {
+                    int x2IA, y2IA;
+                    Case c = null;
+                    do {
+                        x2IA = ((IA) j).getRandomNumberBetween(0, 11);
+                        y2IA = ((IA) j).getRandomNumberBetween(0, 11);
+                        int choix = ((IA) j).getRandomNumberBetween(1, 4);
+                        switch (choix) {
+                            case 1: c = this.partie.getPlateau().getCase(x2IA+1, y2IA);
+                            case 2: c = this.partie.getPlateau().getCase(x2IA-1, y2IA);
+                            case 3: c = this.partie.getPlateau().getCase(x2IA, y2IA+1);
+                            case 4: c = this.partie.getPlateau().getCase(x2IA, y2IA-1);
+                        }
+                    } while (this.partie.frontiereValide(this.partie.getPlateau().getCase(x2IA, y2IA), c));
+                    j.jouerCarte(carte.get(0), carte.get(1), this.partie.getPlateau(), Optional.empty(), x2IA, y2IA, c.getX(), c.getY());
+                }
+            }
+;       }
+        else {
+            VBox v = new VBox();
+            v.setPrefWidth(Region.USE_COMPUTED_SIZE);
+            v.setPrefHeight(Region.USE_COMPUTED_SIZE);
+            v.setAlignment(Pos.CENTER);
+            v.setStyle("-fx-background-color: WHITE");
+            Text t = new Text();
+            t.setText("Quelle action ?");
+            v.getChildren().add(t);
+            HBox h = new HBox();
+            h.setPrefWidth(Region.USE_COMPUTED_SIZE);
+            h.setPrefHeight(Region.USE_COMPUTED_SIZE);
+            h.setSpacing(10);
+            h.setAlignment(Pos.CENTER);
+            for(int i =0;i<j.getMain().get(this.SlotSelect-1).getActions().size();i++) {
+                Button yes = new Button();
+                yes.setPrefWidth(Region.USE_COMPUTED_SIZE);
+                yes.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                yes.setText(j.getMain().get(this.SlotSelect-1).getActions().get(i).getDescription());
+                int finalI = i;
+                yes.setOnMousePressed((event) -> {
+                    this.carteActionChoix = finalI;
+                    this.carteAction = true;
+                    this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    this.anchorPane.getChildren().remove(v);
+                });
+                h.getChildren().add(yes);
+            }
+            v.getChildren().add(h);
+            v.setLayoutX(this.Plateau.getWidth()/2 - 200);
+            v.setLayoutY(this.Plateau.getHeight()/2 - 100);
+
+            Platform.runLater(() -> this.anchorPane.getChildren().add(v));
+            while (!this.carteAction){
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            boolean WaitTour = true;
+            this.action = false;
+            while(WaitTour) {
+                try {
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
-                this.LabelInformation.setText("selectionner une case valide");
-                if (this.action) {
-                    int Case_1_X = this.CaseClicked.get(0);
-                    int Case_1_Y = this.CaseClicked.get(1);
-                    if (a instanceof AjoutFrontiere || a instanceof Transfuge || a instanceof Alliance) {
-                        this.action = false;
-                        boolean WaitTour2 = true;
-                        while (WaitTour2) {
-                            try {
-                                Thread.sleep(500);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                Action a = j.getMain().get(this.SlotSelect - 1).getActions().get(this.carteActionChoix);
+                while (a.getNombre() != 0) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    this.LabelInformation.setText("selectionner une case valide");
+                    if (this.action) {
+                        int Case_1_X = this.CaseClicked.get(0);
+                        int Case_1_Y = this.CaseClicked.get(1);
+                        if (a instanceof AjoutFrontiere || a instanceof Transfuge || a instanceof Alliance) {
+                            this.action = false;
+                            boolean WaitTour2 = true;
+                            while (WaitTour2) {
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                this.LabelInformation.setText("selectionner une case valide supplementaire");
+                                if (this.action) {
+                                    int Case_2_X = this.CaseClicked.get(0);
+                                    int Case_2_Y = this.CaseClicked.get(1);
+                                    Domaine d1 = this.partie.caseOnDomaine(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y));
+                                    Domaine d2 = this.partie.caseOnDomaine(this.partie.getPlateau().getCase(Case_2_X, Case_2_Y));
+                                    Pion p = this.partie.pionOncase(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y));
+                                    if (a instanceof AjoutFrontiere
+                                            && this.partie.frontiereValide(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y),this.partie.getPlateau().getCase(Case_2_X,Case_2_Y))) {
+                                        j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Optional.empty(),Case_1_X, Case_1_Y, Case_2_X, Case_2_Y);//AddFrontiere
+                                    }
+                                    else if (a instanceof Transfuge
+                                            && (d1 != null && d2 != null)
+                                            && this.partie.domaineAdjacent(d1,d2)
+                                            && p!=null
+                                            && this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(Case_2_X, Case_2_Y),j,false)) {
+                                        j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix,partie.getPlateau(), Optional.of(p), Case_2_X, Case_2_Y);//Transfuge
+                                    }
+                                    else if (a instanceof Alliance){}
+                                    else {
+                                        this.LabelInformation.setText("Cases non Valides");
+                                    }
+                                    Platform.runLater(this::RefreshPlateau);
+                                    WaitTour2 = false;
+                                }
                             }
-                            this.LabelInformation.setText("selectionner une case valide supplementaire");
-                            if (this.action) {
-                                int Case_2_X = this.CaseClicked.get(0);
-                                int Case_2_Y = this.CaseClicked.get(1);
-                                Domaine d1 = this.partie.caseOnDomaine(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y));
-                                Domaine d2 = this.partie.caseOnDomaine(this.partie.getPlateau().getCase(Case_2_X, Case_2_Y));
-                                Pion p = this.partie.pionOncase(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y));
-                                if (a instanceof AjoutFrontiere
-                                        && this.partie.frontiereValide(this.partie.getPlateau().getCase(Case_1_X, Case_1_Y),this.partie.getPlateau().getCase(Case_2_X,Case_2_Y))) {
-                                    j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(), Optional.empty(),Case_1_X, Case_1_Y, Case_2_X, Case_2_Y);//AddFrontiere
-                                }
-                                else if (a instanceof Transfuge
-                                        && (d1 != null && d2 != null)
-                                        && this.partie.domaineAdjacent(d1,d2)
-                                        && p!=null
-                                        && this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(Case_2_X, Case_2_Y),j,false)) {
-                                    j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix,partie.getPlateau(), Optional.of(p), Case_2_X, Case_2_Y);//Transfuge
-                                }
-                                else if (a instanceof Alliance){}
-                                else {
-                                    this.LabelInformation.setText("Cases non Valides");
-                                    System.out.println("YOLO");
-                                }
-                                Platform.runLater(this::RefreshPlateau);
-                                WaitTour2 = false;
-                            }
-                        }
-                    } else if (a instanceof AjoutChevalier) {
-                        if (this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,false))
-                            j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y);//Addchevalier
-                    } else if (a instanceof ExtensionDomaine) {
+                        } else if (a instanceof AjoutChevalier) {
+                            if (this.partie.pionValide(j.getChevaliers().get(j.getChevalierNonPlacer()),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,false))
+                                j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y);//Addchevalier
+                        } else if (a instanceof ExtensionDomaine) {
                             j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y); //extension
-                    } else this.LabelInformation.setText("Case non Valide");
+                        } else this.LabelInformation.setText("Case non Valide");
+                    }
+                    this.partie.refreshDomaine();
+                    setPoint();
+                    this.action = false;
+                    WaitTour = false;
                 }
-                this.partie.refreshDomaine();
-                setPoint();
-                this.action = false;
-                WaitTour = false;
             }
         }
         Platform.runLater(this::RefreshPlateau);

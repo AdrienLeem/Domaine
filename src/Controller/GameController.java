@@ -770,7 +770,7 @@ public class GameController{
                     do {
                         x1IA = ((IA) j).getRandomNumberBetween(0, 11);
                         y1IA = ((IA) j).getRandomNumberBetween(0, 11);
-                    } while (!(this.partie.pionValide(j.getChateaux().get(j.getChevaliers().size() - 1 - j.getChevalierNonPlacer()), this.partie.getPlateau().getCase(x1IA, y1IA), j, true)));
+                    } while (!(this.partie.pionValide(j.getChevaliers().get((j.getChevaliers().size()-1)-j.getChevalierNonPlacer()), this.partie.getPlateau().getCase(x1IA, y1IA), j, false)));
                     j.jouerCarte(carte.get(0), carte.get(1), this.partie.getPlateau(), Optional.empty(), x1IA, y1IA);
                 } else {
                     System.out.println("frontiere");

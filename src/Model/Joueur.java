@@ -3,7 +3,6 @@ package Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Scanner;
 
 public class Joueur implements Serializable {
     private final String nom;

@@ -388,6 +388,41 @@ public class Partie implements Serializable {
                     }
                 }
     }
+
+    public void revenuMines() {
+        for (Joueur j : this.joueurs) {
+            int mineCuivre = 0;
+            int mineArgent = 0;
+            int mineOr = 0;
+            int mineDiamant = 0;
+            if (j.getDomaine().size() > 0) {
+                for (int i = 0; i < j.getDomaine().size(); i++) {
+                    for (int k =0; k < j.getDomaine().get(i).getCases().size(); k++) {
+                        if (this.plateau.getCase(j.getDomaine().get(i).getCases().get(k).getX(),j.getDomaine().get(i).getCases().get(k).getY()) instanceof CaseMineCuivre) mineCuivre += 1;
+                        else if (this.plateau.getCase(j.getDomaine().get(i).getCases().get(k).getX(),j.getDomaine().get(i).getCases().get(k).getY()) instanceof CaseMineArgent) mineArgent += 1;
+                        else if (this.plateau.getCase(j.getDomaine().get(i).getCases().get(k).getX(),j.getDomaine().get(i).getCases().get(k).getY()) instanceof CaseMineOr) mineOr += 1;
+                        else if (this.plateau.getCase(j.getDomaine().get(i).getCases().get(k).getX(),j.getDomaine().get(i).getCases().get(k).getY()) instanceof CaseMineDiamant) mineDiamant += 1;
+                    }
+                }
+            }
+            if (mineCuivre > 0 && mineArgent == 0 && mineOr == 0 && mineDiamant == 0) j.setDucat(1);
+            else if (mineCuivre == 0 && mineArgent > 0 && mineOr == 0 && mineDiamant == 0) j.setDucat(1);
+            else if (mineCuivre == 0 && mineArgent == 0 && mineOr > 0 && mineDiamant == 0) j.setDucat(1);
+            else if (mineCuivre == 0 && mineArgent == 0 && mineOr == 0 && mineDiamant > 0) j.setDucat(1);
+            else if (mineCuivre > 0 && mineArgent > 0 && mineOr == 0 && mineDiamant == 0) j.setDucat(2);
+            else if (mineCuivre > 0 && mineArgent == 0 && mineOr > 0 && mineDiamant == 0) j.setDucat(2);
+            else if (mineCuivre > 0 && mineArgent == 0 && mineOr == 0 && mineDiamant > 0) j.setDucat(2);
+            else if (mineCuivre == 0 && mineArgent > 0 && mineOr > 0 && mineDiamant == 0) j.setDucat(2);
+            else if (mineCuivre == 0 && mineArgent == 0 && mineOr > 0 && mineDiamant > 0) j.setDucat(2);
+            else if (mineCuivre == 0 && mineArgent > 0 && mineOr == 0 && mineDiamant > 0) j.setDucat(2);
+            else if (mineCuivre > 0 && mineArgent > 0 && mineOr > 0 && mineDiamant == 0) j.setDucat(3);
+            else if (mineCuivre > 0 && mineArgent > 0 && mineOr == 0 && mineDiamant > 0) j.setDucat(3);
+            else if (mineCuivre > 0 && mineArgent == 0 && mineOr > 0 && mineDiamant > 0) j.setDucat(3);
+            else if (mineCuivre == 0 && mineArgent > 0 && mineOr > 0 && mineDiamant > 0) j.setDucat(3);
+            else if (mineCuivre > 0 && mineArgent > 0 && mineOr > 0 && mineDiamant > 0) j.setDucat(4);
+        }
+    }
+
     public int getNbJoueurs(){
         return this.joueurs.size();
     }
@@ -537,8 +572,6 @@ public class Partie implements Serializable {
                 for (Case c2 : d.getCases())
                     if (c.getX() == c2.getX() && c.getY() == c2.getY())
                         return d;
-
-
         }
         return null;
     }
@@ -587,5 +620,93 @@ public class Partie implements Serializable {
         return false;
     }
 
+    public boolean caseAdjacenteDomaineJoueur(Joueur joueur, Case c) {
+        for (int i = 0; i < joueur.getDomaine().size(); i++) {
+            for (int j = 0; j < joueur.getDomaine().get(i).getCases().size(); j++) {
+                int x = joueur.getDomaine().get(i).getCases().get(j).getX();
+                int y = joueur.getDomaine().get(i).getCases().get(j).getY();
+                if (x == 0 && y == 0) {
+                    if (this.plateau.getCase(x + 1, y) == c) return true;
+                    if (this.plateau.getCase(x, y + 1) == c) return true;
+                }
+                else if (x == 0 && y == 11) {
+                    if (this.plateau.getCase(x + 1, y) == c) return true;
+                    if (this.plateau.getCase(x, y - 1) == c) return true;
+                }
+                else if (x == 11 && y == 0) {
+                    if (this.plateau.getCase(x - 1, y) == c) return true;
+                    if (this.plateau.getCase(x, y + 1) == c) return true;
+                }
+                else if (x == 11 && y == 11) {
+                    if (this.plateau.getCase(x - 1, y) == c) return true;
+                    if (this.plateau.getCase(x, y - 1) == c) return true;
+                }
+                else if (x == 0) {
+                    if (this.plateau.getCase(x + 1, y) == c) return true;
+                    if (this.plateau.getCase(x, y + 1) == c) return true;
+                    if (this.plateau.getCase(x, y - 1) == c) return true;
+                }
+                else if (y == 0) {
+                    if (this.plateau.getCase(x + 1, y) == c) return true;
+                    if (this.plateau.getCase(x - 1, y) == c) return true;
+                    if (this.plateau.getCase(x, y + 1) == c) return true;
+                }
+                else if (x == 11) {
+                    if (this.plateau.getCase(x - 1, y) == c) return true;
+                    if (this.plateau.getCase(x, y + 1) == c) return true;
+                    if (this.plateau.getCase(x, y - 1) == c) return true;
+                }
+                else if (y == 11) {
+                    if (this.plateau.getCase(x + 1, y) == c) return true;
+                    if (this.plateau.getCase(x - 1, y) == c) return true;
+                    if (this.plateau.getCase(x, y - 1) == c) return true;
+                }
+                else {
+                    if (this.plateau.getCase(x + 1, y) == c) return true;
+                    if (this.plateau.getCase(x - 1, y) == c) return true;
+                    if (this.plateau.getCase(x, y + 1) == c) return true;
+                    if (this.plateau.getCase(x, y - 1) == c) return true;
+                }
+            }
+        }
+        return false;
+    }
 
+    public boolean FinPartie() {
+        if (this.joueurs.size() == 2 && (this.joueurs.get(0).getPoint() >= 50 || this.joueurs.get(1).getPoint() >= 50)) {
+            return true;
+        }
+        else if (this.joueurs.size() == 3 && (this.joueurs.get(0).getPoint() >= 40 || this.joueurs.get(1).getPoint() >= 40 || this.joueurs.get(2).getPoint() >= 40)) {
+            return true;
+        }
+        else if (this.joueurs.size() == 4 && (this.joueurs.get(0).getPoint() >= 30 || this.joueurs.get(1).getPoint() >= 30 || this.joueurs.get(2).getPoint() >= 30 || this.joueurs.get(3).getPoint() >= 30)) {
+            return true;
+        }
+        else if (this.pioche.size() == 0) {
+            for (Joueur j : this.joueurs) {
+                for (int i = 0; i < j.getMain().size(); i++) {
+                    j.vendreCarte(i);
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public Joueur getGagnant() {
+        int[] array = new int[4];
+        int index = 0;
+        for (int i = 0; i < this.joueurs.size(); i++) {
+            array[i] = this.joueurs.get(i).getPoint();
+            index = i;
+        }
+        Arrays.sort(array);
+        Joueur tempJ = this.joueurs.get(0);
+        for (Joueur joueur : this.joueurs) {
+            if (joueur.getPoint() == array[index]) joueur.setPoint(joueur.getPoint() + 5);
+            else if (joueur.getPoint() == array[index - 1]) joueur.setPoint(joueur.getPoint() + 3);
+            if (joueur.getPoint() > tempJ.getPoint()) tempJ = joueur;
+        }
+        return tempJ;
+    }
 }

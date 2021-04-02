@@ -101,6 +101,15 @@ public class Joueur implements Serializable {
         return res;
     }
 
+    public boolean verifCarteJouable(int index) {
+        if (this.main.get(index).getActions().size() == 1) {
+            if (this.main.get(index).getActions().get(0) instanceof Alliance || this.main.get(index).getActions().get(0) instanceof Transfuge) {
+                if (this.domaine.size() == 0) return false;
+            }
+        }
+        return true;
+    }
+
     public void setCouleur(String s){
         this.couleur = s;
     }

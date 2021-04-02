@@ -244,7 +244,10 @@ public class GameController{
         this.img_SlotFrontière.setImage(new Image("img/Grenzen_gross.PNG"));
         this.img_SlotDucat1.setImage(new Image("img/Dukaten_gross.PNG"));
         this.img_SlotChevalier.setImage(new Image("img/PionChevalierBlanc.PNG"));
-        this.img_SlotPioche.setImage(new Image("img/Carte_Verso_A.png"));
+        if (this.partie.getPioche().size() > 45) this.img_SlotPioche.setImage(new Image("img/Carte_Verso_A.png"));
+        else if (this.partie.getPioche().size() > 30) this.img_SlotPioche.setImage(new Image("img/Carte_Verso_B.png"));
+        else if (this.partie.getPioche().size() > 15) this.img_SlotPioche.setImage(new Image("img/Carte_Verso_C.png"));
+        else this.img_SlotPioche.setImage(new Image("img/Carte_Verso_D.png"));
         this.img_SlotVendu.setImage(new Image("img/Carte_Dos.png"));
     }
 
@@ -424,7 +427,6 @@ public class GameController{
         this.anchorPane.getChildren().add(v);
     }
 
-
     public void PremierTour(){
         pasClickable(true,true,true,true,true,true);
         int y =0;
@@ -437,8 +439,8 @@ public class GameController{
             for( Joueur j : this.partie.getJoueurs()) {
                 this.LabelJoueur.setText("Joueur :"+j.getNom());
                 if (j instanceof IA) {
-                    int xIA = -1;
-                    int yIA = -1;
+                    int xIA;
+                    int yIA;
                     do {
                         xIA = ((IA) j).getRandomNumberBetween(0,11);
                         yIA = ((IA) j).getRandomNumberBetween(0,11);
@@ -703,6 +705,7 @@ public class GameController{
                 }
             }
         }
+        this.partie.revenuMines();
         this.Dernierjoueur = 0;
     }
 

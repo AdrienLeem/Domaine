@@ -1,0 +1,15 @@
+#anchorPane{
+    -fx-background-image: url('../img/Fondbois.jpg');
+    -fx-background-size: cover;
+}
+
+.button{
+    -fx-background-color: rgba(0,0,0,0.3);
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow( gaussian , rgba(80,0,0,0.7) , 80,0,0,1 );
+    -fx-effect: innershadow( gaussian , rgba(0,0,0,0.7) , 0,0,0,0 );
+}
+
+.button:hover{
+    -fx-background-color: rgba(255,255,255,0.6);
+}

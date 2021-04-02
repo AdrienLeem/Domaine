@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -35,12 +36,19 @@ public class Charger_PartieController implements Initializable {
     private Button Button_Valider;
 
     @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    private AnchorPane anchorPane;
+
+    @FXML
     void Validation(ActionEvent event) {
         for(int i =0; i<this.listCheckbox.size();i++){
             if(this.listCheckbox.get(i).isSelected()){
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("/View/GameView.fxml"));
+                    String css = this.getClass().getResource("/Style/GameStyle.css").toExternalForm();
                     Parent root = fxmlLoader.load();
 
                     GameController gameController = (GameController) fxmlLoader.getController();
@@ -49,6 +57,7 @@ public class Charger_PartieController implements Initializable {
                     //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
                     //Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
                     Scene scene = new Scene(root);
+                    scene.getStylesheets().add(css);
                     Stage stage = new Stage();
                     stage.setX(0);
                     stage.setY(0);
@@ -66,8 +75,10 @@ public class Charger_PartieController implements Initializable {
         }
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         File dir  = new File("Sauvegarde/");
         File[] liste = dir.listFiles();
         for(File item : liste){

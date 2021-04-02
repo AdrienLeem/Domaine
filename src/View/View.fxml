@@ -12,9 +12,9 @@
 
 <BorderPane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="850.0" minWidth="902.0" prefHeight="850.0" prefWidth="902.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LauncherController">
    <right>
-      <Button fx:id="Button_Quitter" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#Quitter" text="Quitter" BorderPane.alignment="TOP_CENTER">
+      <Button fx:id="Button_Quitter" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#Quitter" text="Quitter" textFill="WHITE" BorderPane.alignment="TOP_CENTER">
          <font>
-            <Font size="26.0" />
+            <Font name="Old English Text MT" size="35.0" />
          </font>
          <BorderPane.margin>
             <Insets bottom="5.0" right="15.0" top="50.0" />
@@ -22,33 +22,36 @@
       </Button>
    </right>
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="TOP_CENTER">
          <children>
-            <Label text="Domaine">
+            <Label fx:id="Label_Domaine" text="Domaine">
                <font>
-                  <Font size="96.0" />
+                  <Font name="Old English Text MT" size="120.0" />
                </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
             </Label>
-            <Text fx:id="label" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu principal">
+            <Text fx:id="label" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu principal" underline="true">
                <font>
-                  <Font size="33.0" />
+                  <Font name="Old English Text MT" size="33.0" />
                </font>
             </Text>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
-                  <Button fx:id="Button_Jouer_Partie" mnemonicParsing="false" onAction="#Jouer" prefWidth="251.0" text="Jouer une partie">
+                  <Button fx:id="Button_Jouer_Partie" mnemonicParsing="false" onAction="#Jouer" prefWidth="251.0" text="Jouer une partie" textFill="WHITE">
                      <font>
-                        <Font size="26.0" />
+                        <Font name="Old English Text MT" size="29.0" />
                      </font>
                   </Button>
-                  <Button fx:id="Button_Charger_Partie" mnemonicParsing="false" onAction="#Charger" text="Charger une partie">
+                  <Button fx:id="Button_Charger_Partie" mnemonicParsing="false" onAction="#Charger" text="Charger une partie" textFill="WHITE">
                      <font>
-                        <Font size="26.0" />
+                        <Font name="Old English Text MT" size="29.0" />
                      </font>
                   </Button>
                </children>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="20.0" top="20.0" />
                </padding>
             </HBox>
             <StackPane fx:id="Children_Pane" prefHeight="150.0" prefWidth="200.0" />
@@ -56,9 +59,9 @@
       </VBox>
    </center>
    <left>
-      <Button fx:id="Button_Annuler" mnemonicParsing="false" onAction="#Annulation" text="Annuler" BorderPane.alignment="TOP_CENTER">
+      <Button fx:id="Button_Annuler" mnemonicParsing="false" onAction="#Annulation" text="Annuler" textFill="WHITE" BorderPane.alignment="TOP_CENTER">
          <font>
-            <Font size="26.0" />
+            <Font name="Old English Text MT" size="35.0" />
          </font>
          <BorderPane.margin>
             <Insets bottom="5.0" left="15.0" top="50.0" />

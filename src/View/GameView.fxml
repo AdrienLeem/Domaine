@@ -15,11 +15,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameController">
+<ScrollPane fx:id="MainPane" maxHeight="959.0" maxWidth="946.0" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameController">
   <content>
-    <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0">
+    <AnchorPane fx:id="anchorPane" maxHeight="957.0" maxWidth="944.0" minHeight="0.0" minWidth="0.0">
          <children>
-            <BorderPane minHeight="780.0" minWidth="780.0" prefHeight="957.0" prefWidth="944.0">
+            <BorderPane maxHeight="957.0" maxWidth="944.0" minHeight="780.0" minWidth="780.0" prefHeight="957.0" prefWidth="944.0">
                <center>
                   <GridPane fx:id="Plateau" alignment="CENTER" gridLinesVisible="true" BorderPane.alignment="CENTER">
                     <columnConstraints>
@@ -57,36 +57,36 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="26.0" prefWidth="770.0" spacing="50.0">
                            <children>
-                              <Text fx:id="Label_Partie" strokeType="OUTSIDE" strokeWidth="0.0" text="Partie :">
+                              <Text fx:id="Label_Partie" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Partie :">
                                  <font>
-                                    <Font size="22.0" />
+                                    <Font name="Old English Text MT" size="22.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="LabelJoueur" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur : ">
+                              <Text fx:id="LabelJoueur" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur : ">
                                  <font>
-                                    <Font size="22.0" />
+                                    <Font name="Old English Text MT" size="22.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="LabelNbTour" strokeType="OUTSIDE" strokeWidth="0.0" text="Tour n°">
+                              <Text fx:id="LabelNbTour" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Tour n°">
                                  <font>
-                                    <Font size="22.0" />
+                                    <Font name="Old English Text MT" size="22.0" />
                                  </font>
                               </Text>
-                              <Button fx:id="Button_Sauvegarde" mnemonicParsing="false" onAction="#Sauvegarder" text="Sauvegarde">
+                              <Button fx:id="Button_Sauvegarde" mnemonicParsing="false" onAction="#Sauvegarder" text="Sauvegarde" textFill="WHITE">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="Old English Text MT" size="22.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="Button_Quitter" mnemonicParsing="false" onAction="#Quitter" text="Quitter">
+                              <Button fx:id="Button_Quitter" mnemonicParsing="false" onAction="#Quitter" text="Quitter" textFill="WHITE">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="Old English Text MT" size="22.0" />
                                  </font>
                               </Button>
                            </children>
                         </HBox>
-                        <Text fx:id="LabelInformation" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonjour">
+                        <Text fx:id="LabelInformation" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonjour">
                            <font>
-                              <Font size="15.0" />
+                              <Font name="Old English Text MT" size="22.0" />
                            </font></Text>
                      </children>
                      <BorderPane.margin>
@@ -115,9 +115,9 @@
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <ImageView id="Carte" fx:id="img_SlotFrontière" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
-                              <Text fx:id="LabelFrontiere" strokeType="OUTSIDE" strokeWidth="0.0" text="Frontiere">
+                              <Text fx:id="LabelFrontiere" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Frontiere">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="Old English Text MT" size="22.0" />
                                  </font>
                               </Text>
                            </children>
@@ -125,9 +125,9 @@
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <ImageView id="Carte" fx:id="img_SlotDucat1" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
-                              <Text fx:id="LabelDucat1" strokeType="OUTSIDE" strokeWidth="0.0" text="Ducat1">
+                              <Text fx:id="LabelDucat1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Ducat1">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="Old English Text MT" size="22.0" />
                                  </font>
                               </Text>
                            </children>
@@ -135,9 +135,9 @@
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <ImageView id="Carte" fx:id="img_SlotChevalier" fitHeight="76.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
-                              <Text fx:id="LabelChevalier" strokeType="OUTSIDE" strokeWidth="0.0" text="Chevalier">
+                              <Text fx:id="LabelChevalier" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Chevalier">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="Old English Text MT" size="22.0" />
                                  </font>
                               </Text>
                            </children>
@@ -145,9 +145,9 @@
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <ImageView id="Carte" fx:id="img_SlotPioche" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#PiocheClicked" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
-                              <Text fx:id="LabelPioche" strokeType="OUTSIDE" strokeWidth="0.0" text="Pioche">
+                              <Text fx:id="LabelPioche" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Pioche">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="Old English Text MT" size="22.0" />
                                  </font>
                               </Text>
                            </children>
@@ -155,14 +155,17 @@
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <ImageView id="Carte" fx:id="img_SlotVendu" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#CarteVendu" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
-                              <Text fx:id="LabelVendu" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendu">
+                              <Text fx:id="LabelVendu" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendu">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="Old English Text MT" size="22.0" />
                                  </font>
                               </Text>
                            </children>
                         </VBox>
-                        <Button fx:id="Button_Tour" mnemonicParsing="false" onAction="#Finir_Tour" prefHeight="25.0" prefWidth="90.0" text="Finir le tour" />
+                        <Button fx:id="Button_Tour" mnemonicParsing="false" onAction="#Finir_Tour" prefHeight="25.0" prefWidth="90.0" text="Terminer" textFill="WHITE">
+                           <font>
+                              <Font name="Old English Text MT" size="16.0" />
+                           </font></Button>
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -183,12 +186,12 @@
                               <Insets top="30.0" />
                            </VBox.margin>
                         </ImageView>
-                        <Text fx:id="PointJ2" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                        <Text fx:id="PointJ2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                            <VBox.margin>
                               <Insets bottom="250.0" />
                            </VBox.margin>
                            <font>
-                              <Font size="22.0" />
+                              <Font name="Old English Text MT" size="22.0" />
                            </font>
                         </Text>
                         <ImageView fx:id="imgJ4" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
@@ -196,9 +199,9 @@
                               <Image url="@../img/PionChevalierBlanc.png" />
                            </image>
                         </ImageView>
-                        <Text fx:id="PointJ4" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                        <Text fx:id="PointJ4" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                            <font>
-                              <Font size="22.0" />
+                              <Font name="Old English Text MT" size="22.0" />
                            </font>
                         </Text>
                      </children>
@@ -218,12 +221,12 @@
                               <Insets top="30.0" />
                            </VBox.margin>
                         </ImageView>
-                        <Text fx:id="PointJ1" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                        <Text fx:id="PointJ1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                            <VBox.margin>
                               <Insets bottom="250.0" />
                            </VBox.margin>
                            <font>
-                              <Font size="22.0" />
+                              <Font name="Old English Text MT" size="22.0" />
                            </font>
                         </Text>
                         <ImageView fx:id="imgJ3" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
@@ -231,9 +234,9 @@
                               <Image url="@../img/PionChevalierOrange.png" />
                            </image>
                         </ImageView>
-                        <Text fx:id="PointJ3" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                        <Text fx:id="PointJ3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                            <font>
-                              <Font size="22.0" />
+                              <Font name="Old English Text MT" size="22.0" />
                            </font>
                         </Text>
                      </children>

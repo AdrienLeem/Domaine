@@ -18,6 +18,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -49,6 +51,7 @@ public class PreGameController implements Initializable {
 
     @FXML
     void Suivant(ActionEvent event) {
+        vBox.setSpacing(50);
         if(!this.levier) {
             if (!this.comboBox.getSelectionModel().isEmpty() && !this.nomPartie.getText().isEmpty()) {
                 this.nom = this.nomPartie.getText();
@@ -56,7 +59,9 @@ public class PreGameController implements Initializable {
                 this.vBox.getChildren().clear();
                 for (int i = 1; i <= this.nbJoueur; i++) {
                     HBox v = new HBox();
+                    v.setSpacing(20);
                     TextField t = new TextField();
+                    t.setFont(Font.font("Old English Text MT", FontWeight.NORMAL, 24));
                     CheckBox checkBox = new CheckBox();
                     this.listcheckbox.add(checkBox);
                     this.listField.add(t);
@@ -64,6 +69,7 @@ public class PreGameController implements Initializable {
                     v.setAlignment(Pos.CENTER);
                     v.getChildren().add(t);
                     checkBox.setText("IA ");
+                    checkBox.setFont(Font.font("Old English Text MT"));
                     v.getChildren().add(checkBox);
                     this.vBox.getChildren().add(v);
                 }
@@ -83,6 +89,7 @@ public class PreGameController implements Initializable {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/View/GameView.fxml"));
+                String css = this.getClass().getResource("/Style/GameStyle.css").toExternalForm();
                 Parent root = fxmlLoader.load();
 
                 GameController gameController = (GameController) fxmlLoader.getController();
@@ -92,6 +99,7 @@ public class PreGameController implements Initializable {
                 //Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
 
                 Scene scene = new Scene(root);
+                scene.getStylesheets().add(css);
                 Stage stage = new Stage();
                 stage.setX(0);
                 stage.setY(0);
@@ -108,11 +116,31 @@ public class PreGameController implements Initializable {
         }
     }
 
+    @FXML
+    void Retour(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/View/View.fxml"));
+            String css = this.getClass().getResource("/Style/ViewStyle.css").toExternalForm();
+
+            Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+            Scene scene = new Scene(fxmlLoader.load(), 902, 850);
+            scene.getStylesheets().add(css);
+            Stage stage = new Stage();
+            stage.setTitle("Domaine");
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.comboBox.getItems().addAll(2,3,4);
     }
-
 
 }

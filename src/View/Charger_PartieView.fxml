@@ -9,29 +9,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Charger_PartieController">
+<BorderPane fx:id="MainPane2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Charger_PartieController">
    <top>
-      <Label text="Partie sauvegardée :" BorderPane.alignment="CENTER">
+      <Label text="Partie sauvegardée :" textFill="WHITE" BorderPane.alignment="CENTER">
          <font>
-            <Font size="33.0" />
+            <Font name="Old English Text MT" size="33.0" />
          </font>
+         <BorderPane.margin>
+            <Insets bottom="2.0" />
+         </BorderPane.margin>
       </Label>
    </top>
    <center>
-      <ScrollPane maxWidth="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="scrollPane" maxWidth="600.0" prefWidth="600.0" style="-fx-background-color: BLACK;" BorderPane.alignment="CENTER">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="585.0">
+          <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="585.0">
                <children>
-                  <VBox fx:id="vBox" />
+                  <VBox fx:id="vBox" style="-fx-background-color: transparent;" />
                </children>
             </AnchorPane>
         </content>
       </ScrollPane>
    </center>
    <bottom>
-      <Button fx:id="Button_Valider" mnemonicParsing="false" onAction="#Validation" text="Valider" BorderPane.alignment="CENTER">
+      <Button fx:id="Button_Valider" mnemonicParsing="false" onAction="#Validation" text="Valider" textFill="WHITE" BorderPane.alignment="CENTER">
          <font>
-            <Font size="26.0" />
+            <Font name="Old English Text MT" size="33.0" />
          </font>
          <BorderPane.margin>
             <Insets bottom="10.0" top="20.0" />

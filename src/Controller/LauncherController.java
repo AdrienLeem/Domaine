@@ -8,13 +8,18 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,13 +27,16 @@ import java.util.ResourceBundle;
 public class LauncherController implements Initializable {
 
     @FXML
-    private BorderPane MainPane;
+    private BorderPane MainPane2;
 
     @FXML
     private Text label;
 
     @FXML
     private StackPane Children_Pane;
+
+    @FXML
+    private Label Label_Domaine;
 
     @FXML
     private Button Button_Quitter;
@@ -64,11 +72,14 @@ public class LauncherController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/View/PreGameView.fxml"));
+            String css = this.getClass().getResource("/Style/PregameStyle.css").toExternalForm();
             Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-            Scene scene = new Scene(fxmlLoader.load(), screenBounds.getWidth(), screenBounds.getHeight());
+            Scene scene = new Scene(fxmlLoader.load(), 902, 850);
+            scene.getStylesheets().add(css);
             Stage stage = new Stage();
             stage.setTitle("Domaine");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             System.out.println(e);
@@ -92,6 +103,7 @@ public class LauncherController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         this.Button_Annuler.setVisible(false);
     }
 

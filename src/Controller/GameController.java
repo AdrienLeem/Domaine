@@ -919,11 +919,17 @@ public class GameController{
                                     else if (a instanceof Transfuge
                                             && (d1 != null && d2 != null)
                                             && this.partie.domaineAdjacent(d1,d2)
+                                            && !this.partie.isInAlliance(d1,d2)
                                             && p!=null
                                             && this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()),this.partie.getPlateau().getCase(Case_2_X, Case_2_Y),j,false)) {
                                         j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix,partie.getPlateau(), Optional.of(p), Case_2_X, Case_2_Y);//Transfuge
                                     }
-                                    else if (a instanceof Alliance){}
+                                    else if (a instanceof Alliance
+                                            && (d1 != null && d2 != null)
+                                            && this.partie.domaineAdjacent(d1,d2)){
+                                        this.partie.addAlliance(d1,d2);
+                                        j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix,partie.getPlateau(), Optional.empty(), Case_2_X, Case_2_Y);
+                                    }
                                     else {
                                         this.LabelInformation.setText("Cases non Valides");
                                     }

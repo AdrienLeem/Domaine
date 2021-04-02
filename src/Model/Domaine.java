@@ -18,18 +18,6 @@ public class Domaine implements Serializable {
         return nbPoint;
     }
 
-    public boolean isNeutre(ArrayList<Joueur> j) {
-        int nbChateau = 0;
-        for (Case aCase : this.domaine) {
-            for (Joueur joueur : j) {
-                for (int i = 0; i < joueur.getChateaux().size(); i++) {
-                    if (aCase.getX() == joueur.getChateaux().get(i).getX() && aCase.getY() == joueur.getChateaux().get(i).getY()) nbChateau++;
-                }
-            }
-        }
-        return nbChateau != 1;
-    }
-
     public ArrayList<Case> getCases() {
         return domaine;
     }

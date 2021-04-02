@@ -6,7 +6,7 @@ public class Alliance extends Action {
 
 
     public Alliance() {
-        this.description = "";
+        this.description = "Faites une alliance avec un autre joueur";
         this.nombre = 1;
     }
 
@@ -18,6 +18,6 @@ public class Alliance extends Action {
 
     @Override
     public void run(Joueur j,Optional<Pion> pion,Optional<Plateau> p, int... x) {
-
+        System.out.println("ALED");
     }
 }

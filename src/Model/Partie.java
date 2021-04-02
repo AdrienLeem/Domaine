@@ -12,6 +12,7 @@ public class Partie implements Serializable {
     private ArrayList<Carte> cartesVendu;
     private int NbTour;
     private int dernierjoueur;
+    private HashMap<Domaine, ArrayList<Domaine>> map;
 
     public ArrayList<Carte> getCartesVendu() {
         return cartesVendu;
@@ -20,8 +21,9 @@ public class Partie implements Serializable {
     public Partie() {
         this.plateau = new Plateau();
         this.joueurs = null;
-        this.pioche = new ArrayList<Carte>();
-        this.cartesVendu = new ArrayList<Carte>();
+        this.pioche = new ArrayList<>();
+        this.cartesVendu = new ArrayList<>();
+        this.map = new HashMap<>();
     }
 
     public Partie(ArrayList<Joueur> j) {
@@ -38,6 +40,7 @@ public class Partie implements Serializable {
         this.joueurs = j;
         this.pioche = new ArrayList<Carte>();
         this.cartesVendu = new ArrayList<Carte>();
+        this.map = new HashMap<>();
     }
 
 
@@ -353,6 +356,7 @@ public class Partie implements Serializable {
         this.calculPoint();
     }
 
+
     public void verifFrontieredomaine(){
         for (Joueur j : this.getJoueurs())
             for (Domaine d: j.getDomaine())
@@ -538,6 +542,40 @@ public class Partie implements Serializable {
         }
         return null;
     }
+
+    public void addAlliance(Domaine djoueur, Domaine dadversaire){
+        if (!map.containsKey(djoueur)) map.put(djoueur, new ArrayList<>());
+        if (!map.containsKey(dadversaire)) map.put(dadversaire, new ArrayList<>());
+        map.forEach((key, value) -> {
+            if (value == null){
+                value = new ArrayList<Domaine>();
+                map.put(key, value);
+            }
+            if (djoueur.equals(key) && !value.contains(dadversaire)) {
+                value.add(dadversaire);
+                System.out.println("yeah");
+            }
+            if (dadversaire.equals(key) && !value.contains(djoueur)) {
+                value.add(djoueur);
+                System.out.println("HOHO");
+            }
+            System.out.println(map.toString());
+        });
+    }
+
+    public boolean isInAlliance(Domaine djoueur, Domaine dadversaire){
+        for (Map.Entry<Domaine, ArrayList<Domaine>> entry : map.entrySet()) {
+            Domaine key = entry.getKey();
+            ArrayList<Domaine> value = entry.getValue();
+            if (key.getCases().get(0).equals(djoueur.getCases().get(0))) {
+                for (Domaine v : value){
+                    if (v.getCases().get(0).equals(dadversaire.getCases().get(0))) return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     public boolean domaineAdjacent(Domaine d1, Domaine d2){
         for (Case c1 : d1.getCases()){

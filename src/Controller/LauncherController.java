@@ -4,22 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,19 +18,10 @@ import java.util.ResourceBundle;
 public class LauncherController implements Initializable {
 
     @FXML
-    private BorderPane MainPane2;
-
-    @FXML
     private Text label;
 
     @FXML
     private StackPane Children_Pane;
-
-    @FXML
-    private Label Label_Domaine;
-
-    @FXML
-    private Button Button_Quitter;
 
     @FXML
     private Button Button_Charger_Partie;
@@ -68,12 +50,11 @@ public class LauncherController implements Initializable {
     }
 
     @FXML
-    void Jouer(ActionEvent event) throws IOException {
+    void Jouer(ActionEvent event){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/View/PreGameView.fxml"));
             String css = this.getClass().getResource("/Style/PregameStyle.css").toExternalForm();
-            Rectangle2D screenBounds = Screen.getPrimary().getBounds();
             Scene scene = new Scene(fxmlLoader.load(), 902, 850);
             scene.getStylesheets().add(css);
             Stage stage = new Stage();

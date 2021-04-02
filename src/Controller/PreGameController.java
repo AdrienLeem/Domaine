@@ -8,19 +8,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -42,9 +39,6 @@ public class PreGameController implements Initializable {
 
     @FXML
     private VBox vBox;
-
-    @FXML
-    private BorderPane MainPane;
 
     @FXML
     private ComboBox<Integer> comboBox;
@@ -92,12 +86,8 @@ public class PreGameController implements Initializable {
                 String css = this.getClass().getResource("/Style/GameStyle.css").toExternalForm();
                 Parent root = fxmlLoader.load();
 
-                GameController gameController = (GameController) fxmlLoader.getController();
+                GameController gameController = fxmlLoader.getController();
                 gameController.init(this.nom);
-
-                Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-                //Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
-
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(css);
                 Stage stage = new Stage();
@@ -106,8 +96,6 @@ public class PreGameController implements Initializable {
                 stage.setTitle("Domaine :"+this.nom);
                 stage.setScene(scene);
                 stage.show();
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -122,8 +110,6 @@ public class PreGameController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/View/View.fxml"));
             String css = this.getClass().getResource("/Style/ViewStyle.css").toExternalForm();
-
-            Rectangle2D screenBounds = Screen.getPrimary().getBounds();
             Scene scene = new Scene(fxmlLoader.load(), 902, 850);
             scene.getStylesheets().add(css);
             Stage stage = new Stage();

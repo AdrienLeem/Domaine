@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -34,9 +33,6 @@ public class GameController{
     private boolean isCarteVendu;
 
     @FXML
-    private ScrollPane MainPane;
-
-    @FXML
     private AnchorPane anchorPane;
 
     @FXML
@@ -55,14 +51,7 @@ public class GameController{
     private Text LabelInformation;
 
     @FXML
-    private Button Button_Sauvegarde;
-
-    @FXML
-    private Button Button_Quitter;
-
-    @FXML
     private Button Button_Tour;
-
 
     @FXML
     private ImageView img_SlotCarte1;
@@ -84,18 +73,6 @@ public class GameController{
 
     @FXML
     private ImageView img_SlotPioche;
-
-    @FXML
-    private Text LabelCart1;
-
-    @FXML
-    private Text LabelCart2;
-
-    @FXML
-    private Text LabelCart3;
-
-    @FXML
-    private Text LabelFrontiere;
 
     @FXML
     private Text LabelDucat1;
@@ -123,12 +100,6 @@ public class GameController{
 
     @FXML
     private Text PointJ3;
-
-    @FXML
-    private ImageView imgJ1;
-
-    @FXML
-    private ImageView imgJ2;
 
     @FXML
     private ImageView imgJ3;
@@ -573,7 +544,6 @@ public class GameController{
                         this.LabelInformation.setText("Placer votre château.");
                         if (this.action) {
                             if (this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)), j, true, i)) {
-                                // If bonne case pour chateau
                                 ImageView img = new ImageView();
                                 img.setFitHeight(65);
                                 img.setFitWidth(65);
@@ -582,7 +552,6 @@ public class GameController{
                                 int finalY = y;
                                 Platform.runLater(() -> placer(img, j, j.getChateaux().get(finalY)));
                                 WaitTour = false;
-                                // la
                             } else this.LabelInformation.setText("Case non Valide");
                             this.action = false;
                         }
@@ -598,7 +567,6 @@ public class GameController{
                         this.LabelInformation.setText("Placer votre chevalier.");
                         if (this.action) {
                             if (this.partie.pionValide(j.getChevaliers().get(y), this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)), j, true, i)) {
-                                // If bonne case pour chevalier
                                 ImageView img = new ImageView();
                                 img.setFitHeight(65);
                                 img.setFitWidth(65);
@@ -607,7 +575,6 @@ public class GameController{
                                 int finalY = y;
                                 Platform.runLater(() -> placer(img, j, j.getChevaliers().get(finalY)));
                                 WaitTour = false;
-                                // la
                             } else this.LabelInformation.setText("Case non Valide");
                             this.action = false;
                         }
@@ -618,7 +585,6 @@ public class GameController{
         }
         this.partie.creationDeck();
         this.partie.distribuerCarte();
-        this.LabelInformation.setText("oui ...");
     }
 
     public void placer(Node node, Joueur j,Pion p, int...coord) {

@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.Partie;
-
 import java.io.*;
 
 public class Sauvegarde {
@@ -26,7 +25,6 @@ public class Sauvegarde {
             data = (Partie) ext.readObject();
             ext.close();
         } catch (IOException | ClassNotFoundException e) {
-            //System.out.println("chargement error");
             e.printStackTrace();
         }
         return data;

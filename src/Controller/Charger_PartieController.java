@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,7 +14,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -33,15 +31,6 @@ public class Charger_PartieController implements Initializable {
     private VBox vBox;
 
     @FXML
-    private Button Button_Valider;
-
-    @FXML
-    private ScrollPane scrollPane;
-
-    @FXML
-    private AnchorPane anchorPane;
-
-    @FXML
     void Validation(ActionEvent event) {
         for(int i =0; i<this.listCheckbox.size();i++){
             if(this.listCheckbox.get(i).isSelected()){
@@ -50,12 +39,8 @@ public class Charger_PartieController implements Initializable {
                     fxmlLoader.setLocation(getClass().getResource("/View/GameView.fxml"));
                     String css = this.getClass().getResource("/Style/GameStyle.css").toExternalForm();
                     Parent root = fxmlLoader.load();
-
-                    GameController gameController = (GameController) fxmlLoader.getController();
+                    GameController gameController = fxmlLoader.getController();
                     gameController.init(this.nomFichier.get(i));
-
-                    //Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-                    //Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
                     Scene scene = new Scene(root);
                     scene.getStylesheets().add(css);
                     Stage stage = new Stage();
@@ -65,7 +50,6 @@ public class Charger_PartieController implements Initializable {
                     stage.setScene(scene);
                     stage.show();
 
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -74,7 +58,6 @@ public class Charger_PartieController implements Initializable {
             }
         }
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

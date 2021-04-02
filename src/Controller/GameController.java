@@ -163,12 +163,25 @@ public class GameController{
                 this.anchorPane.getChildren().remove(LVbox);
             });
             h.getChildren().add(img);
-            if(h.getChildren().size() == 5 ){
-                v.getChildren().add(h);
-                h.getChildren().clear();
-            }
+
+
         }
-        v.getChildren().add(h);
+
+        while (h.getChildren().size() !=0) {
+            HBox hhBox = new HBox();
+            if(h.getChildren().size() >=5) {
+                for (int j = 0; j < 5; j++) {
+                    hhBox.getChildren().add(h.getChildren().get(0));
+                }
+            }else {
+                int nb = h.getChildren().size();
+                for (int j = 0; j < nb; j++) {
+                    hhBox.getChildren().add(h.getChildren().get(0));
+                }
+            }
+            v.getChildren().add(hhBox);
+        }
+
         Button buttonP = new Button();
         buttonP.setText("Retour");
         buttonP.setOnMousePressed((event3) -> {

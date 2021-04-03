@@ -271,9 +271,9 @@ public class GameController{
         this.img_SlotCarte2.setImage(new Image("img/Carte_Face_Vierge.png"));
         this.img_SlotCarte3.setImage(new Image("img/Carte_Face_Vierge.png"));
 
-        this.img_SlotFrontière.setImage(new Image("img/Grenzen_gross.PNG"));
-        this.img_SlotDucat1.setImage(new Image("img/Dukaten_gross.PNG"));
-        this.img_SlotChevalier.setImage(new Image("img/PionChevalierBlanc.PNG"));
+        this.img_SlotFrontière.setImage(new Image("img/Grenzen_gross.png"));
+        this.img_SlotDucat1.setImage(new Image("img/Dukaten_gross.png"));
+        this.img_SlotChevalier.setImage(new Image("img/PionChevalierBlanc.png"));
         this.img_SlotPioche.setImage(new Image("img/Carte_Verso_A.png"));
         this.img_SlotVendu.setImage(new Image("img/Carte_Dos.png"));
     }

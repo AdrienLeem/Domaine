@@ -735,7 +735,8 @@ public class GameController{
                         }
                     }
                 }
-                j.piocher(this.partie.getPioche().get(0));
+                if (this.partie.getPioche().size() != 0) j.piocher(this.partie.getPioche().get(0));
+                else return;
                 this.partie.getPioche().remove(0);
                 afficherBord(j);
             }

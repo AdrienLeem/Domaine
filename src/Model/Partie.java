@@ -468,7 +468,7 @@ public class Partie implements Serializable {
         this.dernierjoueur = dernierjoueur;
     }
 
-    public boolean pionValide(Pion p, Case c, Joueur a, boolean init, int... i)
+    public boolean pionValide(Pion p, Case c, Joueur a, Optional<Carte> carte ,boolean init, int... i)
     {
         for (Joueur j : getJoueurs()) {
             for (Pion chateau : j.getChateaux()) {
@@ -488,7 +488,7 @@ public class Partie implements Serializable {
             if (p instanceof PionChateau) return false;
             else {
                 if (!init) {
-                    if (a.getDucat()>0) a.setDucat(-1);
+                    if (chevalierValide(c,a,init,i) && a.getDucat()-carte.get().getPrixAction()>0) a.setDucat(-1);
                     else return false;
                 }
             }
@@ -698,7 +698,35 @@ public class Partie implements Serializable {
         return false;
     }
 
-    public boolean FinPartie() {
+    public Domaine getDomaineJoueur(Joueur j, Case c) {
+        for (Domaine d : j.getDomaines()) {
+            if (d.getCases().contains(this.plateau.getCase(c.getX() - 1, c.getY()))
+                    || d.getCases().contains(this.plateau.getCase(c.getX() + 1, c.getY()))
+                    || d.getCases().contains(this.plateau.getCase(c.getX(), c.getY() - 1))
+                    || d.getCases().contains(this.plateau.getCase(c.getX(), c.getY() + 1))) {
+                return d;
+            }
+        }
+        return null;
+    }
+
+    public boolean verifCountchevalier(Domaine djoueur, Domaine dadversaire){
+        int jnbchevalier = 0;
+        int advnbchevalier = 0;
+        for (Case cj : djoueur.getCases()){
+            if (this.pionOncase(cj) instanceof PionChevalier){
+                jnbchevalier++;
+            }
+        }
+        for (Case cadv : dadversaire.getCases()){
+            if(this.pionOncase(cadv) instanceof PionChevalier){
+                advnbchevalier++;
+            }
+        }
+        return jnbchevalier > advnbchevalier;
+    }
+
+    public boolean finPartie() {
         if (this.joueurs.size() == 2 && (this.joueurs.get(0).getPoint() >= 50 || this.joueurs.get(1).getPoint() >= 50)) {
             return true;
         }

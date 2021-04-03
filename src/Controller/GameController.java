@@ -410,17 +410,17 @@ public class GameController{
             String l = this.LabelJoueur.getText().split(":")[1];
             Joueur j = this.partie.getJoueurbyname(l);
             if (action==2){
-                if (j.getMain().get(SlotSelect-1).getActions().size() == 1){
-                    if (j.getDucat() >= j.getMain().get(SlotSelect-1).getPrixAction() && this.partie.verifCarteJouable(j,j.getMain().get(this.SlotSelect-1).getActions().get(0))) {
-                        h.getChildren().add(yes);
+                if (j.getDucat() >= j.getMain().get(SlotSelect-1).getPrixAction()) {
+                    if (j.getMain().get(SlotSelect - 1).getActions().size() == 1){
+                        if (this.partie.verifCarteJouable(j, j.getMain().get(this.SlotSelect - 1).getActions().get(0))) {
+                            h.getChildren().add(yes);
+                        }
+
                     }
-                    h.getChildren().add(no);
-                }
-                else {
-                    h.getChildren().add(yes);
-                    h.getChildren().add(no);
+                    else h.getChildren().add(yes);
                 }
 
+                h.getChildren().add(no);
             }
             else {
                 h.getChildren().add(yes);
@@ -472,7 +472,7 @@ public class GameController{
                     do {
                         xIA = ((IA) j).getRandomNumberBetween(0,11);
                         yIA = ((IA) j).getRandomNumberBetween(0,11);
-                    } while (!(this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(xIA, yIA), j, true, i)));
+                    } while (!(this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(xIA, yIA), j, Optional.empty(),true, i)));
                     ImageView img1 = new ImageView();
                     img1.setFitHeight(65);
                     img1.setFitWidth(65);
@@ -554,7 +554,7 @@ public class GameController{
                                 case 4 -> c = this.partie.getPlateau().getCase(xIA, yIA-1);
                             }
                         }
-                    } while (!(this.partie.pionValide(j.getChevaliers().get(y), c, j, true, i)));
+                    } while (!(this.partie.pionValide(j.getChevaliers().get(y), c, j, Optional.empty(),true, i)));
                     ImageView img2 = new ImageView();
                     img2.setFitHeight(65);
                     img2.setFitWidth(65);
@@ -573,7 +573,7 @@ public class GameController{
                         }
                         this.LabelInformation.setText("Placer votre château.");
                         if (this.action) {
-                            if (this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)), j, true, i)) {
+                            if (this.partie.pionValide(j.getChateaux().get(y), this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)), j,Optional.empty(),true, i)) {
                                 ImageView img = new ImageView();
                                 img.setFitHeight(65);
                                 img.setFitWidth(65);
@@ -599,7 +599,7 @@ public class GameController{
                         }
                         this.LabelInformation.setText("Placer votre chevalier.");
                         if (this.action) {
-                            if (this.partie.pionValide(j.getChevaliers().get(y), this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)), j, true, i)) {
+                            if (this.partie.pionValide(j.getChevaliers().get(y), this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)), j,Optional.empty(),true, i)) {
                                 ImageView img = new ImageView();
                                 img.setFitHeight(65);
                                 img.setFitWidth(65);
@@ -792,7 +792,7 @@ public class GameController{
                     do {
                         x1IA = ((IA) j).getRandomNumberBetween(0, 11);
                         y1IA = ((IA) j).getRandomNumberBetween(0, 11);
-                    } while (!(this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()), this.partie.getPlateau().getCase(x1IA, y1IA), j, false)));
+                    } while (!(this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()), this.partie.getPlateau().getCase(x1IA, y1IA),j,Optional.of(j.getMain().get(carte.get(0))),false)));
                     j.jouerCarte(carte.get(0), carte.get(1), this.partie.getPlateau(), Optional.empty(), x1IA, y1IA);
                 } else {
                     System.out.println("frontiere");
@@ -976,7 +976,7 @@ public class GameController{
                                             && this.partie.domaineAdjacent(d1,d2)
                                             && !this.partie.isInAlliance(d1,d2)
                                             && p!=null
-                                            && this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()),this.partie.getPlateau().getCase(Case_2_X, Case_2_Y),j,false)) {
+                                            && this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()),this.partie.getPlateau().getCase(Case_2_X, Case_2_Y),j,Optional.empty(),false)) {
                                         j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix,partie.getPlateau(), Optional.of(p), Case_2_X, Case_2_Y);//Transfuge
                                     }
                                     else if (a instanceof Alliance
@@ -993,10 +993,18 @@ public class GameController{
                                 }
                             }
                         } else if (a instanceof AjoutChevalier) {
-                            if (this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,false))
+                            if (this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,Optional.of(j.getMain().get(SlotSelect-1)),false))
                                 j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y);//Addchevalier
                         } else if (a instanceof ExtensionDomaine && this.partie.caseAdjacenteDomaineJoueur(j, this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)))) {
-                            j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y); //extension
+                            Domaine da = this.partie.caseOnDomaine(this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)));
+                            Domaine dj = this.partie.getDomaineJoueur(j,this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)));
+                            if (da == null){
+                                j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y); //extension
+                            }
+                            else if (dj !=null &&this.partie.verifCountchevalier(dj, da)){
+                                j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y);
+                            }
+                            else this.LabelInformation.setText("Impossible d'etendre ici");
                         } else this.LabelInformation.setText("Case non Valide");
                     }
                     this.partie.refreshDomaine();
@@ -1133,7 +1141,7 @@ public class GameController{
         if(!this.partie.getJoueurs().get(0).getChateaux().get(0).estPlace()){
             new Thread(() -> {
                 PremierTour();
-                while (!this.partie.FinPartie()){
+                while (!this.partie.finPartie()){
                     if(this.shutdown){
                         return;
                     }
@@ -1144,7 +1152,7 @@ public class GameController{
             }).start();
         }else {
             new Thread(() -> {
-                while (!this.partie.FinPartie()){
+                while (!this.partie.finPartie()){
                     if(this.shutdown){
                         return;
                     }

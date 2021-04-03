@@ -178,12 +178,20 @@
                <right>
                   <VBox alignment="TOP_CENTER" BorderPane.alignment="TOP_CENTER">
                      <children>
+                        <Text fx:id="NomJ2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom">
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Old English Text MT" size="19.0" />
+                           </font>
+                        </Text>
                         <ImageView fx:id="imgJ2" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../img/PionChevalierBleu.png" />
                            </image>
                            <VBox.margin>
-                              <Insets top="30.0" />
+                              <Insets top="5.0" />
                            </VBox.margin>
                         </ImageView>
                         <Text fx:id="PointJ2" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
@@ -192,6 +200,11 @@
                            </VBox.margin>
                            <font>
                               <Font name="Old English Text MT" size="22.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="NomJ4" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom">
+                           <font>
+                              <Font name="Old English Text MT" size="19.0" />
                            </font>
                         </Text>
                         <ImageView fx:id="imgJ4" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
@@ -213,12 +226,20 @@
                <left>
                   <VBox alignment="TOP_CENTER" BorderPane.alignment="TOP_CENTER">
                      <children>
+                        <Text fx:id="NomJ1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom">
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Old English Text MT" size="19.0" />
+                           </font>
+                        </Text>
                         <ImageView fx:id="imgJ1" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../img/PionChevalierRouge.png" />
                            </image>
                            <VBox.margin>
-                              <Insets top="30.0" />
+                              <Insets top="5.0" />
                            </VBox.margin>
                         </ImageView>
                         <Text fx:id="PointJ1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
@@ -227,6 +248,11 @@
                            </VBox.margin>
                            <font>
                               <Font name="Old English Text MT" size="22.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="NomJ3" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom">
+                           <font>
+                              <Font name="Old English Text MT" size="19.0" />
                            </font>
                         </Text>
                         <ImageView fx:id="imgJ3" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">

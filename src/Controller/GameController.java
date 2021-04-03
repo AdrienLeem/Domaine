@@ -112,6 +112,18 @@ public class GameController{
     private ImageView imgJ4;
 
     @FXML
+    private Text NomJ1;
+
+    @FXML
+    private Text NomJ2;
+
+    @FXML
+    private Text NomJ3;
+
+    @FXML
+    private Text NomJ4;
+
+    @FXML
     void CarteVendu(MouseEvent event) {
         pasClickable(true,true,true,true,true,true);
         VBox LVbox = new VBox();
@@ -231,14 +243,23 @@ public class GameController{
         this.action =false;
         initPlateau();
 
+        this.NomJ1.setText(this.partie.getJoueurs().get(0).getNom());
+        this.NomJ2.setText(this.partie.getJoueurs().get(1).getNom());
         if(this.partie.getNbJoueurs()==2) {
             this.imgJ3.setVisible(false);
             this.PointJ3.setVisible(false);
             this.imgJ4.setVisible(false);
             this.PointJ4.setVisible(false);
+            this.NomJ3.setVisible(false);
+            this.NomJ4.setVisible(false);
         }else if(this.partie.getNbJoueurs()==3) {
+            this.NomJ3.setText(this.partie.getJoueurs().get(2).getNom());
             this.imgJ4.setVisible(false);
             this.PointJ4.setVisible(false);
+            this.NomJ4.setVisible(false);
+        }else if(this.partie.getNbJoueurs()==4){
+            this.NomJ3.setText(this.partie.getJoueurs().get(2).getNom());
+            this.NomJ4.setText(this.partie.getJoueurs().get(3).getNom());
         }
 
         initSlot();

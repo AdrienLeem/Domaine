@@ -73,6 +73,23 @@ public class PreGameController implements Initializable {
                 this.levier = true;
             }
         }else{
+            ArrayList<String> DefaultName = new ArrayList<>();
+            DefaultName.add("Adrien");
+            DefaultName.add("Gauthier");
+            DefaultName.add("Lucas");
+            DefaultName.add("Léo");
+            for(int o = 0; o < this.nbJoueur; o++){
+                if(this.listField.get(o).getText().isEmpty()){
+                    this.listField.get(o).setText(DefaultName.get(0));
+                    DefaultName.remove(0);
+                }
+                for(int o2 = 1; o2 < this.nbJoueur-1; o2++){
+                    if(this.listField.get(o).getText() == this.listField.get(o2).getText()){
+                        this.listField.get(o).setText(DefaultName.get(0));
+                        DefaultName.remove(0);
+                    }
+                }
+            }
             for (int i = 0; i < this.nbJoueur; i++) {
                 if(this.listcheckbox.get(i).isSelected()){
                     this.listJoueur.add(new IA(this.listField.get(i).getText()));

@@ -69,7 +69,7 @@
       </Button>
    </bottom>
    <top>
-      <Button fx:id="btn_Retour" mnemonicParsing="false" onAction="#Retour" text="Retour" textFill="WHITE" BorderPane.alignment="TOP_LEFT">
+      <Button fx:id="btn_Retour" mnemonicParsing="false" onAction="#Retour" text="Annuler" textFill="WHITE" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </BorderPane.margin>

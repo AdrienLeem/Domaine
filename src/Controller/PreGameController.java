@@ -3,7 +3,9 @@ package Controller;
 import Model.IA;
 import Model.Joueur;
 import Model.Partie;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -91,6 +94,13 @@ public class PreGameController implements Initializable {
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(css);
                 Stage stage = new Stage();
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent t) {
+                        Platform.exit();
+                        System.exit(0);
+                    }
+                });
                 stage.setX(0);
                 stage.setY(0);
                 stage.setTitle("Domaine :"+this.nom);

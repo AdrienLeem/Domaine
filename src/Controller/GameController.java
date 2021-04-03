@@ -31,6 +31,7 @@ public class GameController{
     private boolean carteAction;
     private int Dernierjoueur;
     private boolean isCarteVendu;
+    private boolean shutdown;
 
     @FXML
     private AnchorPane anchorPane;
@@ -162,8 +163,8 @@ public class GameController{
         LVbox.getChildren().add(buttonP);
         LVbox.getChildren().add(v);
 
-        LVbox.setLayoutX(this.Plateau.getWidth()/2 - 100);
-        LVbox.setLayoutY(this.Plateau.getHeight()/2 - 100);
+        LVbox.setLayoutX(this.Plateau.getWidth()/2 - LVbox.getWidth()/2);
+        LVbox.setLayoutY(this.Plateau.getHeight()/2 - LVbox.getHeight()/2);
         this.anchorPane.getChildren().add(LVbox);
     }
 
@@ -210,11 +211,13 @@ public class GameController{
         pasClickable(true,true,true,true,true,false);
     }
 
+
     public void init(String message) {
         Label_Partie.setText("Partie : "+message);
         this.nomPartie = message;
         this.partie = Sauvegarde.charger(this.nomPartie);
         this.Dernierjoueur = this.partie.getDernierjoueur();
+        this.shutdown = false;
         initGame();
     }
 
@@ -376,7 +379,8 @@ public class GameController{
                     case 0 ->{
                         this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                         this.anchorPane.getChildren().remove(v);
-                        this.stage.close();
+                        this.shutdown  =true;
+                        Platform.exit();
                     }
                     case  2 ->{
                         this.JouerCarte = true;
@@ -422,8 +426,8 @@ public class GameController{
             });
             v.getChildren().add(ok);
         }
-        v.setLayoutX(this.Plateau.getWidth()/2 - 100);
-        v.setLayoutY(this.Plateau.getHeight()/2 - 100);
+        v.setLayoutX(this.Plateau.getWidth()/2 - v.getWidth()/2);
+        v.setLayoutY(this.Plateau.getHeight()/2 - v.getHeight()/2);
         this.anchorPane.getChildren().add(v);
     }
 
@@ -557,6 +561,9 @@ public class GameController{
                             } else this.LabelInformation.setText("Case non Valide");
                             this.action = false;
                         }
+                        if(this.shutdown == true){
+                            return;
+                        }
                     }
                     WaitTour = true;
 
@@ -579,6 +586,9 @@ public class GameController{
                                 WaitTour = false;
                             } else this.LabelInformation.setText("Case non Valide");
                             this.action = false;
+                        }
+                        if(this.shutdown == true){
+                            return;
                         }
                     }
                 }
@@ -701,6 +711,9 @@ public class GameController{
                             JouerCarte(j);
                             this.JouerCarte = false;
                         }
+                    }
+                    if(this.shutdown == true){
+                        return;
                     }
                 }
             }
@@ -866,11 +879,14 @@ public class GameController{
                 h.getChildren().add(yes);
             }
             v.getChildren().add(h);
-            v.setLayoutX(this.Plateau.getWidth()/2 - 200);
-            v.setLayoutY(this.Plateau.getHeight()/2 - 100);
+            v.setLayoutX(this.Plateau.getWidth()/2 - v.getWidth()/2);
+            v.setLayoutY(this.Plateau.getHeight()/2 - v.getHeight()/2);
 
             Platform.runLater(() -> this.anchorPane.getChildren().add(v));
             while (!this.carteAction){
+                if(this.shutdown == true){
+                    return;
+                }
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -881,6 +897,9 @@ public class GameController{
             boolean WaitTour = true;
             this.action = false;
             while(WaitTour) {
+                if(this.shutdown == true){
+                    return;
+                }
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -889,6 +908,9 @@ public class GameController{
 
                 Action a = j.getMain().get(this.SlotSelect - 1).getActions().get(this.carteActionChoix);
                 while (a.getNombre() != 0) {
+                    if(this.shutdown == true){
+                        return;
+                    }
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
@@ -903,6 +925,9 @@ public class GameController{
                             this.action = false;
                             boolean WaitTour2 = true;
                             while (WaitTour2) {
+                                if(this.shutdown == true){
+                                    return;
+                                }
                                 try {
                                     Thread.sleep(500);
                                 } catch (InterruptedException e) {
@@ -1083,14 +1108,14 @@ public class GameController{
             setLabelNbTour();
             new Thread(() -> {
                 PremierTour();
-                while (true){
+                while (!this.shutdown){
                     Tour();
                 }
             }).start();
         }else {
             setLabelNbTour();
             new Thread(() -> {
-                while (true){
+                while (!this.shutdown){
                     Tour();
                 }
             }).start();

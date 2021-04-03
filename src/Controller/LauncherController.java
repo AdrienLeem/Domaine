@@ -1,5 +1,6 @@
 package Controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -72,8 +73,7 @@ public class LauncherController implements Initializable {
 
     @FXML
     void Quitter(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+        Platform.exit();
     }
 
     private void visibilityMenu(boolean v){

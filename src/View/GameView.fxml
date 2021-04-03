@@ -155,7 +155,7 @@
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <ImageView id="Carte" fx:id="img_SlotVendu" fitHeight="76.0" fitWidth="65.0" onMouseClicked="#CarteVendu" pickOnBounds="true" preserveRatio="true" styleClass="Style.css" />
-                              <Text fx:id="LabelVendu" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendu">
+                              <Text fx:id="LabelVendu" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Marché">
                                  <font>
                                     <Font name="Old English Text MT" size="22.0" />
                                  </font>

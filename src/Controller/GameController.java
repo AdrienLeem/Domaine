@@ -250,10 +250,7 @@ public class GameController{
         this.img_SlotFrontière.setImage(new Image("img/Grenzen_gross.PNG"));
         this.img_SlotDucat1.setImage(new Image("img/Dukaten_gross.PNG"));
         this.img_SlotChevalier.setImage(new Image("img/PionChevalierBlanc.PNG"));
-        if (this.partie.getPioche().size() > 45) this.img_SlotPioche.setImage(new Image("img/Carte_Verso_A.png"));
-        else if (this.partie.getPioche().size() > 30) this.img_SlotPioche.setImage(new Image("img/Carte_Verso_B.png"));
-        else if (this.partie.getPioche().size() > 15) this.img_SlotPioche.setImage(new Image("img/Carte_Verso_C.png"));
-        else this.img_SlotPioche.setImage(new Image("img/Carte_Verso_D.png"));
+        this.img_SlotPioche.setImage(new Image("img/Carte_Verso_A.png"));
         this.img_SlotVendu.setImage(new Image("img/Carte_Dos.png"));
     }
 
@@ -671,6 +668,10 @@ public class GameController{
         this.LabelChevalier.setText(String.valueOf(j.getChevalierNonPlacer()));
         this.LabelPioche.setText(String.valueOf(this.partie.getPioche().size()));
         this.LabelVendu.setText(String.valueOf(this.partie.getCartesVendu().size()));
+        if (this.partie.getPioche().size() > 45) this.img_SlotPioche.setImage(new Image("img/Carte_Verso_A.png"));
+        else if (this.partie.getPioche().size() > 30) this.img_SlotPioche.setImage(new Image("img/Carte_Verso_B.png"));
+        else if (this.partie.getPioche().size() > 15) this.img_SlotPioche.setImage(new Image("img/Carte_Verso_C.png"));
+        else this.img_SlotPioche.setImage(new Image("img/Carte_Verso_D.png"));
     }
 
     public void Tour(){
@@ -684,7 +685,6 @@ public class GameController{
             this.partie.setDernierjoueur(i);
             Joueur j = this.partie.getJoueurs().get(i);
             if (j instanceof IA) {
-                pasClickable(true,true,true,true,true,true);
                 if (j.getDucat() <= 2) {
                     VendreCarte(j);
                 }
@@ -992,7 +992,7 @@ public class GameController{
                         } else if (a instanceof AjoutChevalier) {
                             if (this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()),this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)),j,false))
                                 j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y);//Addchevalier
-                        } else if (a instanceof ExtensionDomaine) {
+                        } else if (a instanceof ExtensionDomaine && this.partie.caseAdjacenteDomaineJoueur(j, this.partie.getPlateau().getCase(CaseClicked.get(0), CaseClicked.get(1)))) {
                             j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y); //extension
                         } else this.LabelInformation.setText("Case non Valide");
                     }

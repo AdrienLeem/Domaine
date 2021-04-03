@@ -86,6 +86,9 @@ public class Joueur implements Serializable {
         else if (this.main.get(index).getActions().get(choix) instanceof Transfuge)
             this.main.get(index).getActions().get(choix).run(this,pion,Optional.empty(),x);
 
+        else if (this.main.get(index).getActions().get(choix) instanceof ExtensionDomaine)
+            this.main.get(index).getActions().get(choix).run(this,Optional.empty(),Optional.of(p),x);
+
         else this.main.get(index).getActions().get(choix).run(this,Optional.empty(),Optional.empty(),x);
         this.main.get(index).getActions().get(choix).setNombre(this.main.get(index).getActions().get(choix).getNombre()-1);
         if (getMain().get(index).getActions().get(choix).getNombre()==0){

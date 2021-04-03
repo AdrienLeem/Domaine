@@ -608,7 +608,6 @@ public class Partie implements Serializable {
         return false;
     }
 
-
     public boolean domaineAdjacent(Domaine d1, Domaine d2){
         for (Case c1 : d1.getCases()){
             if (d2.getCases().contains(this.plateau.getCase(c1.getX()+1,c1.getY()))

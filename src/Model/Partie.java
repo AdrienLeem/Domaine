@@ -299,10 +299,6 @@ public class Partie implements Serializable {
         }
     }
 
-    public static void main(String[] args) {
-
-    }
-
     public void assignDomaine() {
         for (Joueur joueur : this.joueurs) {
             joueur.getDomaines().clear();

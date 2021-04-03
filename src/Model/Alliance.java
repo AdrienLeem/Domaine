@@ -18,6 +18,5 @@ public class Alliance extends Action {
 
     @Override
     public void run(Joueur j,Optional<Pion> pion,Optional<Plateau> p, int... x) {
-        System.out.println("ALED");
     }
 }

@@ -190,18 +190,21 @@ public class GameController{
     @FXML
     void SlotCart1Clicked(MouseEvent event) {
         this.SlotSelect = 1;
+        pasClickable(true, true, true, true,true, true);
         MessagePop("Voulez-vous jouer ou vendre la carte ?",true,2,"Jouer","Vendre");
     }
 
     @FXML
     void SlotCart2Clicked(MouseEvent event) {
         this.SlotSelect = 2;
+        pasClickable(true, true, true, true,true, true);
         MessagePop("Voulez-vous jouer ou vendre la carte ?",true,2,"Jouer","Vendre");
     }
 
     @FXML
     void SlotCart3Clicked(MouseEvent event) {
         this.SlotSelect = 3;
+        pasClickable(true, true, true, true,true, true);
         MessagePop("Voulez-vous jouer ou vendre la carte ?",true,2,"Jouer","Vendre");
     }
 

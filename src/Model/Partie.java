@@ -583,13 +583,10 @@ public class Partie implements Serializable {
             }
             if (djoueur.equals(key) && !value.contains(dadversaire)) {
                 value.add(dadversaire);
-                System.out.println("yeah");
             }
             if (dadversaire.equals(key) && !value.contains(djoueur)) {
                 value.add(djoueur);
-                System.out.println("HOHO");
             }
-            System.out.println(map.toString());
         });
     }
 

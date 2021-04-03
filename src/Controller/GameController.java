@@ -781,7 +781,6 @@ public class GameController{
 
     public void VendreCarte(Joueur j){
         if (j instanceof IA) {
-            System.out.println("vendre");
             int index = 0;
             int prixVente = 0;
             for (int i = 0; i < j.getMain().size(); i++) {
@@ -803,12 +802,10 @@ public class GameController{
     public void JouerCarte(Joueur j){
         this.carteAction = false;
         if (j instanceof IA) {
-            System.out.println("jouer");
             ArrayList<Integer> carte = ((IA) j).getCarteChevalierFrontiere();
             Action a = j.getMain().get(carte.get(0)).getActions().get(carte.get(1));
             while (a.getNombre() != 0) {
                 if (j.getMain().get(carte.get(0)).getActions().get(carte.get(1)) instanceof AjoutChevalier) {
-                    System.out.println("cheval");
                     int x1IA, y1IA;
                     do {
                         x1IA = ((IA) j).getRandomNumberBetween(0, 11);
@@ -816,7 +813,6 @@ public class GameController{
                     } while (!(this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()), this.partie.getPlateau().getCase(x1IA, y1IA),j,Optional.of(j.getMain().get(carte.get(0))),false)));
                     j.jouerCarte(carte.get(0), carte.get(1), this.partie.getPlateau(), Optional.empty(), x1IA, y1IA);
                 } else {
-                    System.out.println("frontiere");
                     int x2IA, y2IA;
                     Case c = null;
                     do {

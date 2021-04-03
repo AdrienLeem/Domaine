@@ -11,7 +11,7 @@ public class Joueur implements Serializable {
     private ArrayList<PionChateau> chateaux;
     private ArrayList<PionChevalier> chevaliers;
     private Pion marqueur;
-    private ArrayList<Domaine> domaine;
+    private ArrayList<Domaine> domaines;
     private String couleur;
     private int ducat;
 
@@ -28,7 +28,7 @@ public class Joueur implements Serializable {
             this.chevaliers.add(new PionChevalier());
         }
         this.marqueur =null;
-        this.domaine = new ArrayList<Domaine>();
+        this.domaines = new ArrayList<Domaine>();
         this.ducat = 7;
         this.couleur = null;
     }
@@ -69,8 +69,8 @@ public class Joueur implements Serializable {
         this.ducat += ducat;
     }
 
-    public ArrayList<Domaine> getDomaine() {
-        return domaine;
+    public ArrayList<Domaine> getDomaines() {
+        return domaines;
     }
 
     public void placePion(Pion pion, int x, int y) {
@@ -101,14 +101,6 @@ public class Joueur implements Serializable {
         return res;
     }
 
-    public boolean verifCarteJouable(int index) {
-        if (this.main.get(index).getActions().size() == 1) {
-            if (this.main.get(index).getActions().get(0) instanceof Alliance || this.main.get(index).getActions().get(0) instanceof Transfuge) {
-                if (this.domaine.size() == 0) return false;
-            }
-        }
-        return true;
-    }
 
     public void setCouleur(String s){
         this.couleur = s;

@@ -305,7 +305,7 @@ public class Partie implements Serializable {
 
     public void assignDomaine() {
         for (Joueur joueur : this.joueurs) {
-            joueur.getDomaine().clear();
+            joueur.getDomaines().clear();
         }
         ArrayList<Integer> lint = new ArrayList<>();
         for (int i = 0; i < this.plateau.getDomaines().size(); i++) {
@@ -333,7 +333,7 @@ public class Partie implements Serializable {
             }
             if (cpt == 1) {
                 for (int i1 = 0; i1 < lint.size(); i1++) {
-                    if (lint.get(i1) == 1) this.joueurs.get(i1).getDomaine().add(this.plateau.getDomaines().get(i));
+                    if (lint.get(i1) == 1) this.joueurs.get(i1).getDomaines().add(this.plateau.getDomaines().get(i));
                 }
             }
         }
@@ -342,8 +342,8 @@ public class Partie implements Serializable {
     public void calculPoint() {
         for (Joueur j : this.joueurs) {
             int nbPoint = 0;
-            for (int i = 0; i < j.getDomaine().size(); i++) {
-                nbPoint += j.getDomaine().get(i).calculPoint();
+            for (int i = 0; i < j.getDomaines().size(); i++) {
+                nbPoint += j.getDomaines().get(i).calculPoint();
             }
             j.setPoint(nbPoint);
         }
@@ -359,7 +359,7 @@ public class Partie implements Serializable {
 
     public void verifFrontieredomaine(){
         for (Joueur j : this.getJoueurs())
-            for (Domaine d: j.getDomaine())
+            for (Domaine d: j.getDomaines())
                 for (Case c: d.getCases()) {
                     if (c.isfOuest()) {
                         Case c2 = this.plateau.getCase(c.getX(),c.getY()-1);
@@ -395,13 +395,13 @@ public class Partie implements Serializable {
             int mineArgent = 0;
             int mineOr = 0;
             int mineDiamant = 0;
-            if (j.getDomaine().size() > 0) {
-                for (int i = 0; i < j.getDomaine().size(); i++) {
-                    for (int k =0; k < j.getDomaine().get(i).getCases().size(); k++) {
-                        if (this.plateau.getCase(j.getDomaine().get(i).getCases().get(k).getX(),j.getDomaine().get(i).getCases().get(k).getY()) instanceof CaseMineCuivre) mineCuivre += 1;
-                        else if (this.plateau.getCase(j.getDomaine().get(i).getCases().get(k).getX(),j.getDomaine().get(i).getCases().get(k).getY()) instanceof CaseMineArgent) mineArgent += 1;
-                        else if (this.plateau.getCase(j.getDomaine().get(i).getCases().get(k).getX(),j.getDomaine().get(i).getCases().get(k).getY()) instanceof CaseMineOr) mineOr += 1;
-                        else if (this.plateau.getCase(j.getDomaine().get(i).getCases().get(k).getX(),j.getDomaine().get(i).getCases().get(k).getY()) instanceof CaseMineDiamant) mineDiamant += 1;
+            if (j.getDomaines().size() > 0) {
+                for (int i = 0; i < j.getDomaines().size(); i++) {
+                    for (int k = 0; k < j.getDomaines().get(i).getCases().size(); k++) {
+                        if (this.plateau.getCase(j.getDomaines().get(i).getCases().get(k).getX(),j.getDomaines().get(i).getCases().get(k).getY()) instanceof CaseMineCuivre) mineCuivre += 1;
+                        else if (this.plateau.getCase(j.getDomaines().get(i).getCases().get(k).getX(),j.getDomaines().get(i).getCases().get(k).getY()) instanceof CaseMineArgent) mineArgent += 1;
+                        else if (this.plateau.getCase(j.getDomaines().get(i).getCases().get(k).getX(),j.getDomaines().get(i).getCases().get(k).getY()) instanceof CaseMineOr) mineOr += 1;
+                        else if (this.plateau.getCase(j.getDomaines().get(i).getCases().get(k).getX(),j.getDomaines().get(i).getCases().get(k).getY()) instanceof CaseMineDiamant) mineDiamant += 1;
                     }
                 }
             }
@@ -478,7 +478,7 @@ public class Partie implements Serializable {
                 if (chevalier.getX() == c.getX() && chevalier.getY() == c.getY()) return false;
             }
             if (!j.equals(a))
-                for (Domaine d : j.getDomaine())
+                for (Domaine d : j.getDomaines())
                     for (Case e : d.getCases())
                         if (c.getX() == e.getX() && c.getY() == e.getY())
                             return false;
@@ -543,7 +543,7 @@ public class Partie implements Serializable {
             return false;
         }
         for (Joueur j : this.getJoueurs())
-            for (Domaine d : j.getDomaine())
+            for (Domaine d : j.getDomaines())
                 for (Case c : d.getCases())
                     if (c.equals(c1) || c.equals(c2)) return false;
         return (!c1.isfNord() || (c2.getX() != c1.getX() - 1 || c2.getY() != c1.getY()))
@@ -568,9 +568,8 @@ public class Partie implements Serializable {
 
     public Domaine caseOnDomaine(Case c) {
         for (Joueur joueur : getJoueurs()){
-            for (Domaine d : joueur.getDomaine())
-                for (Case c2 : d.getCases())
-                    if (c.getX() == c2.getX() && c.getY() == c2.getY())
+            for (Domaine d : joueur.getDomaines())
+                if (d.getCases().contains(c))
                         return d;
         }
         return null;
@@ -620,11 +619,89 @@ public class Partie implements Serializable {
         return false;
     }
 
+    public boolean verifCarteJouable(Joueur j,int index) {
+        if (j.getMain().get(index).getActions().size() == 1) {
+            if (j.getMain().get(index).getActions().get(0) instanceof Alliance || j.getMain().get(index).getActions().get(0) instanceof Transfuge || j.getMain().get(index).getActions().get(0) instanceof ExtensionDomaine) {
+                if (j.getDomaines().size() == 0) return false;
+                if (j.getMain().get(index).getActions().get(0) instanceof Alliance || j.getMain().get(index).getActions().get(0) instanceof Transfuge){
+                    for (Joueur k : joueurs){
+                        if (!k.equals(j)){
+                            for (Domaine kdom :k.getDomaines()){
+                                for (Domaine jdom : j.getDomaines()){
+                                    if(domaineAdjacent(jdom,kdom) && !isInAlliance(jdom,kdom)) {
+                                        if (j.getMain().get(index).getActions().get(0) instanceof Transfuge){
+                                            for (PionChevalier chevalier : k.getChevaliers()){
+                                                Case c = this.plateau.getCase(chevalier.getX(), chevalier.getY());
+                                                if (kdom.getCases().contains(c)) return true;
+                                            }
+                                        }
+                                        else return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        else if (j.getMain().get(index).getActions().size()==2){
+            if (j.getMain().get(index).getActions().get(0) instanceof Alliance || j.getMain().get(index).getActions().get(0) instanceof Transfuge || j.getMain().get(index).getActions().get(0) instanceof ExtensionDomaine) {
+                if (j.getDomaines().size() == 0) return false;
+                if (j.getMain().get(index).getActions().get(0) instanceof Alliance || j.getMain().get(index).getActions().get(0) instanceof Transfuge){
+                    for (Joueur k : joueurs){
+                        if (!k.equals(j)){
+                            for (Domaine kdom :k.getDomaines()){
+                                for (Domaine jdom : j.getDomaines()){
+                                    if(domaineAdjacent(jdom,kdom) && !isInAlliance(jdom,kdom)) {
+                                        if (j.getMain().get(index).getActions().get(0) instanceof Transfuge){
+                                            for (PionChevalier chevalier : k.getChevaliers()){
+                                                Case c = this.plateau.getCase(chevalier.getX(), chevalier.getY());
+                                                if (kdom.getCases().contains(c)) return true;
+                                            }
+                                        }
+                                        else return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return false;
+                }
+            }
+            else if (j.getMain().get(index).getActions().get(1) instanceof Alliance || j.getMain().get(index).getActions().get(1) instanceof Transfuge || j.getMain().get(index).getActions().get(1) instanceof ExtensionDomaine) {
+                if (j.getDomaines().size() == 0) return false;
+                if (j.getMain().get(index).getActions().get(1) instanceof Alliance || j.getMain().get(index).getActions().get(1) instanceof Transfuge){
+                    for (Joueur k : joueurs){
+                        if (!k.equals(j)){
+                            for (Domaine kdom :k.getDomaines()){
+                                for (Domaine jdom : j.getDomaines()){
+                                    if(domaineAdjacent(jdom,kdom) && !isInAlliance(jdom,kdom)) {
+                                        if (j.getMain().get(index).getActions().get(1) instanceof Transfuge){
+                                            for (PionChevalier chevalier : k.getChevaliers()){
+                                                Case c = this.plateau.getCase(chevalier.getX(), chevalier.getY());
+                                                if (kdom.getCases().contains(c)) return true;
+                                            }
+                                        }
+                                        else return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
     public boolean caseAdjacenteDomaineJoueur(Joueur joueur, Case c) {
-        for (int i = 0; i < joueur.getDomaine().size(); i++) {
-            for (int j = 0; j < joueur.getDomaine().get(i).getCases().size(); j++) {
-                int x = joueur.getDomaine().get(i).getCases().get(j).getX();
-                int y = joueur.getDomaine().get(i).getCases().get(j).getY();
+        for (int i = 0; i < joueur.getDomaines().size(); i++) {
+            for (int j = 0; j < joueur.getDomaines().get(i).getCases().size(); j++) {
+                int x = joueur.getDomaines().get(i).getCases().get(j).getX();
+                int y = joueur.getDomaines().get(i).getCases().get(j).getY();
                 if (x == 0 && y == 0) {
                     if (this.plateau.getCase(x + 1, y) == c) return true;
                     if (this.plateau.getCase(x, y + 1) == c) return true;

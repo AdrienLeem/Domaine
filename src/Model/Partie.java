@@ -8,11 +8,11 @@ import static java.lang.Math.abs;
 public class Partie implements Serializable {
     private final Plateau plateau;
     private final ArrayList<Joueur> joueurs;
-    private ArrayList<Carte> pioche;
-    private ArrayList<Carte> cartesVendu;
+    private final ArrayList<Carte> pioche;
+    private final ArrayList<Carte> cartesVendu;
     private int NbTour;
     private int dernierjoueur;
-    private HashMap<Domaine, ArrayList<Domaine>> map;
+    private final HashMap<Domaine, ArrayList<Domaine>> map;
 
     public ArrayList<Carte> getCartesVendu() {
         return cartesVendu;
@@ -484,8 +484,10 @@ public class Partie implements Serializable {
             if (p instanceof PionChateau) return false;
             else {
                 if (!init) {
-                    if (chevalierValide(c,a,init,i) && a.getDucat()-carte.get().getPrixAction()>0) a.setDucat(-1);
-                    else return false;
+                    if (carte.isPresent()){
+                        if (chevalierValide(c,a,init,i) && a.getDucat()-carte.get().getPrixAction()>0) a.setDucat(-1);
+                        else return false;
+                    }
                 }
             }
         }
@@ -595,9 +597,13 @@ public class Partie implements Serializable {
         for (Map.Entry<Domaine, ArrayList<Domaine>> entry : map.entrySet()) {
             Domaine key = entry.getKey();
             ArrayList<Domaine> value = entry.getValue();
-            if (key.getCases().get(0).equals(djoueur.getCases().get(0))) {
-                for (Domaine v : value){
-                    if (v.getCases().get(0).equals(dadversaire.getCases().get(0))) return true;
+            for (Case k : key.getCases()) {
+                if (djoueur.getCases().contains(k)) {
+                    for (Domaine v : value) {
+                        for (Case vc : v.getCases()){
+                            if (dadversaire.getCases().contains(vc)) return true;
+                        }
+                    }
                 }
             }
         }
@@ -641,6 +647,12 @@ public class Partie implements Serializable {
         return true;
     }
 
+    public void removeAndAdd(Pion p){
+        for (Joueur j : this.getJoueurs()){
+            boolean remove = j.getChevaliers().remove(p);
+            if (remove) j.getChevaliers().add(new PionChevalier());
+        }
+    }
 
     public boolean caseAdjacenteDomaineJoueur(Joueur joueur, Case c) {
         for (int i = 0; i < joueur.getDomaines().size(); i++) {

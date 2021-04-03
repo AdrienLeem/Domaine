@@ -977,11 +977,13 @@ public class GameController{
                                             && !this.partie.isInAlliance(d1,d2)
                                             && p!=null
                                             && this.partie.pionValide(j.getChevaliers().get(j.getProchainchevalier()),this.partie.getPlateau().getCase(Case_2_X, Case_2_Y),j,Optional.empty(),false)) {
-                                        j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix,partie.getPlateau(), Optional.of(p), Case_2_X, Case_2_Y);//Transfuge
+                                        j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix,partie.getPlateau(), Optional.of(p), Case_2_X, Case_2_Y);
+                                        this.partie.removeAndAdd(p);//Transfuge
                                     }
                                     else if (a instanceof Alliance
                                             && (d1 != null && d2 != null)
-                                            && this.partie.domaineAdjacent(d1,d2)){
+                                            && this.partie.domaineAdjacent(d1,d2)
+                                            && !this.partie.isInAlliance(d1,d2)){
                                         this.partie.addAlliance(d1,d2);
                                         j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix,partie.getPlateau(), Optional.empty(), Case_2_X, Case_2_Y);
                                     }
@@ -1001,7 +1003,7 @@ public class GameController{
                             if (da == null){
                                 j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y); //extension
                             }
-                            else if (dj !=null &&this.partie.verifCountchevalier(dj, da)){
+                            else if (dj !=null && this.partie.verifCountchevalier(dj, da) && !this.partie.isInAlliance(da,dj)){
                                 j.jouerCarte(this.SlotSelect - 1, this.carteActionChoix, partie.getPlateau(),Optional.empty(),Case_1_X, Case_1_Y);
                             }
                             else this.LabelInformation.setText("Impossible d'etendre ici");

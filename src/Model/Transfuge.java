@@ -16,9 +16,7 @@ public class Transfuge extends Action {
     @Override
     public void run(Joueur j,  Optional<Pion> pion,Optional<Plateau> p,int... x) {
         if (pion.isPresent()) {
-            pion.get().setX(-100);
-            pion.get().setY(-100);
-            j.placePion(j.getChevaliers().get(j.getChevalierNonPlacer()),x[0], x[1]);
+            j.placePion(j.getChevaliers().get(j.getProchainchevalier()),x[0], x[1]);
         }
 
     }

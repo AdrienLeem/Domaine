@@ -410,7 +410,7 @@ public class GameController{
             String l = this.LabelJoueur.getText().split(":")[1];
             Joueur j = this.partie.getJoueurbyname(l);
             if (action==2){
-                if (j.getDucat() >= j.getMain().get(SlotSelect-1).getPrixAction()) {
+                if (j.getDucat() >= j.getMain().get(SlotSelect-1).getPrixAction() && this.partie.verifCarteJouable(j,SlotSelect-1)) {
                     h.getChildren().add(yes);
                 }
                 h.getChildren().add(no);
@@ -730,7 +730,7 @@ public class GameController{
                             this.JouerCarte = false;
                         }
                     }
-                    if(this.shutdown == true){
+                    if(this.shutdown){
                         return;
                     }
                 }
@@ -1122,12 +1122,12 @@ public class GameController{
     }
 
     public void Jeu(){
+        setLabelNbTour();
         if(!this.partie.getJoueurs().get(0).getChateaux().get(0).estPlace()){
-            setLabelNbTour();
             new Thread(() -> {
                 PremierTour();
                 while (!this.partie.FinPartie()){
-                    if(this.shutdown == true){
+                    if(this.shutdown){
                         return;
                     }
                     Tour();
@@ -1136,10 +1136,9 @@ public class GameController{
 
             }).start();
         }else {
-            setLabelNbTour();
             new Thread(() -> {
                 while (!this.partie.FinPartie()){
-                    if(this.shutdown == true){
+                    if(this.shutdown){
                         return;
                     }
                     Tour();

@@ -5,8 +5,10 @@ import Model.Action;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +17,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.*;
 
 public class GameController{
@@ -421,8 +424,22 @@ public class GameController{
             Button ok = new Button();
             ok.setText(bt1);
             ok.setOnMousePressed((event) -> {
-                this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                this.Plateau.getChildren().remove(v);
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("/View/View.fxml"));
+                    String css = this.getClass().getResource("/Style/ViewStyle.css").toExternalForm();
+                    Scene scene = new Scene(fxmlLoader.load(), 902, 850);
+                    scene.getStylesheets().add(css);
+                    Stage stage = new Stage();
+                    stage.setTitle("Domaine");
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    stage.show();
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.close();
             });
             v.getChildren().add(ok);
         }
@@ -990,6 +1007,7 @@ public class GameController{
         ArrayList<Joueur> listjoueurs = this.partie.getJoueurs();
 
         this.Plateau.getChildren().clear();
+        //init du plateau de base
         for(int i=0;i<12;i++){
             for(int j=0;j<12;j++){
                 ImageView img = new ImageView();
@@ -1022,45 +1040,42 @@ public class GameController{
                     this.action = true;
                 });
                 this.Plateau.add(img,j,i);
+
+                if(p.getCase(i,j).isfEst()){
+                    ImageView img2 = new ImageView();
+                    img2.setFitHeight(65);
+                    img2.setFitWidth(65);
+                    img2.setDisable(true);
+                    img2.setImage(new Image("img/FrontiereEst.png"));
+                    this.Plateau.add(img2, j, i);
+                }
+                if(p.getCase(i,j).isfOuest()){
+                    ImageView img2 = new ImageView();
+                    img2.setFitHeight(65);
+                    img2.setFitWidth(65);
+                    img2.setDisable(true);
+                    img2.setImage(new Image("img/FrontiereOuest.png"));
+                    this.Plateau.add(img2, j, i);
+                }
+                if(p.getCase(i,j).isfNord()) {
+                    ImageView img2 = new ImageView();
+                    img2.setFitHeight(65);
+                    img2.setFitWidth(65);
+                    img2.setDisable(true);
+                    img2.setImage(new Image("img/FrontiereNord.png"));
+                    this.Plateau.add(img2, j, i);
+                }
+                if(p.getCase(i,j).isfSud()) {
+                    ImageView img2 = new ImageView();
+                    img2.setFitHeight(65);
+                    img2.setFitWidth(65);
+                    img2.setDisable(true);
+                    img2.setImage(new Image("img/FrontiereSud.png"));
+                    this.Plateau.add(img2, j, i);
+                }
             }
         }
 
-        for(int i=0;i<12;i++) {
-            for (int j = 0; j < 12; j++) {
-                if(p.getCase(i,j).isfEst()){
-                    ImageView img = new ImageView();
-                    img.setFitHeight(65);
-                    img.setFitWidth(65);
-                    img.setDisable(true);
-                    img.setImage(new Image("img/FrontiereEst.png"));
-                    this.Plateau.add(img, j, i);
-                }
-                if(p.getCase(i,j).isfOuest()){
-                    ImageView img = new ImageView();
-                    img.setFitHeight(65);
-                    img.setFitWidth(65);
-                    img.setDisable(true);
-                    img.setImage(new Image("img/FrontiereOuest.png"));
-                    this.Plateau.add(img, j, i);
-                }
-                if(p.getCase(i,j).isfNord()) {
-                    ImageView img = new ImageView();
-                    img.setFitHeight(65);
-                    img.setFitWidth(65);
-                    img.setDisable(true);
-                    img.setImage(new Image("img/FrontiereNord.png"));
-                    this.Plateau.add(img, j, i);
-                }
-                if(p.getCase(i,j).isfSud()) {
-                    ImageView img = new ImageView();
-                    img.setFitHeight(65);
-                    img.setFitWidth(65);
-                    img.setDisable(true);
-                    img.setImage(new Image("img/FrontiereSud.png"));
-                    this.Plateau.add(img, j, i);
-                }
-            }
-        }
         for(Joueur joueur : listjoueurs) {
             for (PionChateau chateau : joueur.getChateaux()) {
                 if (chateau.estPlace()) {
@@ -1108,16 +1123,25 @@ public class GameController{
             setLabelNbTour();
             new Thread(() -> {
                 PremierTour();
-                while (!this.shutdown){
+                while (!this.partie.FinPartie()){
+                    if(this.shutdown == true){
+                        return;
+                    }
                     Tour();
                 }
+                Platform.runLater(() -> MessagePop("Le Gagnant est : "+this.partie.getGagnant().getNom(),false,0,"Terminer",""));
+
             }).start();
         }else {
             setLabelNbTour();
             new Thread(() -> {
-                while (!this.shutdown){
+                while (!this.partie.FinPartie()){
+                    if(this.shutdown == true){
+                        return;
+                    }
                     Tour();
                 }
+                Platform.runLater(() -> MessagePop("Le Gagnant est : "+this.partie.getGagnant().getNom(),false,0,"Terminer",""));
             }).start();
         }
     }

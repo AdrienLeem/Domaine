@@ -410,10 +410,17 @@ public class GameController{
             String l = this.LabelJoueur.getText().split(":")[1];
             Joueur j = this.partie.getJoueurbyname(l);
             if (action==2){
-                if (j.getDucat() >= j.getMain().get(SlotSelect-1).getPrixAction() && this.partie.verifCarteJouable(j,SlotSelect-1)) {
-                    h.getChildren().add(yes);
+                if (j.getMain().get(SlotSelect-1).getActions().size() == 1){
+                    if (j.getDucat() >= j.getMain().get(SlotSelect-1).getPrixAction() && this.partie.verifCarteJouable(j,j.getMain().get(this.SlotSelect-1).getActions().get(0))) {
+                        h.getChildren().add(yes);
+                    }
+                    h.getChildren().add(no);
                 }
-                h.getChildren().add(no);
+                else {
+                    h.getChildren().add(yes);
+                    h.getChildren().add(no);
+                }
+
             }
             else {
                 h.getChildren().add(yes);
@@ -578,7 +585,7 @@ public class GameController{
                             } else this.LabelInformation.setText("Case non Valide");
                             this.action = false;
                         }
-                        if(this.shutdown == true){
+                        if(this.shutdown){
                             return;
                         }
                     }
@@ -604,7 +611,7 @@ public class GameController{
                             } else this.LabelInformation.setText("Case non Valide");
                             this.action = false;
                         }
-                        if(this.shutdown == true){
+                        if(this.shutdown){
                             return;
                         }
                     }
@@ -721,7 +728,6 @@ public class GameController{
                         e.printStackTrace();
                     }
                     if(this.SlotSelect != 0){
-                        pasClickable(true,true,true,true,true,true);
                         if(this.VendreCarte){
                             VendreCarte(j);
                             this.VendreCarte = false;
@@ -761,7 +767,6 @@ public class GameController{
             this.partie.setCartesVendu(c);
         }
         else {
-            pasClickable(true,true,true,true,true,true);
             this.isCarteVendu = true;
             Carte c = j.vendreCarte(this.SlotSelect-1);
             this.partie.setCartesVendu(c);
@@ -870,7 +875,6 @@ public class GameController{
             setPoint();
 ;       }
         else {
-            pasClickable(true,true,true,true,true,true);
             VBox v = new VBox();
             v.setPrefWidth(Region.USE_COMPUTED_SIZE);
             v.setPrefHeight(Region.USE_COMPUTED_SIZE);
@@ -896,7 +900,7 @@ public class GameController{
                     this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     this.anchorPane.getChildren().remove(v);
                 });
-                h.getChildren().add(yes);
+                if (this.partie.verifCarteJouable(j,j.getMain().get(this.SlotSelect-1).getActions().get(i))) h.getChildren().add(yes);
             }
             v.getChildren().add(h);
             v.setLayoutX(this.Plateau.getWidth()/2 - v.getWidth()/2);
@@ -904,7 +908,7 @@ public class GameController{
 
             Platform.runLater(() -> this.anchorPane.getChildren().add(v));
             while (!this.carteAction){
-                if(this.shutdown == true){
+                if(this.shutdown){
                     return;
                 }
                 try {
@@ -917,7 +921,7 @@ public class GameController{
             boolean WaitTour = true;
             this.action = false;
             while(WaitTour) {
-                if(this.shutdown == true){
+                if(this.shutdown){
                     return;
                 }
                 try {
@@ -928,7 +932,7 @@ public class GameController{
 
                 Action a = j.getMain().get(this.SlotSelect - 1).getActions().get(this.carteActionChoix);
                 while (a.getNombre() != 0) {
-                    if(this.shutdown == true){
+                    if(this.shutdown){
                         return;
                     }
                     try {
@@ -945,7 +949,7 @@ public class GameController{
                             this.action = false;
                             boolean WaitTour2 = true;
                             while (WaitTour2) {
-                                if(this.shutdown == true){
+                                if(this.shutdown){
                                     return;
                                 }
                                 try {

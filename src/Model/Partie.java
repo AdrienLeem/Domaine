@@ -619,78 +619,28 @@ public class Partie implements Serializable {
         return false;
     }
 
-    public boolean verifCarteJouable(Joueur j,int index) {
-        if (j.getMain().get(index).getActions().size() == 1) {
-            if (j.getMain().get(index).getActions().get(0) instanceof Alliance || j.getMain().get(index).getActions().get(0) instanceof Transfuge || j.getMain().get(index).getActions().get(0) instanceof ExtensionDomaine) {
-                if (j.getDomaines().size() == 0) return false;
-                if (j.getMain().get(index).getActions().get(0) instanceof Alliance || j.getMain().get(index).getActions().get(0) instanceof Transfuge){
-                    for (Joueur k : joueurs){
-                        if (!k.equals(j)){
-                            for (Domaine kdom :k.getDomaines()){
-                                for (Domaine jdom : j.getDomaines()){
-                                    if(domaineAdjacent(jdom,kdom) && !isInAlliance(jdom,kdom)) {
-                                        if (j.getMain().get(index).getActions().get(0) instanceof Transfuge){
-                                            for (PionChevalier chevalier : k.getChevaliers()){
-                                                Case c = this.plateau.getCase(chevalier.getX(), chevalier.getY());
-                                                if (kdom.getCases().contains(c)) return true;
-                                            }
+    public boolean verifCarteJouable(Joueur j,Action a) {
+        if (a instanceof Alliance || a instanceof Transfuge || a instanceof ExtensionDomaine) {
+            if (j.getDomaines().size() == 0) return false;
+            if (a instanceof Alliance || a instanceof Transfuge){
+                for (Joueur k : joueurs){
+                    if (!k.equals(j)){
+                        for (Domaine kdom :k.getDomaines()){
+                            for (Domaine jdom : j.getDomaines()){
+                                if(domaineAdjacent(jdom,kdom) && !isInAlliance(jdom,kdom)) {
+                                    if (a instanceof Transfuge){
+                                        for (PionChevalier chevalier : k.getChevaliers()){
+                                            Case c = this.plateau.getCase(chevalier.getX(), chevalier.getY());
+                                            if (kdom.getCases().contains(c)) return true;
                                         }
-                                        else return true;
                                     }
+                                    else return true;
                                 }
                             }
                         }
                     }
-                    return false;
                 }
-            }
-        }
-        else if (j.getMain().get(index).getActions().size()==2){
-            if (j.getMain().get(index).getActions().get(0) instanceof Alliance || j.getMain().get(index).getActions().get(0) instanceof Transfuge || j.getMain().get(index).getActions().get(0) instanceof ExtensionDomaine) {
-                if (j.getDomaines().size() == 0) return false;
-                if (j.getMain().get(index).getActions().get(0) instanceof Alliance || j.getMain().get(index).getActions().get(0) instanceof Transfuge){
-                    for (Joueur k : joueurs){
-                        if (!k.equals(j)){
-                            for (Domaine kdom :k.getDomaines()){
-                                for (Domaine jdom : j.getDomaines()){
-                                    if(domaineAdjacent(jdom,kdom) && !isInAlliance(jdom,kdom)) {
-                                        if (j.getMain().get(index).getActions().get(0) instanceof Transfuge){
-                                            for (PionChevalier chevalier : k.getChevaliers()){
-                                                Case c = this.plateau.getCase(chevalier.getX(), chevalier.getY());
-                                                if (kdom.getCases().contains(c)) return true;
-                                            }
-                                        }
-                                        else return true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return false;
-                }
-            }
-            else if (j.getMain().get(index).getActions().get(1) instanceof Alliance || j.getMain().get(index).getActions().get(1) instanceof Transfuge || j.getMain().get(index).getActions().get(1) instanceof ExtensionDomaine) {
-                if (j.getDomaines().size() == 0) return false;
-                if (j.getMain().get(index).getActions().get(1) instanceof Alliance || j.getMain().get(index).getActions().get(1) instanceof Transfuge){
-                    for (Joueur k : joueurs){
-                        if (!k.equals(j)){
-                            for (Domaine kdom :k.getDomaines()){
-                                for (Domaine jdom : j.getDomaines()){
-                                    if(domaineAdjacent(jdom,kdom) && !isInAlliance(jdom,kdom)) {
-                                        if (j.getMain().get(index).getActions().get(1) instanceof Transfuge){
-                                            for (PionChevalier chevalier : k.getChevaliers()){
-                                                Case c = this.plateau.getCase(chevalier.getX(), chevalier.getY());
-                                                if (kdom.getCases().contains(c)) return true;
-                                            }
-                                        }
-                                        else return true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return false;
-                }
+                return false;
             }
         }
         return true;

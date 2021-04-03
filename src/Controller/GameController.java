@@ -721,6 +721,7 @@ public class GameController{
                         e.printStackTrace();
                     }
                     if(this.SlotSelect != 0){
+                        pasClickable(true,true,true,true,true,true);
                         if(this.VendreCarte){
                             VendreCarte(j);
                             this.VendreCarte = false;
@@ -760,6 +761,7 @@ public class GameController{
             this.partie.setCartesVendu(c);
         }
         else {
+            pasClickable(true,true,true,true,true,true);
             this.isCarteVendu = true;
             Carte c = j.vendreCarte(this.SlotSelect-1);
             this.partie.setCartesVendu(c);
@@ -868,6 +870,7 @@ public class GameController{
             setPoint();
 ;       }
         else {
+            pasClickable(true,true,true,true,true,true);
             VBox v = new VBox();
             v.setPrefWidth(Region.USE_COMPUTED_SIZE);
             v.setPrefHeight(Region.USE_COMPUTED_SIZE);
